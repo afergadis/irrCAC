@@ -2,7 +2,18 @@
 name = "irrCAC"
 version = "0.1.0"
 description = "Degree of agreement among raters."
-authors = ["Aris Fergadis <aris.fergadis@protonmail.com>"]
+authors = ["Aris Fergadis"]
+keywords = ["Chance-corrected agreement coefficients",
+    "Inter-rater reliability",
+    "Inter-annotator agreement"
+]
+readme = "README.rst"
+homepage = "https://github.com/afergadis/irrCAC"
+repository = "https://github.com/afergadis/irrCAC"
+packages = [
+    { include="irrCAC", from="." },
+]
+
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
