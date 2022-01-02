@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Chance-corrected Agreement Coefficients &#8212; irrCAC 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quickstart" href="quickstart.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="chance-corrected-agreement-coefficients">
+<h1>Chance-corrected Agreement Coefficients<a class="headerlink" href="#chance-corrected-agreement-coefficients" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>irrCAC</strong> is an Python package that provides several functions for
+calculating various chance-corrected agreement coefficients. This package
+closely follows the general framework of inter-rater reliability assessment
+presented by Gwet (2014).</p>
+<p>The functionality covers calculations for various chance-corrected agreement
+coefficients (CAC) among 2 or more raters. Among the CAC coefficients covered
+are Cohen’s kappa, Conger’s kappa, Fleiss’ kappa, Brennan-Prediger coefficient,
+Gwet’s AC1/AC2 coefficients, and Krippendorff’s alpha. Multiple sets of weights
+are proposed for computing weighted analyses.</p>
+<p>The functions included in this package can handle 2 types of input data. Those
+types with the corresponding coefficients are in the following list:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="irrCAC.html#module-irrCAC.table">Contingency Table</a>:</p></li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Brennar-Prediger</p></li>
+<li><p>Cohen’s kappa</p></li>
+<li><p>Gwet AC1/AC2</p></li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p><a class="reference external" href="irrCAC.html#module-irrCAC.raw">Raw Data</a>:</p></li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Fleiss’ kappa</p></li>
+<li><p>Gwet AC1/AC2</p></li>
+</ol>
+</div></blockquote>
+<p>The package also supports functionality for weighted analysis using a set of
+predefined <a class="reference external" href="irrCAC.html#module-irrCAC.weights">weights</a> and interpreting the
+level of agreement using <a class="reference external" href="irrCAC.html#module-irrCAC.benchmark">benchmarking</a>.</p>
+<p>Please refer to <a class="reference external" href="usage.html">usage</a> and the <a class="reference external" href="py-modindex.html">api</a> for
+more.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All of these statistical procedures are described in details in
+Gwet, K.L. (2014,ISBN:978-0970806284):
+“Handbook of Inter-Rater Reliability,” 4th edition, Advanced Analytics, LLC.</p>
+<p>This package is a port <em>(with permission)</em> to Python of the
+<a class="reference external" href="https://github.com/kgwet/irrCAC">irrCAC</a> library for R by Gwet, K.L.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This is a <strong>work in progress</strong> and <em>does not</em> have (yet) the full
+functionality found in the R library.</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#developers">Developers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/usage_table_data.html">CAC from Contingency Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/usage_raw_data.html">CAC from Raw Ratings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/usage_benchmarking.html">Compute benchmark scale membership probabilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">irrCAC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="irrCAC.html">irrCAC package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">irrCAC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">irrCAC</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="quickstart.html" title="next chapter">Quickstart</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Kilem Gwet, Aris Fergadis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

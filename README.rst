@@ -1,0 +1,68 @@
+Chance-corrected Agreement Coefficients
+=======================================
+
+The **irrCAC** is an Python package that provides several functions for
+calculating various chance-corrected agreement coefficients. This package
+closely follows the general framework of inter-rater reliability assessment
+presented by Gwet (2014).
+
+The functionality covers calculations for various chance-corrected agreement
+coefficients (CAC) among 2 or more raters. Among the CAC coefficients covered
+are Cohen's kappa, Conger's kappa, Fleiss' kappa, Brennan-Prediger coefficient,
+Gwet's AC1/AC2 coefficients, and Krippendorff's alpha. Multiple sets of weights
+are proposed for computing weighted analyses.
+
+The functions included in this package can handle 2 types of input data. Those
+types with the corresponding coefficients are in the following list:
+
+1. Contingency Table
+
+  1. Brennar-Prediger
+  2. Cohen's kappa
+  3. Gwet AC1/AC2
+
+2. Raw Data
+
+  1. Fleiss' kappa
+  2. Gwet AC1/AC2
+
+.. note::
+   All of these statistical procedures are described in details in
+   Gwet, K.L. (2014,ISBN:978-0970806284):
+   "Handbook of Inter-Rater Reliability," 4th edition, Advanced Analytics, LLC.
+
+   This package is a port *(with permission)* to Python of the
+   `irrCAC <https://github.com/kgwet/irrCAC>`_ library for R by Gwet, K.L.
+
+.. important::
+   This is a **work in progress** and *does not* have (yet) the full
+   functionality found in the R library.
+
+Installation
+------------
+To install the package, run:
+
+.. code:: bash
+
+    pip install irrCAC
+
+Developers
+----------
+To run the tests, install `poetry <https://python-poetry.org/>`_ and run:
+
+.. code:: bash
+
+    poetry install
+
+Next run:
+
+.. code:: bash
+
+    poetry run pytest
+
+There is also a config file for `tox <https://tox.readthedocs.io/en/latest/>`_
+so you can automatically run the tests for various python versions like this:
+
+.. code:: bash
+
+    tox
