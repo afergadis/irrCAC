@@ -1,7 +1,12 @@
 Chance-corrected Agreement Coefficients
 =======================================
 
-The **irrCAC** is an Python package that provides several functions for
+.. image:: https://readthedocs.org/projects/irrcac/badge/?version=latest
+  :target: https://irrcac.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation Status
+
+
+The **irrCAC** is a Python package that provides several functions for
 calculating various chance-corrected agreement coefficients. This package
 closely follows the general framework of inter-rater reliability assessment
 presented by Gwet (2014).
@@ -66,3 +71,8 @@ so you can automatically run the tests for various python versions like this:
 .. code:: bash
 
     tox
+
+Documentation
+-------------
+The documentation of the project is available at the following page:
+http://irrcac.readthedocs.io/
