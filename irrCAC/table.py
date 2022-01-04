@@ -53,15 +53,15 @@ from irrCAC.weights import Weights
 class CAC:
     """ Chance-corrected Agreement Coefficients (CAC) 
     
-    Calculates various chance-corrected agreement coefficients (CAC) among 2 or
-    more raters are provided. Among the CAC coefficients covered are
+    The following chance-corrected agreement coefficients (CAC) among 2 raters
+    are provided.
 
-    * Brennan-Prediger coefficient,
+    * Brennan-Prediger,
     * Cohen's kappa,
-    * Conger's kappa, (TODO)
-    * Fleiss' kappa, (TODO)
-    * Gwet's AC1/AC2 coefficients, and
-    * Krippendorff's alpha. (TODO)
+    * Gwet's AC1/AC2,
+    * Krippendorff's Alpha,
+    * Percent Agreement,
+    * Scott's Pi.
 
     Multiple sets of weights are proposed for computing weighted analyses.
     All of these statistical procedures are described in details in Gwet, K.L.
@@ -160,7 +160,7 @@ class CAC:
         return self.__str__()
 
     def bp(self):
-        """ Brennan-Prediger coefficient.
+        """ Brennan-Prediger coefficient for 2 raters.
         """
 
         tw = np.sum(self.weights_mat)
@@ -194,7 +194,7 @@ class CAC:
         return self.agreement
 
     def cohen(self):
-        """ Cohen's kappa coefficient.
+        """ Cohen's kappa coefficient for 2 raters.
         
         Cohen's kappa measures the agreement between two raters who each
         classify N subjects into :math:`q` mutually exclusive categories.
@@ -236,7 +236,7 @@ class CAC:
         return self.agreement
 
     def gwet(self):
-        """ Gwet's AC1/AC2 coefficient.
+        """ Gwet's AC1/AC2 coefficient for 2 raters.
 
         The AC1 coefficient was suggested by Gwet (2008a) as a paradox-resistant
         alternative to Cohen’s Kappa. The percent chance agreement it is
@@ -282,6 +282,127 @@ class CAC:
                 se=np.round(stderr, self.digits),
                 z=np.round(ac1 / stderr, self.digits),
                 coefficient_value=np.round(ac1, self.digits),
+                confidence_interval=(
+                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
+                p_value=np.round(p_value, self.digits)))
+        return self.agreement
+
+    def krippendorff(self):
+        """ Krippendorff’s Alpha coefficient for 2 raters.
+
+        .. versionadded:: 0.2.0
+        """
+        epsi = 1 / (2 * self.n)
+        pa = (1 - epsi) * self.pa + epsi
+        pk_dot = (self.ratings.sum(axis=1) / self.n).values.reshape(-1, 1)
+        p_dot_l = (self.ratings.sum(axis=0) / self.n).values.reshape(-1, 1)
+        pi_dot_k = (pk_dot + p_dot_l) / 2
+        pe = np.sum(self.weights_mat * (pi_dot_k * pi_dot_k.T))
+        kripen_coeff = (pa - pe) / (1 - pe)
+        pkl = self.ratings.values / self.n
+        pb_dot_k = (self.weights_mat * p_dot_l).sum(axis=0)
+        pbl_dot = (self.weights_mat * pk_dot).sum(axis=0)
+        pbk = (pb_dot_k + pbl_dot) / 2
+        kcoeff = (self.pa - pe) / (1 - pe)
+        sum1 = 0
+        for k in range(self.q):
+            for l in range(self.q):
+                sum1 += pkl[k][l] * (
+                        self.weights_mat[k][l] - (1 - kcoeff) *
+                        (pbk[k] + pbk[l]))**2
+        var_kripp = ((1 - self.f) / (self.n * (1 - pe)**2)) * (
+                sum1 - (self.pa - 2 * (1 - kcoeff) * pe)**2)
+        stderr = np.sqrt(var_kripp)
+        p_value = 2 * (1 - stats.t.cdf(abs(kripen_coeff / stderr), self.n - 1))
+        lcb, ucb = stats.t.interval(
+            alpha=self.confidence_level,
+            df=self.n - 1,
+            scale=stderr,
+            loc=kripen_coeff)
+        ucb = min(1, ucb)
+        self.agreement['est'].update(
+            dict(
+                coefficient_name="Krippendorff's Alpha",
+                pa=np.round(pa, self.digits),
+                pe=np.round(pe, self.digits),
+                se=np.round(stderr, self.digits),
+                z=np.round(kripen_coeff / stderr, self.digits),
+                coefficient_value=np.round(kripen_coeff, self.digits),
+                confidence_interval=(
+                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
+                p_value=np.round(p_value, self.digits)))
+        return self.agreement
+
+    def pa2(self):
+        """ Percent Agreement coefficient for 2 raters.
+
+        .. versionadded:: 0.2.0
+        """
+        pkl = self.ratings.values / self.n
+        sum1 = 0
+        for k in range(self.q):
+            for l in range(self.q):
+                sum1 += pkl[k][l] * self.weights_mat[k][l] ** 2
+        var_pa = ((1  -  self.f) / self.n) * (sum1 - self.pa ** 2)
+        stderr = np.sqrt(var_pa)
+        p_value = 2 * (1 - stats.t.cdf(abs(self.pa / stderr), self.n - 1))
+        lcb, ucb = stats.t.interval(
+            alpha=self.confidence_level,
+            df=self.n - 1,
+            scale=stderr,
+            loc=self.pa)
+        ucb = min(1, ucb)
+        self.agreement['est'].update(
+            dict(
+                coefficient_name="Percent Agreement",
+                pa=np.round(self.pa, self.digits),
+                pe=0,
+                se=np.round(stderr, self.digits),
+                z=np.round(self.pa / stderr, self.digits),
+                coefficient_value=np.round(self.pa, self.digits),
+                confidence_interval=(
+                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
+                p_value=np.round(p_value, self.digits)))
+        return self.agreement
+
+    def scott(self):
+        """ Scott’s Pi coefficient for 2 raters.
+         
+         .. versionadded:: 0.2.0
+         """
+        pk_dot = (self.ratings.sum(axis=1) / self.n).values.reshape(-1, 1)
+        p_dot_l = (self.ratings.sum(axis=0) / self.n).values.reshape(-1, 1)
+        pi_dot_k = (pk_dot + p_dot_l) / 2
+        pe = np.sum(self.weights_mat * (pi_dot_k * pi_dot_k.T))
+        scott = (self.pa - pe) / (1 - pe)
+        pkl = self.ratings.values / self.n
+        pb_dot_k = (self.weights_mat * p_dot_l).sum(axis=0)
+        pbl_dot = (self.weights_mat * pk_dot).sum(axis=0)
+        pbk = (pb_dot_k + pbl_dot) / 2
+        sum1 = 0
+        for k in range(self.q):
+            for l in range(self.q):
+                sum1 += pkl[k][l] * (
+                        self.weights_mat[k][l] - (1 - scott) *
+                        (pbk[k] + pbk[l]))**2
+        var_scott = ((1 - self.f) / (self.n * (1 - pe)**2)) * (
+                sum1 - (self.pa - 2 * (1 - scott) * pe)**2)
+        stderr = np.sqrt(var_scott)
+        p_value = 2 * (1 - stats.t.cdf(abs(self.pa / stderr), self.n - 1))
+        lcb, ucb = stats.t.interval(
+            alpha=self.confidence_level,
+            df=self.n - 1,
+            scale=stderr,
+            loc=scott)
+        ucb = min(1, ucb)
+        self.agreement['est'].update(
+            dict(
+                coefficient_name="Scott's Pi",
+                pa=np.round(self.pa, self.digits),
+                pe=0,
+                se=np.round(stderr, self.digits),
+                z=np.round(scott / stderr, self.digits),
+                coefficient_value=np.round(scott, self.digits),
                 confidence_interval=(
                     np.round(lcb, self.digits), np.round(ucb, self.digits)),
                 p_value=np.round(p_value, self.digits)))
