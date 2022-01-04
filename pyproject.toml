@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "irrCAC"
-version = "0.1.0"
+version = "0.2.0"
 description = "Degree of agreement among raters."
 authors = ["Aris Fergadis"]
 keywords = ["Chance-corrected agreement coefficients",
