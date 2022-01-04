@@ -1,14 +1,6 @@
 irrCAC package
 ==============
 
-Module contents
----------------
-
-.. automodule:: irrCAC
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Submodules
 ----------
 
@@ -48,6 +40,14 @@ irrCAC.weights module
 ---------------------
 
 .. automodule:: irrCAC.weights
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: irrCAC
    :members:
    :undoc-members:
    :show-inheritance:

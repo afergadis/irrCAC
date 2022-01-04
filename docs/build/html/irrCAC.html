@@ -37,28 +37,6 @@
             
   <section id="irrcac-package">
 <h1>irrCAC package<a class="headerlink" href="#irrcac-package" title="Permalink to this headline">¶</a></h1>
-<section id="module-irrCAC">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-irrCAC" title="Permalink to this headline">¶</a></h2>
-<p>Inter-rater reliability</p>
-<p>In statistics, inter-rater reliability (also called by various similar names,
-such as inter-rater agreement, inter-rater concordance, inter-observer
-reliability, and so on) is the degree of agreement among raters. It is a score
-of how much homogeneity or consensus exists in the ratings given by various
-judges.</p>
-<p>There are a number of statistics that can be used to determine inter-rater
-reliability. Different statistics are appropriate for different types of
-measurement. Some options are</p>
-<ul class="simple">
-<li><p>joint-probability of agreement</p></li>
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Cohen%27s_kappa">Cohen’s kappa</a></p></li>
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Scott%27s_pi">Scott’s pi</a></p></li>
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Fleiss%27_kappa">Fleiss’ kappa</a></p></li>
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Krippendorff%27s_alpha">Krippendorff’s alpha</a></p></li>
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Concordance_correlation_coefficient">Concordance Correlation Coefficient</a></p></li>
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Intraclass_correlation">Intra-Class Correlation</a></p></li>
-</ul>
-<p>and many others.</p>
-</section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </section>
@@ -866,9 +844,14 @@ defined as the propensity for raters to agree on hard-to-score
 subjects and is calculated by multiplying the probability to agree
 when the rating is random by the probability to select a
 hard-to-score subject.</p>
-<p>The Gwet’s AC2 coefficient is the one when using weight for the
+<p>The Gwet’s AC2 coefficient is the one when using weights for the
 calculation.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="irrCAC.raw.CAC.krippendorff">
+<span class="sig-name descname"><span class="pre">krippendorff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.raw.CAC.krippendorff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -928,15 +911,15 @@ calculation.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">irrCAC.table.</span></span><span class="sig-name descname"><span class="pre">CAC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.table.CAC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Chance-corrected Agreement Coefficients (CAC)</p>
-<p>Calculates various chance-corrected agreement coefficients (CAC) among 2 or
-more raters are provided. Among the CAC coefficients covered are</p>
+<p>The following chance-corrected agreement coefficients (CAC) among 2 raters
+are provided.</p>
 <ul class="simple">
-<li><p>Brennan-Prediger coefficient,</p></li>
+<li><p>Brennan-Prediger,</p></li>
 <li><p>Cohen’s kappa,</p></li>
-<li><p>Conger’s kappa, (TODO)</p></li>
-<li><p>Fleiss’ kappa, (TODO)</p></li>
-<li><p>Gwet’s AC1/AC2 coefficients, and</p></li>
-<li><p>Krippendorff’s alpha. (TODO)</p></li>
+<li><p>Gwet’s AC1/AC2,</p></li>
+<li><p>Krippendorff’s Alpha,</p></li>
+<li><p>Percent Agreement,</p></li>
+<li><p>Scott’s Pi.</p></li>
 </ul>
 <p>Multiple sets of weights are proposed for computing weighted analyses.
 All of these statistical procedures are described in details in Gwet, K.L.
@@ -967,13 +950,13 @@ variance. Its default value is infinity.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="irrCAC.table.CAC.bp">
 <span class="sig-name descname"><span class="pre">bp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.table.CAC.bp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Brennan-Prediger coefficient.</p>
+<dd><p>Brennan-Prediger coefficient for 2 raters.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="irrCAC.table.CAC.cohen">
 <span class="sig-name descname"><span class="pre">cohen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.table.CAC.cohen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cohen’s kappa coefficient.</p>
+<dd><p>Cohen’s kappa coefficient for 2 raters.</p>
 <p>Cohen’s kappa measures the agreement between two raters who each
 classify N subjects into <span class="math notranslate nohighlight">\(q\)</span> mutually exclusive categories.</p>
 </dd></dl>
@@ -981,7 +964,7 @@ classify N subjects into <span class="math notranslate nohighlight">\(q\)</span>
 <dl class="py method">
 <dt class="sig sig-object py" id="irrCAC.table.CAC.gwet">
 <span class="sig-name descname"><span class="pre">gwet</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.table.CAC.gwet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gwet’s AC1/AC2 coefficient.</p>
+<dd><p>Gwet’s AC1/AC2 coefficient for 2 raters.</p>
 <p>The AC1 coefficient was suggested by Gwet (2008a) as a paradox-resistant
 alternative to Cohen’s Kappa. The percent chance agreement it is
 defined as the propensity for raters to agree on hard-to-score
@@ -990,6 +973,33 @@ when the rating is random by the probability to select a
 hard-to-score subject.</p>
 <p>The Gwet’s AC2 coefficient is the one when using weight for the
 calculation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="irrCAC.table.CAC.krippendorff">
+<span class="sig-name descname"><span class="pre">krippendorff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.table.CAC.krippendorff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Krippendorff’s Alpha coefficient for 2 raters.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="irrCAC.table.CAC.pa2">
+<span class="sig-name descname"><span class="pre">pa2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.table.CAC.pa2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Percent Agreement coefficient for 2 raters.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="irrCAC.table.CAC.scott">
+<span class="sig-name descname"><span class="pre">scott</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.table.CAC.scott" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scott’s Pi coefficient for 2 raters.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.2.0.</span></p>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -1187,6 +1197,28 @@ weighted coefficients.</p>
 
 </dd></dl>
 
+</section>
+<section id="module-irrCAC">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-irrCAC" title="Permalink to this headline">¶</a></h2>
+<p>Inter-rater reliability</p>
+<p>In statistics, inter-rater reliability (also called by various similar names,
+such as inter-rater agreement, inter-rater concordance, inter-observer
+reliability, and so on) is the degree of agreement among raters. It is a score
+of how much homogeneity or consensus exists in the ratings given by various
+judges.</p>
+<p>There are a number of statistics that can be used to determine inter-rater
+reliability. Different statistics are appropriate for different types of
+measurement. Some options are</p>
+<ul class="simple">
+<li><p>joint-probability of agreement</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Cohen%27s_kappa">Cohen’s kappa</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Scott%27s_pi">Scott’s pi</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Fleiss%27_kappa">Fleiss’ kappa</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Krippendorff%27s_alpha">Krippendorff’s alpha</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Concordance_correlation_coefficient">Concordance Correlation Coefficient</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Intraclass_correlation">Intra-Class Correlation</a></p></li>
+</ul>
+<p>and many others.</p>
 </section>
 </section>
 

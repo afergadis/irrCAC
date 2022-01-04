@@ -373,8 +373,9 @@ div.rendered_html tbody tr:hover {
 &lt;irrCAC.table.CAC Subjects: 100, Categories: [&#39;Ectopic&#39;, &#39;AIU&#39;, &#39;NIU&#39;], Weights: &#34;identity&#34;&gt;
 </pre></div></div>
 </div>
+</section>
 <section id="Brennar-Prediger-Coefficient">
-<h3>Brennar-Prediger Coefficient<a class="headerlink" href="#Brennar-Prediger-Coefficient" title="Permalink to this headline">¶</a></h3>
+<h2>Brennar-Prediger Coefficient<a class="headerlink" href="#Brennar-Prediger-Coefficient" title="Permalink to this headline">¶</a></h2>
 <p>To calculate the Brennar-Prediger coefficient, call the <code class="docutils literal notranslate"><span class="pre">bp()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -407,7 +408,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Cohen’s-kappa">
-<h3>Cohen’s kappa<a class="headerlink" href="#Cohen’s-kappa" title="Permalink to this headline">¶</a></h3>
+<h2>Cohen’s kappa<a class="headerlink" href="#Cohen’s-kappa" title="Permalink to this headline">¶</a></h2>
 <p>To caclulate the Cohen’s kappa coefficient, call the <code class="docutils literal notranslate"><span class="pre">cohen()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -440,7 +441,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Gwet’s-Coefficient">
-<h3>Gwet’s Coefficient<a class="headerlink" href="#Gwet’s-Coefficient" title="Permalink to this headline">¶</a></h3>
+<h2>Gwet’s Coefficient<a class="headerlink" href="#Gwet’s-Coefficient" title="Permalink to this headline">¶</a></h2>
 <p>To calculate the Gwet’s coefficient, call the <code class="docutils literal notranslate"><span class="pre">gwet()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -472,17 +473,15 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 </section>
-</section>
-<section id="Weighted-Analysis">
-<h2>Weighted Analysis<a class="headerlink" href="#Weighted-Analysis" title="Permalink to this headline">¶</a></h2>
-<p>We can use custom weights or predefined weight types initializing the <a class="reference internal" href="../irrCAC.html#module-irrCAC.table"><span class="std std-ref">CAC</span></a> objects. For the available weight types see the <a class="reference internal" href="../irrCAC.html#module-irrCAC.weights"><span class="std std-ref">Weights</span></a> module.</p>
-<p>In the following example, we initialize a new object on the same data using <a class="reference internal" href="../irrCAC.html#irrCAC.weights.Weights.linear"><span class="std std-ref">linear</span></a> weights.</p>
+<section id="Krippendorff’s-Alpha">
+<h2>Krippendorff’s Alpha<a class="headerlink" href="#Krippendorff’s-Alpha" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the Krippendorff’s Alpha coefficient, call the <code class="docutils literal notranslate"><span class="pre">krippendorff()</span></code> method</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cac_abstractors_linear</span> <span class="o">=</span> <span class="n">CAC</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
-<span class="n">cac_abstractors_linear</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span> <span class="o">=</span> <span class="n">cac_abstractors</span><span class="o">.</span><span class="n">krippendorff</span><span class="p">()</span>
+<span class="n">alpha</span>
 </pre></div>
 </div>
 </div>
@@ -492,12 +491,112 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+{&#39;est&#39;: {&#39;coefficient_value&#39;: 0.79726,
+  &#39;coefficient_name&#39;: &#34;Krippendorff&#39;s Alpha&#34;,
+  &#39;confidence_interval&#39;: (0.68008, 0.91444),
+  &#39;p_value&#39;: 0.0,
+  &#39;z&#39;: 13.50033,
+  &#39;se&#39;: 0.05905,
+  &#39;pa&#39;: 0.89055,
+  &#39;pe&#39;: 0.46015},
+ &#39;weights&#39;: array([[1., 0., 0.],
+        [0., 1., 0.],
+        [0., 0., 1.]]),
+ &#39;categories&#39;: [&#39;Ectopic&#39;, &#39;AIU&#39;, &#39;NIU&#39;]}
+</pre></div></div>
+</div>
+</section>
+<section id="Percent-Agreement">
+<h2>Percent Agreement<a class="headerlink" href="#Percent-Agreement" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the Percent Agreement, call the <code class="docutils literal notranslate"><span class="pre">pa2()</span></code> method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pa2</span> <span class="o">=</span> <span class="n">cac_abstractors</span><span class="o">.</span><span class="n">pa2</span><span class="p">()</span>
+<span class="n">pa2</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;est&#39;: {&#39;coefficient_value&#39;: 0.89,
+  &#39;coefficient_name&#39;: &#39;Percent Agreement&#39;,
+  &#39;confidence_interval&#39;: (0.82792, 0.95208),
+  &#39;p_value&#39;: 0.0,
+  &#39;z&#39;: 28.44452,
+  &#39;se&#39;: 0.03129,
+  &#39;pa&#39;: 0.89,
+  &#39;pe&#39;: 0},
+ &#39;weights&#39;: array([[1., 0., 0.],
+        [0., 1., 0.],
+        [0., 0., 1.]]),
+ &#39;categories&#39;: [&#39;Ectopic&#39;, &#39;AIU&#39;, &#39;NIU&#39;]}
+</pre></div></div>
+</div>
+</section>
+<section id="Scott’s-Pi">
+<h2>Scott’s Pi<a class="headerlink" href="#Scott’s-Pi" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the Scott’s Pi, call the <code class="docutils literal notranslate"><span class="pre">scott()</span></code> method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scott</span> <span class="o">=</span> <span class="n">cac_abstractors</span><span class="o">.</span><span class="n">scott</span><span class="p">()</span>
+<span class="n">scott</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;est&#39;: {&#39;coefficient_value&#39;: 0.79624,
+  &#39;coefficient_name&#39;: &#34;Scott&#39;s Pi&#34;,
+  &#39;confidence_interval&#39;: (0.67906, 0.91342),
+  &#39;p_value&#39;: 0.0,
+  &#39;z&#39;: 13.48308,
+  &#39;se&#39;: 0.05905,
+  &#39;pa&#39;: 0.89,
+  &#39;pe&#39;: 0},
+ &#39;weights&#39;: array([[1., 0., 0.],
+        [0., 1., 0.],
+        [0., 0., 1.]]),
+ &#39;categories&#39;: [&#39;Ectopic&#39;, &#39;AIU&#39;, &#39;NIU&#39;]}
+</pre></div></div>
+</div>
+</section>
+<section id="Weighted-Analysis">
+<h2>Weighted Analysis<a class="headerlink" href="#Weighted-Analysis" title="Permalink to this headline">¶</a></h2>
+<p>We can use custom weights or predefined weight types initializing the <a class="reference internal" href="../irrCAC.html#module-irrCAC.table"><span class="std std-ref">CAC</span></a> objects. For the available weight types see the <a class="reference internal" href="../irrCAC.html#module-irrCAC.weights"><span class="std std-ref">Weights</span></a> module.</p>
+<p>In the following example, we initialize a new object on the same data using <a class="reference internal" href="../irrCAC.html#irrCAC.weights.Weights.linear"><span class="std std-ref">linear</span></a> weights.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cac_abstractors_linear</span> <span class="o">=</span> <span class="n">CAC</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">cac_abstractors_linear</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
 &lt;irrCAC.table.CAC Subjects: 100, Categories: [&#39;Ectopic&#39;, &#39;AIU&#39;, &#39;NIU&#39;], Weights: &#34;linear&#34;&gt;
 </pre></div></div>
 </div>
 <p>To see the weights’ matrix we can print the <code class="docutils literal notranslate"><span class="pre">weights_mat</span></code> attribute of the object.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cac_abstractors_linear</span><span class="o">.</span><span class="n">weights_mat</span>
@@ -505,7 +604,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -517,7 +616,7 @@ array([[1. , 0.5, 0. ],
 </div>
 <p>Next, we simply call the method of the coefficient we want the calculation. Here for example we show the weighted Brennan-Prediger coefficient.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bp_linear</span> <span class="o">=</span> <span class="n">cac_abstractors_linear</span><span class="o">.</span><span class="n">bp</span><span class="p">()</span>
@@ -526,7 +625,7 @@ array([[1. , 0.5, 0. ],
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -547,7 +646,7 @@ array([[1. , 0.5, 0. ],
 </div>
 <p>To compare the results of the unweighted (which is the <a class="reference internal" href="../irrCAC.html#irrCAC.weights.Weights.identity"><span class="std std-ref">identity</span></a> weights) and the calculation with the <a class="reference internal" href="../irrCAC.html#irrCAC.weights.Weights.linear"><span class="std std-ref">linear</span></a> weights, we display the results side by side.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -561,7 +660,7 @@ array([[1. , 0.5, 0. ],
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -590,17 +689,17 @@ array([[1. , 0.5, 0. ],
   <tbody>
     <tr>
       <th>0</th>
-      <td>(coefficient_value, 0.84933)</td>
+      <td>(coefficient_value, 0.79624)</td>
       <td>(coefficient_value, 0.87625)</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>(coefficient_name, Gwet's AC1)</td>
+      <td>(coefficient_name, Scott's Pi)</td>
       <td>(coefficient_name, Brennan-Prediger)</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>(confidence_interval, (0.76358, 0.93508))</td>
+      <td>(confidence_interval, (0.67906, 0.91342))</td>
       <td>(confidence_interval, (0.80641, 0.94609))</td>
     </tr>
     <tr>
@@ -610,12 +709,12 @@ array([[1. , 0.5, 0. ],
     </tr>
     <tr>
       <th>4</th>
-      <td>(z, 19.65248)</td>
+      <td>(z, 13.48308)</td>
       <td>(z, 24.8934)</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>(se, 0.04322)</td>
+      <td>(se, 0.05905)</td>
       <td>(se, 0.0352)</td>
     </tr>
     <tr>
@@ -625,7 +724,7 @@ array([[1. , 0.5, 0. ],
     </tr>
     <tr>
       <th>7</th>
-      <td>(pe, 0.26992)</td>
+      <td>(pe, 0)</td>
       <td>(pe, 0.55556)</td>
     </tr>
   </tbody>

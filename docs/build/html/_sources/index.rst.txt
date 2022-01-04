@@ -25,6 +25,9 @@ types with the corresponding coefficients are in the following list:
   1. Brennar-Prediger
   2. Cohen's kappa
   3. Gwet AC1/AC2
+  4. Krippendorff's Alpha
+  5. Percent Agreement
+  6. Schott's Pi
 
 2. `Raw Data <irrCAC.html#module-irrCAC.raw>`_:
 
