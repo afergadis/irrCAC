@@ -208,8 +208,7 @@ def raw_ben_gerry():
     """
     group = 'G2 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2'.split()
     units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    index = pd.MultiIndex.from_arrays(
-        [group, units], names=('Group', 'Units'))
+    index = pd.MultiIndex.from_arrays([group, units], names=('Group', 'Units'))
     data = dict(
         Ben=['a', 'a', 'b', 'b', 'd', 'c', 'c', 'c', 'e', 'd', 'd', 'a'],
         Gerry=['b', 'a', 'b', 'b', 'b', 'c', 'c', 'c', 'e', None, 'd', 'd'])
@@ -250,8 +249,7 @@ def raw_g1g2():
     """
     group = 'G2 G1 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2 G2'.split()
     units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-    index = pd.MultiIndex.from_arrays(
-        [group, units], names=('Group', 'Units'))
+    index = pd.MultiIndex.from_arrays([group, units], names=('Group', 'Units'))
     data = dict(
         Rater1=[
             'a', 'b', 'c', 'c', 'b', 'a', 'd', 'a', 'b', None, None, None, 'b',
@@ -303,8 +301,7 @@ def raw_gender():
         'FEMALE', 'FEMALE', 'FEMALE', 'FEMALE', 'FEMALE', 'FEMALE'
     ]
     units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    index = pd.MultiIndex.from_arrays(
-        [group, units], names=('Group', 'Units'))
+    index = pd.MultiIndex.from_arrays([group, units], names=('Group', 'Units'))
     data = dict(
         Rater1=[
             'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'c', 'a', 'a', 'a', 'a',

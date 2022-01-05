@@ -15,7 +15,7 @@ Initialize a CAC object with the data from the contigency table
 
 >>> cont3x3abstractors = CAC(data)
 >>> print(cont3x3abstractors.gwet())  # doctest: +NORMALIZE_WHITESPACE
-'est': {'coefficient_value': 0.84933,
+{'est': {'coefficient_value': 0.84933,
         'coefficient_name': "Gwet's AC1",
         'confidence_interval': (0.76358, 0.93508),
         'p_value': 0.0,

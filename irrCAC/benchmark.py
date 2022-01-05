@@ -47,11 +47,11 @@ class Benchmark:
     {'scale': [(0.8, 1.0), (0.6, 0.8), (0.4, 0.6), (0.2, 0.4), (-1.0, 0.2)],
     'Altman': ['Very Good', 'Good', 'Moderate', 'Fair', 'Poor'],
     'CumProb': [0.18168, 0.67511, 0.96356, 0.99912, 1.0]}
-    >>> my_scale = dict(\
-        lb=[0.6, 0.3, 0.0],\
-        ub=[1.0, 0.6, 0.3],\
-        interp=['Excellent', 'Acceptable', 'Poor'],\
-        scale_name='My Scale')
+    >>> my_scale = dict(
+    ... lb=[0.6, 0.3, 0.0],
+    ... ub=[1.0, 0.6, 0.3],
+    ... interp=['Excellent', 'Acceptable', 'Poor'],
+    ... scale_name='My Scale')
     >>> print(benchmark.interpret(my_scale))  # doctest: +NORMALIZE_WHITESPACE
     {'scale': [(0.6, 1.0), (0.3, 0.6), (0.0, 0.3)],
     'My Scale': ['Excellent', 'Acceptable', 'Poor'],

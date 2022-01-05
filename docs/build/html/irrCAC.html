@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>irrCAC package &#8212; irrCAC 0.1.0 documentation</title>
+    <title>irrCAC package &#8212; irrCAC 0.2.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -85,7 +85,11 @@ it is recommended to consider the agreement as moderate on the Altman scale.</p>
 <span class="go">{&#39;scale&#39;: [(0.8, 1.0), (0.6, 0.8), (0.4, 0.6), (0.2, 0.4), (-1.0, 0.2)],</span>
 <span class="go">&#39;Altman&#39;: [&#39;Very Good&#39;, &#39;Good&#39;, &#39;Moderate&#39;, &#39;Fair&#39;, &#39;Poor&#39;],</span>
 <span class="go">&#39;CumProb&#39;: [0.18168, 0.67511, 0.96356, 0.99912, 1.0]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_scale</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>        <span class="n">lb</span><span class="o">=</span><span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>        <span class="n">ub</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>        <span class="n">interp</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Excellent&#39;</span><span class="p">,</span> <span class="s1">&#39;Acceptable&#39;</span><span class="p">,</span> <span class="s1">&#39;Poor&#39;</span><span class="p">],</span>        <span class="n">scale_name</span><span class="o">=</span><span class="s1">&#39;My Scale&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_scale</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+<span class="gp">... </span><span class="n">lb</span><span class="o">=</span><span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+<span class="gp">... </span><span class="n">ub</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+<span class="gp">... </span><span class="n">interp</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Excellent&#39;</span><span class="p">,</span> <span class="s1">&#39;Acceptable&#39;</span><span class="p">,</span> <span class="s1">&#39;Poor&#39;</span><span class="p">],</span>
+<span class="gp">... </span><span class="n">scale_name</span><span class="o">=</span><span class="s1">&#39;My Scale&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">benchmark</span><span class="o">.</span><span class="n">interpret</span><span class="p">(</span><span class="n">my_scale</span><span class="p">))</span>  
 <span class="go">{&#39;scale&#39;: [(0.6, 1.0), (0.3, 0.6), (0.0, 0.3)],</span>
 <span class="go">&#39;My Scale&#39;: [&#39;Excellent&#39;, &#39;Acceptable&#39;, &#39;Poor&#39;],</span>
@@ -844,14 +848,9 @@ defined as the propensity for raters to agree on hard-to-score
 subjects and is calculated by multiplying the probability to agree
 when the rating is random by the probability to select a
 hard-to-score subject.</p>
-<p>The Gwet’s AC2 coefficient is the one when using weights for the
+<p>The Gwet’s AC2 coefficient is the one when using weight for the
 calculation.</p>
 </dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="irrCAC.raw.CAC.krippendorff">
-<span class="sig-name descname"><span class="pre">krippendorff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#irrCAC.raw.CAC.krippendorff" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -874,7 +873,7 @@ calculation.</p>
 <p>Initialize a CAC object with the data from the contigency table</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cont3x3abstractors</span> <span class="o">=</span> <span class="n">CAC</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cont3x3abstractors</span><span class="o">.</span><span class="n">gwet</span><span class="p">())</span>  
-<span class="go">&#39;est&#39;: {&#39;coefficient_value&#39;: 0.84933,</span>
+<span class="go">{&#39;est&#39;: {&#39;coefficient_value&#39;: 0.84933,</span>
 <span class="go">        &#39;coefficient_name&#39;: &quot;Gwet&#39;s AC1&quot;,</span>
 <span class="go">        &#39;confidence_interval&#39;: (0.76358, 0.93508),</span>
 <span class="go">        &#39;p_value&#39;: 0.0,</span>
