@@ -82,6 +82,7 @@ To use weights with the calculations, we pass the type of weights as argument.
 'categories': [1.0, 2.0, 3.0, 4.0, 5.0]}
 """
 import numpy as np
+from copy import deepcopy
 from scipy import stats
 from irrCAC.weights import Weights
 
@@ -144,8 +145,8 @@ class CAC:
             N=np.inf,
             digits=5):
         weights_choices = (
-            "identity", "quadratic", "ordinal", "linear",
-            "radical", "ratio", "circular", "bipolar")
+            "identity", "quadratic", "ordinal", "linear", "radical", "ratio",
+            "circular", "bipolar")
         if weights not in weights_choices:
             raise ValueError(f'weights values can be any of {weights_choices}')
         if not 0.9 <= confidence_level <= 0.99:
@@ -282,7 +283,7 @@ class CAC:
                 'confidence_interval': self.confidence_interval,
                 'p_value': self.p_value
             })
-        return self.agreement
+        return deepcopy(self.agreement)
 
     def fleiss(self):
         """ Fleiss' generalized kappa coefficient.
@@ -346,7 +347,7 @@ class CAC:
                 'confidence_interval': self.confidence_interval,
                 'p_value': self.p_value
             })
-        return self.agreement
+        return deepcopy(self.agreement)
 
     # def conger(self):
     #     for k in range(self.q):
