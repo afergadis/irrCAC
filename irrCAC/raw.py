@@ -355,3 +355,86 @@ class CAC:
                 p_value=self.p_value))
         return deepcopy(self.agreement)
 
+    def krippendorff(self):
+        """ Krippendorff’s alpha coefficient for an arbitrary number of raters.
+
+        Krippendorff’s alpha coefficient for an arbitrary number of raters
+        (2, 3, +) when the input data represent the raw ratings reported for
+        each subject and each rater.
+
+        References
+        ----------
+        Gwet, K. (2014). *Handbook of Inter-Rater Reliability: The Definitive
+        Guide to Measuring the Extent of Agreement Among Multiple Raters*,
+        4th Edition. Advanced Analytics, LLC.
+
+        Krippendorff (1970). *Bivariate agreement coefficients for reliability
+        of data*. Sociological Methodology, 2, 139-150.
+
+        Krippendorff (1980). *Content analysis: An introduction to its
+        methodology (2nd ed.)*, New-bury Park, CA: Sage.
+
+        .. versionadded:: 0.2.2
+        """
+        agree_mat = np.zeros(shape=(self.n, self.q))
+        for k in range(self.q):
+            agree_mat[:, k] = self.ratings[self.ratings ==
+                                           self.categories[k]].count(axis=1)
+        agree_mat_w = np.transpose(np.matmul(self.weights_mat, agree_mat.T))
+        ri_vec = agree_mat.sum(axis=1)
+        agree_mat = agree_mat[ri_vec >= 2]
+        agree_mat_w = agree_mat_w[ri_vec >= 2]
+        ri_vec = ri_vec[ri_vec >= 2]
+        ri_mean = np.mean(ri_vec)
+        n = agree_mat.shape[0]
+        epsi = 1 / np.sum(ri_vec)
+        sum_q = (agree_mat * (agree_mat_w - 1)).sum(axis=1)
+        paprime = np.sum(sum_q / (ri_mean * (ri_vec - 1))) / n
+        pa = float((1 - epsi) * paprime + epsi)
+        pi_vec = np.matmul(
+            np.repeat(1 / n, n).reshape(1, n), agree_mat / ri_mean).T
+        pe = float(np.sum(self.weights_mat * np.matmul(pi_vec, pi_vec.T)))
+        krippen_alpha = (pa - pe) / (1 - pe)
+        krippen_alpha_est = np.round(krippen_alpha, self.digits)
+        krippen_alpha_prime = (paprime - pe) / (1 - pe)
+        pa_ivec = (
+            sum_q / (ri_mean * (ri_vec - 1)) - pa *
+            (ri_vec - ri_mean) / ri_mean).reshape(-1, 1)
+        krippen_ivec = (pa_ivec - pe) / (1 - pe)
+        pi_vec_wk_ = np.matmul(self.weights_mat, pi_vec)
+        pi_vec_w_k = np.matmul(self.weights_mat.T, pi_vec)
+        pi_vec_w = (pi_vec_wk_ + pi_vec_w_k) / 2
+        pe_ivec = np.matmul(agree_mat, pi_vec_w) / ri_mean - \
+                  (pe * (ri_vec - ri_mean) / ri_mean).reshape(-1, 1)
+        krippen_ivec_x = krippen_ivec - 2 * (1 - krippen_alpha_prime) * (
+            pe_ivec - pe) / (1 - pe)
+        var_krippen = (1 - self.f) / (n * (n - 1)) * sum(
+            (krippen_ivec_x - krippen_alpha_prime)**2)
+        stderr = np.sqrt(float(var_krippen))
+        p_value = 2 * (1 - stats.t.cdf(abs(krippen_alpha / stderr), n - 1))
+        lcb, ucb = stats.t.interval(
+            alpha=self.confidence_level,
+            df=n - 1,
+            scale=stderr,
+            loc=krippen_alpha)
+        ucb = min(1, ucb)
+        self.coefficient_value = round(krippen_alpha_est, self.digits)
+        self.coefficient_name = "Krippendorff's Alpha"
+        self.confidence_interval = (
+            round(lcb, self.digits), round(ucb, self.digits))
+        self.p_value = p_value
+        self.z = round(krippen_alpha_est / stderr, self.digits)
+        self.se = round(stderr, self.digits)
+        self.pa = round(pa, self.digits)
+        self.pe = round(pe, self.digits)
+        self.agreement['est'].update(
+            dict(
+                coefficient_name=self.coefficient_name,
+                pa=self.pa,
+                pe=self.pe,
+                se=self.se,
+                z=self.z,
+                coefficient_value=self.coefficient_value,
+                confidence_interval=self.confidence_interval,
+                p_value=self.p_value))
+        return deepcopy(self.agreement)
