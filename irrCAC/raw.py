@@ -170,7 +170,6 @@ class CAC:
         else:
             self.weights_name = 'Custom Weights'
             self.weights_mat = np.asarray(weights)
-        self.agree_mat = np.zeros(shape=(self.n, self.q))
         self.digits = digits
         self.coefficient_value = 0
         self.coefficient_name = None
@@ -220,27 +219,26 @@ class CAC:
         The Gwet's AC2 coefficient is the one when using weight for the
         calculation.
         """
+        agree_mat = np.zeros(shape=(self.n, self.q))
         for k in range(self.q):
-            self.agree_mat[:, k] = self.ratings[
-                self.ratings == self.categories[k]].count(axis=1)
-        agree_mat_w = np.transpose(
-            np.matmul(self.weights_mat, self.agree_mat.T))
-        ri_vec = self.agree_mat.sum(axis=1)
-        sum_q = (self.agree_mat * (agree_mat_w - 1)).sum(axis=1)
+            agree_mat[:, k] = self.ratings[self.ratings ==
+                                           self.categories[k]].count(axis=1)
+        agree_mat_w = np.transpose(np.matmul(self.weights_mat, agree_mat.T))
+        ri_vec = agree_mat.sum(axis=1)
+        sum_q = (agree_mat * (agree_mat_w - 1)).sum(axis=1)
         n2more = sum(ri_vec >= 2)
         pa = sum(
             sum_q[ri_vec >= 2] / (ri_vec * (ri_vec - 1))[ri_vec >= 2]) / n2more
         pi_vec = (
-            np.repeat(1 / self.n, self.n).reshape(self.n, 1) * (
-                self.agree_mat /
-                np.repeat(ri_vec, self.q).reshape(self.n, self.q))).T.sum(
-                    axis=1)
+            np.repeat(1 / self.n, self.n).reshape(self.n, 1) *
+            (agree_mat /
+             np.repeat(ri_vec, self.q).reshape(self.n, self.q))).T.sum(axis=1)
         weights_mat_sum = sum(sum(self.weights_mat))
-        if self.q > 1:
+        if self.q >= 2:
             pe = weights_mat_sum * sum(pi_vec * (1 - pi_vec)) / (
                 self.q * (self.q - 1))
         else:
-            pe = 1
+            pe = 1 - 1e-15
         ac1 = (pa - pe) / (1 - pe)
         den_ivec = ri_vec * (ri_vec - 1)
         den_ivec = den_ivec - (den_ivec == 0)
@@ -248,7 +246,7 @@ class CAC:
         pe_r2 = pe * (ri_vec >= 2)
         ac1_ivec = (self.n / n2more) * (pa_ivec - pe_r2) / (1 - pe)
         pe_ivec = (weights_mat_sum / (self.q * (self.q - 1))) * np.matmul(
-            self.agree_mat, (1 - pi_vec)) / ri_vec
+            agree_mat, (1 - pi_vec)) / ri_vec
         ac1_ivec_x = ac1_ivec - 2 * (1 - ac1) * (pe_ivec - pe) / (1 - pe)
         var_ac1 = (1 - self.f) / (self.n * (self.n - 1)) * sum(
             (ac1_ivec_x - ac1)**2)
@@ -267,22 +265,21 @@ class CAC:
         self.coefficient_name = coeff_name
         self.confidence_interval = (
             round(lcb, self.digits), round(ucb, self.digits))
-        self.p_value = round(p_value, self.digits)
+        self.p_value = p_value
         self.z = round(ac1 / stderr, self.digits)
         self.se = round(stderr, self.digits)
         self.pa = round(pa, self.digits)
         self.pe = round(pe, self.digits)
         self.agreement['est'].update(
-            {
-                'coefficient_name': coeff_name,
-                'pa': self.pa,
-                'pe': self.pe,
-                'se': self.se,
-                'z': self.z,
-                'coefficient_value': self.coefficient_value,
-                'confidence_interval': self.confidence_interval,
-                'p_value': self.p_value
-            })
+            dict(
+                coefficient_name=coeff_name,
+                pa=self.pa,
+                pe=self.pe,
+                se=self.se,
+                z=self.z,
+                coefficient_value=self.coefficient_value,
+                confidence_interval=self.confidence_interval,
+                p_value=self.p_value))
         return deepcopy(self.agreement)
 
     def fleiss(self):
@@ -294,102 +291,67 @@ class CAC:
         The calculation of the kappa coefficient here takes into account any
         missing values.
         """
+        agree_mat = np.zeros(shape=(self.n, self.q))
         for c in range(self.q):
-            self.agree_mat[:, c] = self.ratings[
-                self.ratings == self.categories[c]].count(axis=1)
-        ri_vec = self.agree_mat.sum(axis=1)
-        sum_q = (self.agree_mat * (self.agree_mat - 1)).sum(axis=1)
+            agree_mat[:, c] = self.ratings[self.ratings ==
+                                           self.categories[c]].count(axis=1)
+        agree_mat_w = np.transpose(np.matmul(self.weights_mat, agree_mat.T))
+        ri_vec = agree_mat.sum(axis=1)
+        sum_q = (agree_mat * (agree_mat_w - 1)).sum(axis=1)
         n2more = sum(ri_vec >= 2)
-        pa = sum(
-            sum_q[ri_vec >= 2] / (ri_vec * (ri_vec - 1))[ri_vec >= 2]) / n2more
+        pa = float(
+            sum(sum_q[ri_vec >= 2] / (ri_vec * (ri_vec - 1))[ri_vec >= 2]) /
+            n2more)
         pi_vec = (
-            np.repeat(1 / self.n, self.n).reshape(self.n, 1) * (
-                self.agree_mat /
-                np.repeat(ri_vec, self.q).reshape(self.n, self.q))).T.sum(
-                    axis=1)
-        pe = sum(pi_vec * pi_vec.T)
-        kappa = (pa - pe) / (1 - pe)
+            np.repeat(1 / self.n, self.n).reshape(self.n, 1) *
+            (agree_mat /
+             np.repeat(ri_vec, self.q).reshape(self.n, self.q))).T.sum(axis=1)
+        pe = float(
+            np.sum(
+                self.weights_mat *
+                (pi_vec.reshape(self.q, 1) * pi_vec.reshape(1, self.q))))
+        fleiss_kappa = (pa - pe) / (1 - pe)
         den_ivec = ri_vec * (ri_vec - 1)
         den_ivec = den_ivec - (den_ivec == 0)
         pa_ivec = sum_q / den_ivec
         pe_r2 = pe * (ri_vec >= 2)
         kappa_ivec = (self.n / n2more) * (pa_ivec - pe_r2) / (1 - pe)
-        pe_ivec = np.matmul(self.agree_mat, pi_vec) / ri_vec
-        kappa_ivec_x = kappa_ivec - 2 * (1 - kappa) * (pe_ivec - pe) / (1 - pe)
-        var_kappa = (1 - self.f) / (self.n * (self.n - 1)) * sum(
-            (kappa_ivec_x - kappa)**2)
-        stderr = np.sqrt(var_kappa)
-        p_value = 2 * (1 - stats.t.cdf(abs(kappa / stderr), self.n - 1))
+        pi_vec_wk_ = np.matmul(self.weights_mat, pi_vec)
+        pi_vec_w_k = np.matmul(self.weights_mat.T, pi_vec)
+        pi_vec_w = (pi_vec_wk_ + pi_vec_w_k) / 2
+        pe_ivec = np.matmul(agree_mat, pi_vec_w) / ri_vec
+        kappa_ivec_x = kappa_ivec - 2 * (1 - fleiss_kappa) * (pe_ivec -
+                                                              pe) / (1 - pe)
+        var_fleiss = (1 - self.f) / (self.n * (self.n - 1)) * sum(
+            (kappa_ivec_x - fleiss_kappa)**2)
+        stderr = np.sqrt(var_fleiss)
+        p_value = float(
+            2 * (1 - stats.t.cdf(abs(fleiss_kappa / stderr), self.n - 1)))
         lcb, ucb = stats.t.interval(
             alpha=self.confidence_level,
             df=self.n - 1,
             scale=stderr,
-            loc=kappa)
+            loc=fleiss_kappa)
         ucb = min(1, ucb)
 
-        self.coefficient_value = round(kappa, self.digits)
+        self.coefficient_value = round(fleiss_kappa, self.digits)
         self.coefficient_name = "Fleiss' kappa"
         self.confidence_interval = (
             round(lcb, self.digits), round(ucb, self.digits))
-        self.p_value = round(p_value, self.digits)
-        self.z = round(kappa / stderr, self.digits)
+        self.p_value = p_value
+        self.z = round(fleiss_kappa / stderr, self.digits)
         self.se = round(stderr, self.digits)
         self.pa = round(pa, self.digits)
         self.pe = round(pe, self.digits)
         self.agreement['est'].update(
-            {
-                'coefficient_name': self.coefficient_name,
-                'pa': self.pa,
-                'pe': self.pe,
-                'se': self.se,
-                'z': self.z,
-                'coefficient_value': self.coefficient_value,
-                'confidence_interval': self.confidence_interval,
-                'p_value': self.p_value
-            })
+            dict(
+                coefficient_name=self.coefficient_name,
+                pa=self.pa,
+                pe=self.pe,
+                se=self.se,
+                z=self.z,
+                coefficient_value=self.coefficient_value,
+                confidence_interval=self.confidence_interval,
+                p_value=self.p_value))
         return deepcopy(self.agreement)
 
-    # def conger(self):
-    #     for k in range(self.q):
-    #         self.agree_mat[:, k] = self.ratings[
-    #             self.ratings == self.categories[k]].count(axis=1)
-    #     agree_mat_w = np.transpose(
-    #         np.matmul(self.weights_mat, self.agree_mat.T))
-    #     classif_mat = np.zeros((self.r, self.q))
-    #     for k in range(self.q):
-    #         with_mis = self.ratings == self.categories[k]
-    #         without_mis = with_mis.T.fillna(False)
-    #         classif_mat[:, k] = without_mis.sum(axis=1)
-    #     ri_vec = self.agree_mat.sum(axis=1)
-    #     sum_q = (self.agree_mat * (self.agree_mat - 1)).sum(axis=1)
-    #     n2more = sum(ri_vec >= 2)
-    #     pa = sum(
-    #         sum_q[ri_vec >= 2] / (ri_vec * (ri_vec - 1))[ri_vec >= 2]) / n2more
-    #     ng_vec = classif_mat.sum(axis=1).reshape(-1, 1)
-    #     pgk_mat = classif_mat / np.broadcast_to(ng_vec, (self.r, self.q))
-    #     p_mean_k = pgk_mat.T.sum(axis=1) / self.r
-    #     p_mean_k = p_mean_k.reshape(-1, 1)
-    #     s2kl_mat = (
-    #         np.matmul(pgk_mat.T, pgk_mat) - self.r *
-    #         (p_mean_k * p_mean_k.T)) / (
-    #             self.r - 1)
-    #     pe = np.sum(
-    #         self.weights_mat * (p_mean_k * p_mean_k.T - s2kl_mat / self.r))
-    #     conger_kappa = (pa - pe) / (1 - pe)
-    #     bkl_mat = (self.weights_mat + self.weights_mat.T) / 2
-    #     pe_ivec1 = self.r * (
-    #         self.agree_mat * (p_mean_k.T * bkl_mat).sum(axis=1)).sum(axis=1)
-    #     pe_ivec2 = np.zeros((1, self.n))
-    #     lambda_ig_mat = np.zeros((self.n, self.r))
-    #     is_numeric_ratings = self.ratings.applymap(
-    #         lambda x: isinstance(x, (int, float))).all(1).sum() == self.n
-    #     if is_numeric_ratings:
-    #         epsi_ig_mat = 1 - self.ratings.isna()
-    #     else:
-    #         epsi_ig_mat = 1 - self.ratings.applymap(
-    #             lambda x: isinstance(x, str))
-    #     for k in range(self.q):
-    #         lambda_ig_kmat = np.zeros((self.n, self.r))
-    #         for l in range(self.q):
-    #             delta_ig_mat = self.ratings == self.categories[l]
-    #     pass
