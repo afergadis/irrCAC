@@ -1,8 +1,3 @@
-.. irrCAC documentation master file, created by
-   sphinx-quickstart on Thu Dec 30 17:35:43 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Chance-corrected Agreement Coefficients
 =======================================
 
@@ -33,6 +28,7 @@ types with the corresponding coefficients are in the following list:
 
   1. Fleiss' kappa
   2. Gwet AC1/AC2
+  3. Krippendorff's Alpha
 
 The package also supports functionality for weighted analysis using a set of
 predefined `weights <irrCAC.html#module-irrCAC.weights>`_ and interpreting the

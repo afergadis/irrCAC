@@ -22,7 +22,7 @@ copyright = '2021, Kilem Gwet, Aris Fergadis'
 author = 'Kilem Gwet, Aris Fergadis'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.0'
+release = '0.2.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -76,7 +76,7 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
     "body_max_width": "100%",
 }

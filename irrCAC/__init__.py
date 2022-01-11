@@ -10,7 +10,7 @@ There are a number of statistics that can be used to determine inter-rater
 reliability. Different statistics are appropriate for different types of
 measurement. Some options are
 
-* joint-probability of agreement
+* Joint-probability of agreement
 * `Cohen's kappa <https://en.wikipedia.org/wiki/Cohen%27s_kappa>`_
 * `Scott's pi <https://en.wikipedia.org/wiki/Scott%27s_pi>`_
 * `Fleiss' kappa <https://en.wikipedia.org/wiki/Fleiss%27_kappa>`_

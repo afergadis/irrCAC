@@ -1,41 +1,91 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>Compute benchmark scale membership probabilities &#8212; irrCAC 0.2.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compute benchmark scale membership probabilities &mdash; irrCAC 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="irrCAC" href="../modules.html" />
-    <link rel="prev" title="CAC from Raw Ratings" href="usage_raw_data.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="prev" title="CAC from Raw Ratings" href="usage_raw_data.html" /> 
+</head>
 
-  </head><body>
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> irrCAC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="usage_table_data.html">CAC from Contingency Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_raw_data.html">CAC from Raw Ratings</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compute benchmark scale membership probabilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Initialize-Benchmark">Initialize Benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Altman">Altman</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Ciccheti-Sparrow">Ciccheti-Sparrow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Fleiss">Fleiss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Landis-Koch">Landis-Koch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Regier-et-al.">Regier et al.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Custom-Scale">Custom Scale</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">irrCAC</a></li>
+</ul>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
+        </div>
+      </div>
+    </nav>
 
-          <div class="body" role="main">
-            
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">irrCAC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../usage.html">Usage</a> &raquo;</li>
+      <li>Compute benchmark scale membership probabilities</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/usage/usage_benchmarking.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -283,9 +333,31 @@ div.rendered_html tbody tr:nth-child(odd) {
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
 </style>
 <section id="Compute-benchmark-scale-membership-probabilities">
-<h1>Compute benchmark scale membership probabilities<a class="headerlink" href="#Compute-benchmark-scale-membership-probabilities" title="Permalink to this headline">¶</a></h1>
+<h1>Compute benchmark scale membership probabilities<a class="headerlink" href="#Compute-benchmark-scale-membership-probabilities" title="Permalink to this headline"></a></h1>
 <p>An elaborate approach to interpret a kappa value is based on the notion of cumulative interval membership probability (CIMP). The interval probability represents the Normality-based probability that the “true” agreement coefficient kappa belongs to the interval in question. The general rule consists of retaining the highest interval whose CIMP equals or exceeds the threshold of 0.95. For more details see <a class="reference external" href="https://inter-rater-reliability.blogspot.com/2018/02/">Inter-rater reliability among multiple raters when subjects are rated by different pairs of
 subjects blog post</a>.</p>
 <p>We can use one of the available scales or define a custom one. The available ones are:</p>
@@ -297,7 +369,7 @@ subjects blog post</a>.</p>
 <li><p>Regier</p></li>
 </ul>
 <section id="Initialize-Benchmark">
-<h2>Initialize Benchmark<a class="headerlink" href="#Initialize-Benchmark" title="Permalink to this headline">¶</a></h2>
+<h2>Initialize Benchmark<a class="headerlink" href="#Initialize-Benchmark" title="Permalink to this headline"></a></h2>
 <p>First, we have to initialize a <a class="reference internal" href="../irrCAC.html#module-irrCAC.benchmark"><span class="std std-ref">Benchmark</span></a> object.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -322,7 +394,7 @@ subjects blog post</a>.</p>
 </div>
 </section>
 <section id="Altman">
-<h2>Altman<a class="headerlink" href="#Altman" title="Permalink to this headline">¶</a></h2>
+<h2>Altman<a class="headerlink" href="#Altman" title="Permalink to this headline"></a></h2>
 <p>To interpret coefficient using the Altman scale, use the <code class="docutils literal notranslate"><span class="pre">altman()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -399,7 +471,7 @@ subjects blog post</a>.</p>
 </div>
 </section>
 <section id="Ciccheti-Sparrow">
-<h2>Ciccheti-Sparrow<a class="headerlink" href="#Ciccheti-Sparrow" title="Permalink to this headline">¶</a></h2>
+<h2>Ciccheti-Sparrow<a class="headerlink" href="#Ciccheti-Sparrow" title="Permalink to this headline"></a></h2>
 <p>To interpret coefficient using the Ciccheti-Sparrow scale, use the <code class="docutils literal notranslate"><span class="pre">ciccheti_sparrow()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -470,7 +542,7 @@ subjects blog post</a>.</p>
 </div>
 </section>
 <section id="Fleiss">
-<h2>Fleiss<a class="headerlink" href="#Fleiss" title="Permalink to this headline">¶</a></h2>
+<h2>Fleiss<a class="headerlink" href="#Fleiss" title="Permalink to this headline"></a></h2>
 <p>To interpret coefficient using the Fleiss scale, use the <code class="docutils literal notranslate"><span class="pre">fleiss()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -535,7 +607,7 @@ subjects blog post</a>.</p>
 </div>
 </section>
 <section id="Landis-Koch">
-<h2>Landis-Koch<a class="headerlink" href="#Landis-Koch" title="Permalink to this headline">¶</a></h2>
+<h2>Landis-Koch<a class="headerlink" href="#Landis-Koch" title="Permalink to this headline"></a></h2>
 <p>To interpret coefficient using the Landis-Koch scale, use the <code class="docutils literal notranslate"><span class="pre">landis_koch()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -618,7 +690,7 @@ subjects blog post</a>.</p>
 </div>
 </section>
 <section id="Regier-et-al.">
-<h2>Regier et al.<a class="headerlink" href="#Regier-et-al." title="Permalink to this headline">¶</a></h2>
+<h2>Regier et al.<a class="headerlink" href="#Regier-et-al." title="Permalink to this headline"></a></h2>
 <p>To interpret coefficient using the Landis-Koch scale, use the <code class="docutils literal notranslate"><span class="pre">regier()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -695,7 +767,7 @@ subjects blog post</a>.</p>
 </div>
 </section>
 <section id="Custom-Scale">
-<h2>Custom Scale<a class="headerlink" href="#Custom-Scale" title="Permalink to this headline">¶</a></h2>
+<h2>Custom Scale<a class="headerlink" href="#Custom-Scale" title="Permalink to this headline"></a></h2>
 <p>If you must use a custom scale, then you have to provide a dictionary as the one bellow. The <code class="docutils literal notranslate"><span class="pre">lb</span></code> key is for the lower bounds of the scale, the <code class="docutils literal notranslate"><span class="pre">ub</span></code> for the upper bounds, the <code class="docutils literal notranslate"><span class="pre">interp</span></code> key are the interpretations of each scale, and <code class="docutils literal notranslate"><span class="pre">scale_name</span></code> the name of your scale.</p>
 <p>To use the scale, call the <code class="docutils literal notranslate"><span class="pre">interpet()</span></code> method passing the custom scale as an argument.</p>
 <div class="nbinput docutils container">
@@ -768,81 +840,34 @@ subjects blog post</a>.</p>
 </section>
 
 
+           </div>
           </div>
-          
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage_raw_data.html" class="btn btn-neutral float-left" title="CAC from Raw Ratings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../modules.html" class="btn btn-neutral float-right" title="irrCAC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Kilem Gwet, Aris Fergadis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">irrCAC</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../usage.html">Usage</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="usage_table_data.html">CAC from Contingency Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage_raw_data.html">CAC from Raw Ratings</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Compute benchmark scale membership probabilities</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">irrCAC</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="../usage.html">Usage</a><ul>
-      <li>Previous: <a href="usage_raw_data.html" title="previous chapter">CAC from Raw Ratings</a></li>
-      <li>Next: <a href="../modules.html" title="next chapter">irrCAC</a></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2021, Kilem Gwet, Aris Fergadis.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="../_sources/usage/usage_benchmarking.ipynb.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>
