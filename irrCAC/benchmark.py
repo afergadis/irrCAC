@@ -57,20 +57,23 @@ class Benchmark:
     'My Scale': ['Excellent', 'Acceptable', 'Poor'],
     'CumProb': [0.67511, 0.99308, 1.0]}
     """
+
     def __init__(self, coeff: float, se: float):
-        assert coeff <= 1, ValueError('`coeff` value cannot exceed 1.')
+        assert coeff <= 1, ValueError("`coeff` value cannot exceed 1.")
         self.coeff = coeff
         self.se = se
 
     def __str__(self):
-        return f'<Benchmark scales Coefficient value: {self.coeff}, ' \
-               f'Standard Error: {self.se}>'
+        return (
+            f"<Benchmark scales Coefficient value: {self.coeff}, "
+            f"Standard Error: {self.se}>"
+        )
 
     def __repr__(self):
         return self.__str__()
 
     def interpret(self, bench):
-        """ Interpret the agreement coefficient on a benchmark scale.
+        """Interpret the agreement coefficient on a benchmark scale.
 
         To interpret the agreement coefficient we see in which range the
         cumulative probability exceeds 0.95. E.g., if we have a coefficient
@@ -110,20 +113,23 @@ class Benchmark:
             'CumProb': [0.18168, 0.67511, 0.96356, 0.99912, 1.0]}``
 
         """
-        for key in ('lb', 'ub', 'interp', 'scale_name'):
+        for key in ("lb", "ub", "interp", "scale_name"):
             if key not in bench:
                 raise ValueError(
-                    'Please provide a dictionary like this: '
+                    "Please provide a dictionary like this: "
                     '`{"lb": list, "ub": list, "interp": list, '
-                    '"scale_name": str}`.')
-        n = len(bench['lb'])
+                    '"scale_name": str}`.'
+                )
+        n = len(bench["lb"])
         cmprob = []
         trancate_fact = norm.cdf((self.coeff + 1) / self.se) - norm.cdf(
-            (self.coeff - 1) / self.se)
+            (self.coeff - 1) / self.se
+        )
         for i in range(n):
             value = (
-                norm.cdf((self.coeff - bench['lb'][i]) / self.se) - norm.cdf(
-                    (self.coeff - bench['ub'][i]) / self.se)) / trancate_fact
+                norm.cdf((self.coeff - bench["lb"][i]) / self.se)
+                - norm.cdf((self.coeff - bench["ub"][i]) / self.se)
+            ) / trancate_fact
             if i == 0:
                 cmprob.append(value)
             else:
@@ -131,14 +137,14 @@ class Benchmark:
         cmprob = [round(prob, 5) for prob in cmprob]
 
         return {
-            'scale': list(zip(bench['lb'], bench['ub'])),
-            f'{bench["scale_name"]}': bench['interp'],
-            'CumProb': cmprob
+            "scale": list(zip(bench["lb"], bench["ub"])),
+            f'{bench["scale_name"]}': bench["interp"],
+            "CumProb": cmprob,
         }
 
     def altman(self):
-        """ Interpret the level of agreement using the Altman benchmark scale.
-        
+        """Interpret the level of agreement using the Altman benchmark scale.
+
         +----------------+------------+
         | Interpretation | Scale      |
         +================+============+
@@ -159,8 +165,9 @@ class Benchmark:
         scale = dict(
             lb=[0.8, 0.6, 0.4, 0.2, -1.0],
             ub=[1.0, 0.8, 0.6, 0.4, 0.2],
-            interp=['Very Good', 'Good', 'Moderate', 'Fair', 'Poor'],
-            scale_name='Altman')
+            interp=["Very Good", "Good", "Moderate", "Fair", "Poor"],
+            scale_name="Altman",
+        )
         return self.interpret(scale)
 
     def cicchetti_sparrow(self):
@@ -188,12 +195,13 @@ class Benchmark:
         scale = dict(
             lb=[0.75, 0.6, 0.4, 0.0],
             ub=[1.0, 0.75, 0.6, 0.4],
-            interp=['Excellent', 'Good', 'Fair', 'Poor'],
-            scale_name='Cicchetti')
+            interp=["Excellent", "Good", "Fair", "Poor"],
+            scale_name="Cicchetti",
+        )
         return self.interpret(scale)
 
     def fleiss(self):
-        """ Interpret the level of agreement using the Fleiss benchmark scale.
+        """Interpret the level of agreement using the Fleiss benchmark scale.
 
         +----------------+-------------+
         | Interpretation | Scale       |
@@ -204,15 +212,16 @@ class Benchmark:
         +----------------+-------------+
         | Poor           | 0.0  - 0.4  |
         +----------------+-------------+
-        
+
         Fleiss, J. L. (1971). Measuring nominal scale agreement among many
         raters. Psychological Bulletin, 76(5), 378
         """
         scale = dict(
             lb=[0.75, 0.4, -1.0],
             ub=[1.0, 0.75, 0.4],
-            interp=['Excellent', 'Intermediate to Good', 'Poor'],
-            scale_name='Fleiss')
+            interp=["Excellent", "Intermediate to Good", "Poor"],
+            scale_name="Fleiss",
+        )
         return self.interpret(scale)
 
     def landis_koch(self):
@@ -243,10 +252,15 @@ class Benchmark:
             lb=[0.8, 0.6, 0.4, 0.2, 0.0, -1.0],
             ub=[1.0, 0.8, 0.6, 0.4, 0.2, 0.0],
             interp=[
-                'Almost Perfect', 'Substantial', 'Moderate', 'Fair', 'Slight',
-                'Poor'
+                "Almost Perfect",
+                "Substantial",
+                "Moderate",
+                "Fair",
+                "Slight",
+                "Poor",
             ],
-            scale_name='Landis-Koch')
+            scale_name="Landis-Koch",
+        )
         return self.interpret(scale)
 
     def regier(self):
@@ -278,11 +292,12 @@ class Benchmark:
             lb=[0.8, 0.6, 0.4, 0.2, 0.0],
             ub=[1.0, 0.8, 0.6, 0.4, 0.2],
             interp=[
-                'Excellent',
-                'Very Good',
-                'Good',
-                'Questionable',
-                'Unacceptable',
+                "Excellent",
+                "Very Good",
+                "Good",
+                "Questionable",
+                "Unacceptable",
             ],
-            scale_name='Regier')
+            scale_name="Regier",
+        )
         return self.interpret(scale)

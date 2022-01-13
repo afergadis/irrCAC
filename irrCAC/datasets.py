@@ -3,7 +3,7 @@ import pandas as pd
 
 
 def dist_4cat():
-    """ Distribution of 4 raters by Category and Subject - Subjects allocated \
+    """Distribution of 4 raters by Category and Subject - Subjects allocated \
     in 2 groups A and B.
         
     This dataset summarizes the ratings assigned by 4 raters who classified 15
@@ -22,16 +22,17 @@ def dist_4cat():
         c
             Number of ratings in category "c"
     """
-    group = pd.Index('A A A A A A A A A B B B B B B'.split(), name='Group')
+    group = pd.Index("A A A A A A A A A B B B B B B".split(), name="Group")
     data = dict(
         a=[3, 2, 2, 2, 3, 3, 0, 0, 0, 3, 0, 0, 0, 0, 3],
         b=[0, 1, 1, 0, 1, 1, 4, 3, 0, 1, 4, 3, 2, 0, 1],
-        c=[1, 1, 1, 2, 0, 0, 0, 1, 4, 0, 0, 1, 2, 4, 0])
+        c=[1, 1, 1, 2, 0, 0, 0, 1, 4, 0, 0, 1, 2, 4, 0],
+    )
     return pd.DataFrame(data, group)
 
 
 def dist_g1g2():
-    """ Distribution of 4 raters by subject and by category, for 14 Subjects \
+    """Distribution of 4 raters by subject and by category, for 14 Subjects \
     that belong to 2 groups "G1" and "G2".
 
     This dataset contains rating data in the form of a subject-level
@@ -74,15 +75,16 @@ def dist_g1g2():
             Number of raters who classified the subject represented by the row
             into category "e"
     """
-    group = 'G2 G1 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2 G2'.split()
+    group = "G2 G1 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2 G2".split()
     units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-    index = pd.MultiIndex.from_arrays([group, units], names=('Group', 'Units'))
+    index = pd.MultiIndex.from_arrays([group, units], names=("Group", "Units"))
     data = dict(
         a=[3, 0, 0, 0, 0, 1, 0, 3, 0, 0, 2, 0, 0, 1],
         b=[0, 3, 0, 0, 4, 1, 0, 1, 4, 0, 0, 0, 3, 2],
         c=[0, 1, 4, 4, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1],
         d=[0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0],
-        e=[0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0])
+        e=[0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
+    )
     return pd.DataFrame(data, index=index)
 
 
@@ -96,7 +98,7 @@ def raw_4raters():
     the 4 raters. Note that only the 4 last columns are to be used with the
     functions included in this package. The first column only plays a
     descriptive role and is not used in any calculation.
-    
+
     **Source**: Gwet, K.L. (2014) Handbook of Inter-Rater Reliability,
     4th Edition, page #120. Advanced Analytics, LLC
 
@@ -116,18 +118,19 @@ def raw_4raters():
         Rater4
             All ratings from rater 4
     """
-    units = pd.Index([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], name='Units')
+    units = pd.Index([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], name="Units")
     data = dict(
         Rater1=[1, 2, 3, 3, 2, 1, 4, 1, 2, None, None, None],
         Rater2=[1, 2, 3, 3, 2, 2, 4, 1, 2, 5, None, None],
         Rater3=[None, 3, 3, 3, 2, 3, 4, 2, 2, 5, 1, 3],
-        Rater4=[1, 2, 3, 3, 2, 4, 4, 1, 2, 5, 1, None])
+        Rater4=[1, 2, 3, 3, 2, 4, 4, 1, 2, 5, 1, None],
+    )
 
     return pd.DataFrame(data, index=units)
 
 
 def raw_5observers():
-    """ Scores assigned by 5 observers to 20 experimental units.
+    """Scores assigned by 5 observers to 20 experimental units.
 
     This dataset contains data from a reliability experiment where 5 observers
     scored 15 units on a 4-point numeric scale based on the values
@@ -160,28 +163,16 @@ def raw_5observers():
             All ratings from observer 4
         Observer5
             All ratings from observer 5
-            
+
     """
-    units = pd.Index(
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], name='Units')
+    units = pd.Index([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], name="Units")
     data = dict(
-        Observer1=[
-            1.0, 1.0, 2.0, None, 0.0, 0.0, 1.0, 1.0, 2.0, 2.0, None, 0.0, 1.0,
-            3.0, 1.0
-        ],
-        Observer2=[
-            1.0, 1.0, 3.0, 0.0, 0.0, 0.0, 0.0, None, 2.0, 1.0, 1.0, 0.0, 2.0,
-            3.0, 1.0
-        ],
+        Observer1=[1, 1, 2, None, 0, 0, 1, 1, 2, 2, None, 0, 1, 3, 1],
+        Observer2=[1, 1, 3, 0, 0, 0, 0, None, 2, 1, 1, 0, 2, 3, 1],
         Observer3=[2, 0, 3, 0, 0, 0, 2, 2, 2, 1, 0, 0, 2, 2, 1],
-        Observer4=[
-            None, 1.0, 3.0, None, None, None, None, 0.0, None, 1.0, 0.0, 0.0,
-            2.0, 2.0, None
-        ],
-        Observer5=[
-            2.0, None, None, 0.0, 0.0, 0.0, 1.0, None, 2.0, None, None, None,
-            None, 3.0, 1.0
-        ])
+        Observer4=[None, 1, 3, None, None, None, None, 0, None, 1, 0, 0, 2, 2, None],
+        Observer5=[2, None, None, 0, 0, 0, 1, None, 2, None, None, None, None, 3, 1],
+    )
     return pd.DataFrame(data, index=units)
 
 
@@ -206,17 +197,18 @@ def raw_ben_gerry():
         Gerry
             All ratings from Gerry
     """
-    group = 'G2 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2'.split()
+    group = "G2 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2".split()
     units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    index = pd.MultiIndex.from_arrays([group, units], names=('Group', 'Units'))
+    index = pd.MultiIndex.from_arrays([group, units], names=("Group", "Units"))
     data = dict(
-        Ben=['a', 'a', 'b', 'b', 'd', 'c', 'c', 'c', 'e', 'd', 'd', 'a'],
-        Gerry=['b', 'a', 'b', 'b', 'b', 'c', 'c', 'c', 'e', None, 'd', 'd'])
+        Ben=["a", "a", "b", "b", "d", "c", "c", "c", "e", "d", "d", "a"],
+        Gerry=["b", "a", "b", "b", "b", "c", "c", "c", "e", None, "d", "d"],
+    )
     return pd.DataFrame(data, index=index)
 
 
 def raw_g1g2():
-    """ Dataset of raw ratings from 4 Raters on 14 Subjects that belong to 2 \
+    """Dataset of raw ratings from 4 Raters on 14 Subjects that belong to 2 \
     groups "G1" and "G2".
 
     This dataset contains data from a reliability experiment where 4 raters
@@ -247,26 +239,30 @@ def raw_g1g2():
         Rater4
             All ratings from rater 4
     """
-    group = 'G2 G1 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2 G2'.split()
+    group = "G2 G1 G2 G1 G1 G1 G2 G1 G2 G2 G1 G1 G2 G2".split()
     units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-    index = pd.MultiIndex.from_arrays([group, units], names=('Group', 'Units'))
+    index = pd.MultiIndex.from_arrays([group, units], names=("Group", "Units"))
     data = dict(
         Rater1=[
-            'a', 'b', 'c', 'c', 'b', 'a', 'd', 'a', 'b', None, None, None, 'b',
-            'b'
+            "a",
+            "b",
+            "c",
+            "c",
+            "b",
+            "a",
+            "d",
+            "a",
+            "b",
+            None,
+            None,
+            None,
+            "b",
+            "b",
         ],
-        Rater2=[
-            'a', 'b', 'c', 'c', 'b', 'b', 'd', 'a', 'b', 'e', None, None, 'b',
-            'a'
-        ],
-        Rater3=[
-            None, 'c', 'c', 'c', 'b', 'c', 'd', 'b', 'b', 'e', 'a', 'c', 'c',
-            'c'
-        ],
-        Rater4=[
-            'a', 'b', 'c', 'c', 'b', 'd', 'd', 'a', 'b', 'e', 'a', None, 'b',
-            'b'
-        ])
+        Rater2=["a", "b", "c", "c", "b", "b", "d", "a", "b", "e", None, None, "b", "a"],
+        Rater3=[None, "c", "c", "c", "b", "c", "d", "b", "b", "e", "a", "c", "c", "c"],
+        Rater4=["a", "b", "c", "c", "b", "d", "d", "a", "b", "e", "a", None, "b", "b"],
+    )
     return pd.DataFrame(data, index=index)
 
 
@@ -296,34 +292,21 @@ def raw_gender():
         Rater4
             All ratings from rater 4
     """
-    group = [
-        'MALE', 'MALE', 'MALE', 'MALE', 'MALE', 'MALE', 'MALE', 'MALE', 'MALE',
-        'FEMALE', 'FEMALE', 'FEMALE', 'FEMALE', 'FEMALE', 'FEMALE'
-    ]
+    group = "M M M M M M M M M F F F F F F".split()
+
     units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    index = pd.MultiIndex.from_arrays([group, units], names=('Group', 'Units'))
+    index = pd.MultiIndex.from_arrays([group, units], names=("Group", "Units"))
     data = dict(
-        Rater1=[
-            'a', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'c', 'a', 'a', 'a', 'a',
-            'a', 'b'
-        ],
-        Rater2=[
-            'a', 'a', 'a', 'a', 'b', 'a', 'b', 'c', 'c', 'a', 'a', 'a', 'a',
-            'b', 'a'
-        ],
-        Rater3=[
-            'a', 'b', 'b', 'c', 'a', 'a', 'b', 'b', 'c', 'a', 'b', 'b', 'c',
-            'a', 'a'
-        ],
-        Rater4=[
-            'c', 'c', 'c', 'c', 'a', 'a', 'b', 'b', 'c', 'c', 'c', 'c', 'c',
-            'a', 'a'
-        ])
+        Rater1="a a a a a b b b c a a a a a b".split(),
+        Rater2="a a a a b a b c c a a a a b a".split(),
+        Rater3="a b b c a a b b c a b b c a a".split(),
+        Rater4="c c c c a a b b c c c c c a a".split(),
+    )
     return pd.DataFrame(data, index=index)
 
 
 def table_cont3x3abstractors():
-    """ Distribution of 100 pregnant women by pregnancy type and by abstractor.
+    """Distribution of 100 pregnant women by pregnancy type and by abstractor.
 
     This dataset contains pregnancy type data collected from 100 women who
     entered an Emergency Room with a positive pregnancy test and a second
@@ -342,7 +325,7 @@ def table_cont3x3abstractors():
     Returns
     -------
     pandas.DataFrame
-    
+
         Ectopic
             Ectopic Pregnancy
         AIU
@@ -351,7 +334,7 @@ def table_cont3x3abstractors():
             Normal Intrauterine Pregnancy
 
     """
-    data = {'Ectopic': [13, 0, 0], 'AIU': [0, 20, 4], 'NIU': [0, 7, 56]}
+    data = {"Ectopic": [13, 0, 0], "AIU": [0, 20, 4], "NIU": [0, 7, 56]}
     return pd.DataFrame(data, index=data.keys())
 
 
@@ -379,12 +362,14 @@ def table_cont4x4diagnosis():
         Diagnosis
             The category of the diagnosis.
     """
-    methods = ['Clinical Diagnosis', 'Research Diagnosis']
-    diagnosis = ['Schizophrenia', 'Bipolar Disorder', 'Depression', 'Other']
+    methods = ["Clinical Diagnosis", "Research Diagnosis"]
+    diagnosis = ["Schizophrenia", "Bipolar Disorder", "Depression", "Other"]
     cols = pd.MultiIndex.from_product(
-        [[methods[0]], diagnosis], names=['Method', 'Diagnosis'])
+        [[methods[0]], diagnosis], names=["Method", "Diagnosis"]
+    )
     idx = pd.MultiIndex.from_product(
-        [[methods[1]], diagnosis], names=['Method', 'Diagnosis'])
+        [[methods[1]], diagnosis], names=["Method", "Diagnosis"]
+    )
     data = [[40, 4, 4, 17], [6, 25, 2, 13], [4, 1, 21, 12], [15, 5, 9, 45]]
     return pd.DataFrame(data, index=diagnosis, columns=diagnosis)
 
@@ -419,13 +404,12 @@ def distrib_6raters():
         Other
             The number of raters assigned the subject to the other category
     """
-    units = pd.Index(
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], name='Units')
+    units = pd.Index([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], name="Units")
     data = {
-        'Depression': [0, 0, 0, 0, 0, 2, 0, 2, 2, 0, 1, 1, 0, 1, 0],
-        'Personality Disorder': [0, 3, 1, 0, 3, 0, 0, 0, 0, 0, 0, 1, 3, 0, 2],
-        'Schizophrenia': [0, 0, 4, 0, 0, 4, 4, 3, 0, 0, 0, 0, 3, 0, 0],
-        'Neurosis': [6, 0, 0, 0, 3, 0, 0, 1, 4, 0, 5, 4, 0, 5, 3],
-        'Other': [0, 3, 1, 6, 0, 0, 2, 0, 0, 6, 0, 0, 0, 0, 1]
+        "Depression": [0, 0, 0, 0, 0, 2, 0, 2, 2, 0, 1, 1, 0, 1, 0],
+        "Personality Disorder": [0, 3, 1, 0, 3, 0, 0, 0, 0, 0, 0, 1, 3, 0, 2],
+        "Schizophrenia": [0, 0, 4, 0, 0, 4, 4, 3, 0, 0, 0, 0, 3, 0, 0],
+        "Neurosis": [6, 0, 0, 0, 3, 0, 0, 1, 4, 0, 5, 4, 0, 5, 3],
+        "Other": [0, 3, 1, 6, 0, 0, 2, 0, 0, 6, 0, 0, 0, 0, 1],
     }
     return pd.DataFrame(data, index=units)

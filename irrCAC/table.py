@@ -1,4 +1,4 @@
-""" Chance-corrected Agreement Coefficient for tabular ratings.
+"""Chance-corrected Agreement Coefficient for tabular ratings.
 
 Examples
 --------
@@ -30,7 +30,7 @@ Initialize a CAC object with the data from the contigency table
 
 To use weights with the calculations, we pass the type of weights as argument.
 
->>> cont3x3abstractors_quadratic = CAC(data, weights='quadratic')
+>>> cont3x3abstractors_quadratic = CAC(data, weights="quadratic")
 >>> print(cont3x3abstractors_quadratic.gwet())  # doctest: +NORMALIZE_WHITESPACE
 {'est': {'coefficient_value': 0.94024,
          'coefficient_name': "Gwet's AC2",
@@ -94,20 +94,25 @@ class CAC:
     digits : int, default 5
         The number of digits to round the results.
     """
+
     def __init__(
-            self,
-            ratings,
-            weights='identity',
-            confidence_level=0.95,
-            N=np.inf,
-            digits=5):
+        self, ratings, weights="identity", confidence_level=0.95, N=np.inf, digits=5
+    ):
         weights_choices = (
-            "identity", "quadratic", "ordinal", "linear", "radical", "ratio",
-            "circular", "bipolar")
+            "identity",
+            "quadratic",
+            "ordinal",
+            "linear",
+            "radical",
+            "ratio",
+            "circular",
+            "bipolar",
+        )
         if weights not in weights_choices:
-            raise ValueError(f'weights values can be any of {weights_choices}')
-        assert 0 < confidence_level <= 0.99,\
-            'Confidence level should be in the range (0, 1).'
+            raise ValueError(f"weights values can be any of {weights_choices}")
+        assert (
+            0 < confidence_level <= 0.99
+        ), "Confidence level should be in the range (0, 1)."
         self.confidence_level = confidence_level
 
         if isinstance(weights, str):
@@ -115,19 +120,20 @@ class CAC:
             weights_functions = Weights(list(range(1, len(ratings) + 1)))
             self.weights_mat = weights_functions[self.weights_name]
         else:
-            self.weights_name = 'Custom Weights'
+            self.weights_name = "Custom Weights"
             self.weights_mat = np.asarray(weights)
             if ratings.shape[0] != self.weights_mat.shape[0]:
                 raise AttributeError(
-                    f'We expect a {ratings.shape[0]}x{ratings.shape[1]}'
-                    f' weights matrix but the input matrix is '
-                    f'{self.weights_mat.shape[0]}x{self.weights_mat.shape[1]}.'
+                    f"We expect a {ratings.shape[0]}x{ratings.shape[1]}"
+                    f" weights matrix but the input matrix is "
+                    f"{self.weights_mat.shape[0]}x{self.weights_mat.shape[1]}."
                 )
 
         if ratings.shape[0] != ratings.shape[1]:
             raise AttributeError(
-                'The contingency table should have the same '
-                'number of rows and columns.')
+                "The contingency table should have the same "
+                "number of rows and columns."
+            )
         self.ratings = ratings
         self.n = np.sum(ratings.values)
         self.f = self.n / N
@@ -135,34 +141,33 @@ class CAC:
         self.pa = np.sum(self.ratings.values * self.weights_mat / self.n)
         self.digits = digits
         self.agreement = {
-            'est': {
-                'coefficient_value': 0,
-                'coefficient_name': None,
-                'confidence_interval': (0, 0),
-                'p_value': 0,
-                'z': 0,
-                'se': 0,
-                'pa': self.pa,
-                'pe': 0,
+            "est": {
+                "coefficient_value": 0,
+                "coefficient_name": None,
+                "confidence_interval": (0, 0),
+                "p_value": 0,
+                "z": 0,
+                "se": 0,
+                "pa": self.pa,
+                "pe": 0,
             },
-            'weights': self.weights_mat,
-            'categories': self.ratings.index.to_list()
+            "weights": self.weights_mat,
+            "categories": self.ratings.index.to_list(),
         }
 
     def __str__(self):
-        subjects = f'Subjects: {self.n}'
-        categories = f'Categories: {self.agreement["categories"]}'
+        subjects = f"Subjects: {self.n}"
+        categories = f"Categories: {self.agreement['categories']}"
         weights_name = f'Weights: "{self.weights_name}"'
-        class_path = f'{CAC.__module__}.{CAC.__name__}'
-        _str = f'{class_path} {subjects}, {categories}, {weights_name}'
-        return f'<{_str}>'
+        class_path = f"{CAC.__module__}.{CAC.__name__}"
+        _str = f"{class_path} {subjects}, {categories}, {weights_name}"
+        return f"<{_str}>"
 
     def __repr__(self):
         return self.__str__()
 
     def bp(self):
-        """ Brennan-Prediger coefficient for 2 raters.
-        """
+        """Brennan-Prediger coefficient for 2 raters."""
 
         tw = np.sum(self.weights_mat)
         pe = tw / pow(self.q, 2)
@@ -171,32 +176,31 @@ class CAC:
         sum1 = 0
         for k in range(self.q):
             for l in range(self.q):
-                sum1 += pkl[k, l] * self.weights_mat[k, l]**2
-        var_bp = ((1 - self.f) / (self.n * (1 - pe)**2)) * (sum1 - self.pa**2)
+                sum1 += pkl[k, l] * self.weights_mat[k, l] ** 2
+        var_bp = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (sum1 - self.pa ** 2)
         stderr = np.sqrt(var_bp)
         p_value = 2 * (1 - stats.t.cdf(abs(bp_coeff / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level,
-            df=self.n - 1,
-            scale=stderr,
-            loc=bp_coeff)
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
+        )
         ucb = min(1, ucb)
-        self.agreement['est'].update(
+        self.agreement["est"].update(
             dict(
-                coefficient_name='Brennan-Prediger',
+                coefficient_name="Brennan-Prediger",
                 pa=np.round(self.pa, self.digits),
                 pe=round(pe, self.digits),
                 se=round(stderr, self.digits),
                 z=round(bp_coeff / stderr, self.digits),
                 coefficient_value=round(bp_coeff, self.digits),
-                confidence_interval=(
-                    round(lcb, self.digits), round(ucb, self.digits)),
-                p_value=round(p_value, self.digits)))
+                confidence_interval=(round(lcb, self.digits), round(ucb, self.digits)),
+                p_value=round(p_value, self.digits),
+            )
+        )
         return deepcopy(self.agreement)
 
     def cohen(self):
-        """ Cohen's kappa coefficient for 2 raters.
-        
+        """Cohen's kappa coefficient for 2 raters.
+
         Cohen's kappa measures the agreement between two raters who each
         classify N subjects into :math:`q` mutually exclusive categories.
         """
@@ -210,20 +214,24 @@ class CAC:
         sum1 = 0
         for k in range(self.q):
             for l in range(self.q):
-                sum1 += pkl[k][l] * (
-                    self.weights_mat[k][l] - (1 - kappa) *
-                    (pb_dot_k[k] + pbl_dot[l]))**2
-        var_kappa = ((1 - self.f) / (self.n * (1 - pe)**2)) * (
-            sum1 - (self.pa - 2 * (1 - kappa) * pe)**2)
+                sum1 += (
+                    pkl[k][l]
+                    * (
+                        self.weights_mat[k][l]
+                        - (1 - kappa) * (pb_dot_k[k] + pbl_dot[l])
+                    )
+                    ** 2
+                )
+        var_kappa = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (
+            sum1 - (self.pa - 2 * (1 - kappa) * pe) ** 2
+        )
         stderr = np.sqrt(var_kappa)
         p_value = 2 * (1 - stats.t.cdf(abs(kappa / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level,
-            df=self.n - 1,
-            scale=stderr,
-            loc=kappa)
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=kappa
+        )
         ucb = min(1, ucb)
-        self.agreement['est'].update(
+        self.agreement["est"].update(
             dict(
                 coefficient_name="Cohen's kappa",
                 pa=np.round(self.pa, self.digits),
@@ -232,12 +240,16 @@ class CAC:
                 z=np.round(kappa / stderr, self.digits),
                 coefficient_value=np.round(kappa, self.digits),
                 confidence_interval=(
-                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
-                p_value=np.round(p_value, self.digits)))
+                    np.round(lcb, self.digits),
+                    np.round(ucb, self.digits),
+                ),
+                p_value=np.round(p_value, self.digits),
+            )
+        )
         return deepcopy(self.agreement)
 
     def gwet(self):
-        """ Gwet's AC1/AC2 coefficient for 2 raters.
+        """Gwet's AC1/AC2 coefficient for 2 raters.
 
         The AC1 coefficient was suggested by Gwet (2008a) as a paradox-resistant
         alternative to Cohen’s Kappa. The percent chance agreement it is
@@ -260,22 +272,31 @@ class CAC:
         for k in range(self.q):
             for l in range(self.q):
                 sum1 += float(
-                    pkl[k][l] * (
-                        self.weights_mat[k][l] - 2 * (1 - ac1) * tw *
-                        (1 - (pi_dot_k[k] + pi_dot_k[l]) / 2) /
-                        (self.q * (self.q - 1)))**2)
-        var_gwet = ((1 - self.f) / (self.n * (1 - pe)**2)) * (
-            sum1 - (self.pa - 2 * (1 - ac1) * pe)**2)
+                    pkl[k][l]
+                    * (
+                        self.weights_mat[k][l]
+                        - 2
+                        * (1 - ac1)
+                        * tw
+                        * (1 - (pi_dot_k[k] + pi_dot_k[l]) / 2)
+                        / (self.q * (self.q - 1))
+                    )
+                    ** 2
+                )
+        var_gwet = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (
+            sum1 - (self.pa - 2 * (1 - ac1) * pe) ** 2
+        )
         stderr = np.sqrt(var_gwet)
         p_value = 2 * (1 - stats.t.cdf(abs(ac1 / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1)
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
+        )
         ucb = min(1, ucb)
         if np.sum(self.weights_mat) == self.q:
             coeff_name = "Gwet's AC1"
         else:
             coeff_name = "Gwet's AC2"
-        self.agreement['est'].update(
+        self.agreement["est"].update(
             dict(
                 coefficient_name=coeff_name,
                 pa=np.round(self.pa, self.digits),
@@ -284,12 +305,16 @@ class CAC:
                 z=np.round(ac1 / stderr, self.digits),
                 coefficient_value=np.round(ac1, self.digits),
                 confidence_interval=(
-                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
-                p_value=np.round(p_value, self.digits)))
+                    np.round(lcb, self.digits),
+                    np.round(ucb, self.digits),
+                ),
+                p_value=np.round(p_value, self.digits),
+            )
+        )
         return deepcopy(self.agreement)
 
     def krippendorff(self):
-        """ Krippendorff’s Alpha coefficient for 2 raters.
+        """Krippendorff’s Alpha coefficient for 2 raters.
 
         .. versionadded:: 0.2.0
         """
@@ -308,20 +333,20 @@ class CAC:
         sum1 = 0
         for k in range(self.q):
             for l in range(self.q):
-                sum1 += pkl[k][l] * (
-                    self.weights_mat[k][l] - (1 - kcoeff) *
-                    (pbk[k] + pbk[l]))**2
-        var_kripp = ((1 - self.f) / (self.n * (1 - pe)**2)) * (
-            sum1 - (self.pa - 2 * (1 - kcoeff) * pe)**2)
+                sum1 += (
+                    pkl[k][l]
+                    * (self.weights_mat[k][l] - (1 - kcoeff) * (pbk[k] + pbk[l])) ** 2
+                )
+        var_kripp = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (
+            sum1 - (self.pa - 2 * (1 - kcoeff) * pe) ** 2
+        )
         stderr = np.sqrt(var_kripp)
         p_value = 2 * (1 - stats.t.cdf(abs(kripen_coeff / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level,
-            df=self.n - 1,
-            scale=stderr,
-            loc=kripen_coeff)
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=kripen_coeff
+        )
         ucb = min(1, ucb)
-        self.agreement['est'].update(
+        self.agreement["est"].update(
             dict(
                 coefficient_name="Krippendorff's Alpha",
                 pa=np.round(pa, self.digits),
@@ -330,12 +355,16 @@ class CAC:
                 z=np.round(kripen_coeff / stderr, self.digits),
                 coefficient_value=np.round(kripen_coeff, self.digits),
                 confidence_interval=(
-                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
-                p_value=np.round(p_value, self.digits)))
+                    np.round(lcb, self.digits),
+                    np.round(ucb, self.digits),
+                ),
+                p_value=np.round(p_value, self.digits),
+            )
+        )
         return deepcopy(self.agreement)
 
     def pa2(self):
-        """ Percent Agreement coefficient for 2 raters.
+        """Percent Agreement coefficient for 2 raters.
 
         .. versionadded:: 0.2.0
         """
@@ -343,17 +372,15 @@ class CAC:
         sum1 = 0
         for k in range(self.q):
             for l in range(self.q):
-                sum1 += pkl[k][l] * self.weights_mat[k][l]**2
-        var_pa = ((1 - self.f) / self.n) * (sum1 - self.pa**2)
+                sum1 += pkl[k][l] * self.weights_mat[k][l] ** 2
+        var_pa = ((1 - self.f) / self.n) * (sum1 - self.pa ** 2)
         stderr = np.sqrt(var_pa)
         p_value = 2 * (1 - stats.t.cdf(abs(self.pa / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level,
-            df=self.n - 1,
-            scale=stderr,
-            loc=self.pa)
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=self.pa
+        )
         ucb = min(1, ucb)
-        self.agreement['est'].update(
+        self.agreement["est"].update(
             dict(
                 coefficient_name="Percent Agreement",
                 pa=np.round(self.pa, self.digits),
@@ -362,15 +389,19 @@ class CAC:
                 z=np.round(self.pa / stderr, self.digits),
                 coefficient_value=np.round(self.pa, self.digits),
                 confidence_interval=(
-                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
-                p_value=np.round(p_value, self.digits)))
+                    np.round(lcb, self.digits),
+                    np.round(ucb, self.digits),
+                ),
+                p_value=np.round(p_value, self.digits),
+            )
+        )
         return deepcopy(self.agreement)
 
     def scott(self):
-        """ Scott’s Pi coefficient for 2 raters.
-         
-         .. versionadded:: 0.2.0
-         """
+        """Scott’s Pi coefficient for 2 raters.
+
+        .. versionadded:: 0.2.0
+        """
         pk_dot = (self.ratings.sum(axis=1) / self.n).values.reshape(-1, 1)
         p_dot_l = (self.ratings.sum(axis=0) / self.n).values.reshape(-1, 1)
         pi_dot_k = (pk_dot + p_dot_l) / 2
@@ -383,20 +414,20 @@ class CAC:
         sum1 = 0
         for k in range(self.q):
             for l in range(self.q):
-                sum1 += pkl[k][l] * (
-                    self.weights_mat[k][l] - (1 - scott) *
-                    (pbk[k] + pbk[l]))**2
-        var_scott = ((1 - self.f) / (self.n * (1 - pe)**2)) * (
-            sum1 - (self.pa - 2 * (1 - scott) * pe)**2)
+                sum1 += (
+                    pkl[k][l]
+                    * (self.weights_mat[k][l] - (1 - scott) * (pbk[k] + pbk[l])) ** 2
+                )
+        var_scott = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (
+            sum1 - (self.pa - 2 * (1 - scott) * pe) ** 2
+        )
         stderr = np.sqrt(var_scott)
         p_value = 2 * (1 - stats.t.cdf(abs(self.pa / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level,
-            df=self.n - 1,
-            scale=stderr,
-            loc=scott)
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=scott
+        )
         ucb = min(1, ucb)
-        self.agreement['est'].update(
+        self.agreement["est"].update(
             dict(
                 coefficient_name="Scott's Pi",
                 pa=np.round(self.pa, self.digits),
@@ -405,6 +436,10 @@ class CAC:
                 z=np.round(scott / stderr, self.digits),
                 coefficient_value=np.round(scott, self.digits),
                 confidence_interval=(
-                    np.round(lcb, self.digits), np.round(ucb, self.digits)),
-                p_value=np.round(p_value, self.digits)))
+                    np.round(lcb, self.digits),
+                    np.round(ucb, self.digits),
+                ),
+                p_value=np.round(p_value, self.digits),
+            )
+        )
         return deepcopy(self.agreement)

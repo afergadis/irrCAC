@@ -6,7 +6,7 @@ import pandas as pd
 
 
 class Weights:
-    """ Methods for computing weights for a set of categories.
+    """Methods for computing weights for a set of categories.
 
     The class can compute weights, using the methods:
 
@@ -19,8 +19,9 @@ class Weights:
     * radial
     * ratio
     """
+
     def __init__(self, categories):
-        """ Initialize a `Weights` class based on the rating categories.
+        """Initialize a `Weights` class based on the rating categories.
 
         Parameters
         ----------
@@ -44,8 +45,9 @@ class Weights:
             self.q = categories.shape[-1]
         else:
             raise ValueError(
-                'Valid input for `categories` is one of '
-                'list, numpy array, or pandas data frame.')
+                "Valid input for `categories` is one of "
+                "list, numpy array, or pandas data frame."
+            )
         if all(isinstance(n, (int, float)) for n in categories):
             self.categ_vec = sorted(categories)
         else:
@@ -53,30 +55,30 @@ class Weights:
         self.xmin, self.xmax = min(self.categ_vec), max(self.categ_vec)
 
     def __getitem__(self, item):
-        if item == 'bipolar':
+        if item == "bipolar":
             return self.bipolar()
-        elif item == 'circular':
+        elif item == "circular":
             return self.circular()
-        elif item == 'identity':
+        elif item == "identity":
             return self.identity()
-        elif item == 'linear':
+        elif item == "linear":
             return self.linear()
-        elif item == 'ordinal':
+        elif item == "ordinal":
             return self.ordinal()
-        elif item == 'quadratic':
+        elif item == "quadratic":
             return self.quadratic()
-        elif item == 'radical':
+        elif item == "radical":
             return self.radical()
-        elif item == 'ratio':
+        elif item == "ratio":
             return self.ratio()
         else:
             raise ValueError(f'"{item} is an unknown type of weights.')
 
     def __str__(self):
-        return f'Weights for {self.q} categories.'
+        return f"Weights for {self.q} categories."
 
     def bipolar(self):
-        """ Function for computing the Bipolar Weights
+        """Function for computing the Bipolar Weights
 
         Bipolar weights of a matrix :math:`W \in R^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
@@ -98,20 +100,17 @@ class Weights:
         for k in range(self.q):
             for l in range(self.q):
                 if k != l:
-                    weights[k][l] = pow(
-                        self.categ_vec[k] - self.categ_vec[l], 2) / (
-                            (
-                                self.categ_vec[k] + self.categ_vec[l] -
-                                2 * self.xmin) * (
-                                    2 * self.xmax - self.categ_vec[k] -
-                                    self.categ_vec[l]))
+                    weights[k][l] = pow(self.categ_vec[k] - self.categ_vec[l], 2) / (
+                        (self.categ_vec[k] + self.categ_vec[l] - 2 * self.xmin)
+                        * (2 * self.xmax - self.categ_vec[k] - self.categ_vec[l])
+                    )
                 else:
                     weights[k][l] = 0
         weights = 1 - weights / np.max(weights)
         return weights
 
     def circular(self):
-        """ Function for computing the Circular Weights
+        """Function for computing the Circular Weights
 
         Circular weights of a matrix :math:`W \in R^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
@@ -133,14 +132,13 @@ class Weights:
         for k in range(self.q):
             for l in range(self.q):
                 weights[k][l] = pow(
-                    np.sin(
-                        np.pi * (self.categ_vec[k] - self.categ_vec[l]) / U),
-                    2)
+                    np.sin(np.pi * (self.categ_vec[k] - self.categ_vec[l]) / U), 2
+                )
         weights = 1 - weights / np.max(weights)
         return weights
 
     def identity(self):
-        """ Function for computing the Identity Weights.
+        """Function for computing the Identity Weights.
 
         The identity weighted matrix :math:`W \in R^{q \\times q}`, where
         :math:`q` is the number of `categories`, is the same as to calculate the
@@ -158,7 +156,7 @@ class Weights:
         return weights
 
     def linear(self):
-        """ Function for computing the Linear Weights.
+        """Function for computing the Linear Weights.
 
         Linear weights of a matrix :math:`W \in R^{q \\times q}`, where
         math:`q` is the number of `categories`, are defined for each cell
@@ -176,12 +174,13 @@ class Weights:
         weights = np.eye(self.q)
         for k in range(self.q):
             for l in range(self.q):
-                weights[k][l] = 1 - abs(self.categ_vec[k] - self.categ_vec[l]
-                                        ) / abs(self.xmax - self.xmin)
+                weights[k][l] = 1 - abs(self.categ_vec[k] - self.categ_vec[l]) / abs(
+                    self.xmax - self.xmin
+                )
         return weights
 
     def ordinal(self):
-        """ Function for computing the Ordinal Weights
+        """Function for computing the Ordinal Weights
 
         Ordinal weights of a matrix :math:`W \in R^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
@@ -206,7 +205,7 @@ class Weights:
         return weights
 
     def quadratic(self):
-        """ Function for computing the Quadratic Weights
+        """Function for computing the Quadratic Weights
 
         Quadratic weights of a matrix :math:`W \in R^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
@@ -226,11 +225,12 @@ class Weights:
         for k in range(self.q):
             for l in range(self.q):
                 weights[k][l] = 1 - pow(
-                    (self.categ_vec[k] - self.categ_vec[l]) / diff, 2)
+                    (self.categ_vec[k] - self.categ_vec[l]) / diff, 2
+                )
         return weights
 
     def radical(self):
-        """ Function for computing the Radical Weights
+        """Function for computing the Radical Weights
 
         Radical weights of a matrix :math:`W \in R^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
@@ -251,12 +251,12 @@ class Weights:
         for k in range(self.q):
             for l in range(self.q):
                 weights[k][l] = 1 - np.sqrt(
-                    abs(self.categ_vec[k] - self.categ_vec[l])) / np.sqrt(
-                        abs(self.xmax - self.xmin))
+                    abs(self.categ_vec[k] - self.categ_vec[l])
+                ) / np.sqrt(abs(self.xmax - self.xmin))
         return weights
 
     def ratio(self):
-        """ Function for computing the Ratio Weights
+        """Function for computing the Ratio Weights
 
         Ratio weights of a matrix :math:`W \in R^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
@@ -282,16 +282,18 @@ class Weights:
         """
         if 0 in self.categ_vec:
             raise ValueError(
-                'You have 0 as a category. Please do not use'
-                ' 0 as a category because it produce a'
-                ' division by 0.')
+                "You have 0 as a category. Please do not use"
+                " 0 as a category because it produce a"
+                " division by 0."
+            )
         weights = np.eye(self.q)
         for k in range(self.q):
             for l in range(self.q):
                 weights[k][l] = 1 - (
                     pow(
-                        (self.categ_vec[k] - self.categ_vec[l]) /
-                        (self.categ_vec[k] + self.categ_vec[l]), 2)) / pow(
-                            (self.xmax - self.xmin) /
-                            (self.xmax + self.xmin), 2)
+                        (self.categ_vec[k] - self.categ_vec[l])
+                        / (self.categ_vec[k] + self.categ_vec[l]),
+                        2,
+                    )
+                ) / pow((self.xmax - self.xmin) / (self.xmax + self.xmin), 2)
         return weights
