@@ -5,7 +5,7 @@ import pandas as pd
 def dist_4cat():
     """Distribution of 4 raters by Category and Subject - Subjects allocated \
     in 2 groups A and B.
-        
+
     This dataset summarizes the ratings assigned by 4 raters who classified 15
     subjects into one of 3 categories named "a", "b", and "c".
 

@@ -289,11 +289,15 @@ class Weights:
         weights = np.eye(self.q)
         for k in range(self.q):
             for l in range(self.q):
-                weights[k][l] = 1 - (
-                    pow(
-                        (self.categ_vec[k] - self.categ_vec[l])
-                        / (self.categ_vec[k] + self.categ_vec[l]),
-                        2,
+                weights[k][l] = (
+                    1
+                    - (
+                        pow(
+                            (self.categ_vec[k] - self.categ_vec[l])
+                            / (self.categ_vec[k] + self.categ_vec[l]),
+                            2,
+                        )
                     )
-                ) / pow((self.xmax - self.xmin) / (self.xmax + self.xmin), 2)
+                    / pow((self.xmax - self.xmin) / (self.xmax + self.xmin), 2)
+                )
         return weights

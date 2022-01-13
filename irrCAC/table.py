@@ -45,15 +45,17 @@ To use weights with the calculations, we pass the type of weights as argument.
                   [0.  , 0.75, 1.  ]]),
 'categories': ['Ectopic', 'AIU', 'NIU']}
 """
-import numpy as np
 from copy import deepcopy
+
+import numpy as np
 from scipy import stats
+
 from irrCAC.weights import Weights
 
 
 class CAC:
-    """ Chance-corrected Agreement Coefficients (CAC) 
-    
+    """ Chance-corrected Agreement Coefficients (CAC)
+
     The following chance-corrected agreement coefficients (CAC) among 2 raters
     are provided.
 

@@ -1,4 +1,5 @@
 from unittest import TestCase
+
 from irrCAC.datasets import table_cont3x3abstractors
 from irrCAC.table import CAC
 

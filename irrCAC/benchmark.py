@@ -185,7 +185,7 @@ class Benchmark:
         +----------------+-------------+
         | Poor           | 0.0  - 0.4  |
         +----------------+-------------+
-        
+
         Cicchetti, D. V.; Sparrow, S. A. (1981). "Developing criteria for
         establishing interrater reliability of specific items: applications to
         assessment of adaptive behavior". American Journal of Mental Deficiency.
@@ -243,7 +243,7 @@ class Benchmark:
         +----------------+------------+
         | Poor           | -1.0 - 0.0 |
         +----------------+------------+
-        
+
         Landis, J. Richard; Koch, Gary G. (1977). "The Measurement of Observer
         Agreement for Categorical Data". Biometrics. 33 (1): 159–74.
         doi:10.2307/2529310. ISSN 0006-341X.
@@ -280,7 +280,7 @@ class Benchmark:
         +----------------+------------+
         | Unacceptable   | 0.0 - 0.2  |
         +----------------+------------+
-        
+
         Regier, Darrel A.; Narrow, William E.; Clarke, Diana E.; Kraemer,
         Helena C.; Kuramoto, S. Janet; Kuhl, Emily A.; Kupfer, David J. (2013).
         "DSM-5 Field Trials in the United States and Canada, Part II:

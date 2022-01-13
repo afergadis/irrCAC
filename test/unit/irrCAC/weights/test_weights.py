@@ -1,7 +1,9 @@
-import pytest
+from unittest import TestCase
+
 import numpy as np
 import pandas as pd
-from unittest import TestCase
+import pytest
+
 from irrCAC.weights import Weights
 
 

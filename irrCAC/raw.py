@@ -11,7 +11,7 @@ Examples
 >>> data = raw_4raters()
 >>> print(data)  # doctest: +NORMALIZE_WHITESPACE
        Rater1  Rater2  Rater3  Rater4
-Units                                
+Units
 1         1.0     1.0     NaN     1.0
 2         2.0     2.0     3.0     2.0
 3         3.0     3.0     3.0     3.0
@@ -81,15 +81,17 @@ To use weights with the calculations, we pass the type of weights as argument.
                   [0.        , 0.4       , 0.66666667, 0.85714286, 1.        ]]),
 'categories': [1.0, 2.0, 3.0, 4.0, 5.0]}
 """
-import numpy as np
 from copy import deepcopy
+
+import numpy as np
 from scipy import stats
+
 from irrCAC.weights import Weights
 
 
 class CAC:
-    """ Chance-corrected Agreement Coefficients (CAC) 
-    
+    """ Chance-corrected Agreement Coefficients (CAC)
+
     Calculates various chance-corrected agreement coefficients (CAC) among 2 or
     more raters are provided. Among the CAC coefficients covered are
 
@@ -101,7 +103,7 @@ class CAC:
 
     Multiple sets of weights are proposed for computing weighted analyses.
     All of these statistical procedures are described in details in [1].
-    
+
     [1] Gwet, K.L. (2014, ISBN:978-0970806284): *"Handbook of Inter-Rater
     Reliability"*, 4th edition, Advanced Analytics, LLC.
 

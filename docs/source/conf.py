@@ -12,17 +12,18 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
+
+sys.path.insert(0, os.path.abspath("../.."))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'irrCAC'
-copyright = '2021, Kilem Gwet, Aris Fergadis'
-author = 'Kilem Gwet, Aris Fergadis'
+project = "irrCAC"
+copyright = "2021, Kilem Gwet, Aris Fergadis"
+author = "Kilem Gwet, Aris Fergadis"
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.2'
+release = "0.2.2"
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,13 +32,13 @@ release = '0.2.2'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'nbsphinx',
-    'myst_parser',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',
-    'sphinx_autodoc_typehints',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.autosummary',
+    "nbsphinx",
+    "myst_parser",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx_autodoc_typehints",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.autosummary",
     # 'sphinx_copybutton'
 ]
 
@@ -63,7 +64,7 @@ napoleon_use_admonition_for_notes = True
 napoleon_use_admonition_for_references = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -76,7 +77,7 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 html_theme_options = {
     "body_max_width": "100%",
 }
@@ -85,4 +86,4 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]

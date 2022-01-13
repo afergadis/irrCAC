@@ -1,12 +1,13 @@
 from unittest import TestCase
-from irrCAC.raw import CAC
+
 from irrCAC.datasets import (
     raw_4raters,
     raw_5observers,
+    raw_ben_gerry,
     raw_g1g2,
     raw_gender,
-    raw_ben_gerry,
 )
+from irrCAC.raw import CAC
 
 
 class TestFleiss(TestCase):
