@@ -143,7 +143,8 @@ class Benchmark:
         }
 
     def altman(self):
-        """Interpret the level of agreement using the Altman benchmark scale.
+        """Interpret the level of agreement using the Altman :cite:p:`Alt90` \
+        benchmark scale.
 
         +----------------+------------+
         | Interpretation | Scale      |
@@ -158,9 +159,6 @@ class Benchmark:
         +----------------+------------+
         | Poor           | -1.0 - 0.2 |
         +----------------+------------+
-
-        D. Altman. 1990. Practical statistics for medical research.
-        Chapman and Hall/CRC.
         """
         scale = dict(
             lb=[0.8, 0.6, 0.4, 0.2, -1.0],
@@ -172,7 +170,7 @@ class Benchmark:
 
     def cicchetti_sparrow(self):
         """ Interpret the level of agreement using the Cicchetti and Sparrow \
-        benchmark scale.
+        :cite:p:`CS81` benchmark scale.
 
         +----------------+-------------+
         | Interpretation | Scale       |
@@ -185,12 +183,6 @@ class Benchmark:
         +----------------+-------------+
         | Poor           | 0.0  - 0.4  |
         +----------------+-------------+
-
-        Cicchetti, D. V.; Sparrow, S. A. (1981). "Developing criteria for
-        establishing interrater reliability of specific items: applications to
-        assessment of adaptive behavior". American Journal of Mental Deficiency.
-        86 (2): 127–137. ISSN 0002-9351. PMID 7315877.
-
         """
         scale = dict(
             lb=[0.75, 0.6, 0.4, 0.0],
@@ -201,7 +193,8 @@ class Benchmark:
         return self.interpret(scale)
 
     def fleiss(self):
-        """Interpret the level of agreement using the Fleiss benchmark scale.
+        """Interpret the level of agreement using the Fleiss :cite:p:`Fle71` \
+        benchmark scale.
 
         +----------------+-------------+
         | Interpretation | Scale       |
@@ -212,9 +205,6 @@ class Benchmark:
         +----------------+-------------+
         | Poor           | 0.0  - 0.4  |
         +----------------+-------------+
-
-        Fleiss, J. L. (1971). Measuring nominal scale agreement among many
-        raters. Psychological Bulletin, 76(5), 378
         """
         scale = dict(
             lb=[0.75, 0.4, -1.0],
@@ -225,7 +215,7 @@ class Benchmark:
         return self.interpret(scale)
 
     def landis_koch(self):
-        """Interpret the level of agreement using the Landis-Koch benchmark \
+        """Interpret the level of agreement using the Landis and Koch :cite:p:`LK77` \
         scale.
 
         +----------------+------------+
@@ -243,10 +233,6 @@ class Benchmark:
         +----------------+------------+
         | Poor           | -1.0 - 0.0 |
         +----------------+------------+
-
-        Landis, J. Richard; Koch, Gary G. (1977). "The Measurement of Observer
-        Agreement for Categorical Data". Biometrics. 33 (1): 159–74.
-        doi:10.2307/2529310. ISSN 0006-341X.
         """
         scale = dict(
             lb=[0.8, 0.6, 0.4, 0.2, 0.0, -1.0],
@@ -264,8 +250,8 @@ class Benchmark:
         return self.interpret(scale)
 
     def regier(self):
-        """Interpret the level of agreement using the Regier et al. benchmark \
-        scale.
+        """Interpret the level of agreement using the Regier et al. :cite:p:`RNC+13` \
+        benchmark scale.
 
         +----------------+------------+
         | Interpretation | Scale      |
@@ -280,13 +266,6 @@ class Benchmark:
         +----------------+------------+
         | Unacceptable   | 0.0 - 0.2  |
         +----------------+------------+
-
-        Regier, Darrel A.; Narrow, William E.; Clarke, Diana E.; Kraemer,
-        Helena C.; Kuramoto, S. Janet; Kuhl, Emily A.; Kupfer, David J. (2013).
-        "DSM-5 Field Trials in the United States and Canada, Part II:
-        Test-Retest Reliability of Selected Categorical Diagnoses".
-        American Journal of Psychiatry. 170 (1): 59–70.
-        doi:10.1176/appi.ajp.2012.12070999. ISSN 0002-953X. PMID 23111466
         """
         scale = dict(
             lb=[0.8, 0.6, 0.4, 0.2, 0.0],

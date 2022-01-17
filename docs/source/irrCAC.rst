@@ -51,3 +51,7 @@ irrCAC.weights module
    :members:
    :undoc-members:
    :show-inheritance:
+
+References
+----------
+.. bibliography::

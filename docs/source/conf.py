@@ -39,6 +39,7 @@ extensions = [
     "sphinx_autodoc_typehints",
     "sphinx.ext.mathjax",
     "sphinx.ext.autosummary",
+    "sphinxcontrib.bibtex",
     # 'sphinx_copybutton'
 ]
 
@@ -62,6 +63,8 @@ napoleon_include_init_with_doc = False
 napoleon_use_admonition_for_examples = True
 napoleon_use_admonition_for_notes = True
 napoleon_use_admonition_for_references = True
+
+bibtex_bibfiles = ["refs.bib"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

@@ -102,10 +102,8 @@ class CAC:
     * Krippendorff's Alpha.
 
     Multiple sets of weights are proposed for computing weighted analyses.
-    All of these statistical procedures are described in details in [1].
-
-    [1] Gwet, K.L. (2014, ISBN:978-0970806284): *"Handbook of Inter-Rater
-    Reliability"*, 4th edition, Advanced Analytics, LLC.
+    All of these statistical procedures are described in details in Gwet
+    :cite:p:`Gwe14`.
 
     Parameters
     ----------
@@ -220,14 +218,13 @@ class CAC:
     def gwet(self):
         """Gwet's AC1/AC2 coefficient.
 
-        The AC1 coefficient was suggested by Gwet (2008a) as a paradox-resistant
-        alternative to Cohen’s Kappa. The percent chance agreement it is
-        defined as the propensity for raters to agree on hard-to-score
-        subjects and is calculated by multiplying the probability to agree
-        when the rating is random by the probability to select a
-        hard-to-score subject.
+        The AC1 coefficient was suggested by Gwet :cite:p:`Gwe08` as a
+        paradox-resistant alternative to Cohen’s Kappa. The percent chance agreement it
+        is defined as the propensity for raters to agree on hard-to-score subjects and
+        is calculated by multiplying the probability to agree when the rating is random
+        by the probability to select a hard-to-score subject.
 
-        The Gwet's AC2 coefficient is the one when using weight for the
+        The Gwet's AC2 coefficient is the one when using weights for the
         calculation.
         """
         agree_mat = np.zeros(shape=(self.n, self.q))
@@ -299,9 +296,11 @@ class CAC:
     def fleiss(self):
         """Fleiss' generalized kappa coefficient.
 
-        Fleiss' defined the percent chance agreement the probability that any
-        pair of raters classify a subject into the same category.
+        Fleiss :cite:p:`Fle71` defined the percent chance agreement the
+        probability that any pair of raters classify a subject into the same category.
 
+        Notes
+        -----
         The calculation of the kappa coefficient here takes into account any
         missing values.
         """
@@ -375,23 +374,9 @@ class CAC:
     def krippendorff(self):
         """Krippendorff’s alpha coefficient for an arbitrary number of raters.
 
-        Krippendorff’s alpha coefficient for an arbitrary number of raters
-        (2, 3, +) when the input data represent the raw ratings reported for
+        Krippendorff’s alpha :cite:p:`Kri70,Kri80` coefficient for an arbitrary number
+        of raters (2, 3, +) when the input data represent the raw ratings reported for
         each subject and each rater.
-
-        References
-        ----------
-        Gwet, K. (2014). *Handbook of Inter-Rater Reliability: The Definitive
-        Guide to Measuring the Extent of Agreement Among Multiple Raters*,
-        4th Edition. Advanced Analytics, LLC.
-
-        Krippendorff (1970). *Bivariate agreement coefficients for reliability
-        of data*. Sociological Methodology, 2, 139-150.
-
-        Krippendorff (1980). *Content analysis: An introduction to its
-        methodology (2nd ed.)*, New-bury Park, CA: Sage.
-
-        .. versionadded:: 0.2.2
         """
         agree_mat = np.zeros(shape=(self.n, self.q))
         for k in range(self.q):

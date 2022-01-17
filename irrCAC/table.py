@@ -67,9 +67,8 @@ class CAC:
     * Scott's Pi.
 
     Multiple sets of weights are proposed for computing weighted analyses.
-    All of these statistical procedures are described in details in Gwet, K.L.
-    (2014,ISBN:978-0970806284): "Handbook of Inter-Rater Reliability,"
-    4th edition, Advanced Analytics, LLC.
+    All of these statistical procedures are described in details in Gwet
+    :cite:p:`Gwe14`.
 
     Parameters
     ----------
@@ -169,7 +168,7 @@ class CAC:
         return self.__str__()
 
     def bp(self):
-        """Brennan-Prediger coefficient for 2 raters."""
+        """Brennan and Prediger :cite:p:`BP81` coefficient for 2 raters."""
 
         tw = np.sum(self.weights_mat)
         pe = tw / pow(self.q, 2)
@@ -203,8 +202,9 @@ class CAC:
     def cohen(self):
         """Cohen's kappa coefficient for 2 raters.
 
-        Cohen's kappa measures the agreement between two raters who each
-        classify N subjects into :math:`q` mutually exclusive categories.
+        Cohen's kappa :cite:p:`Coh60,Coh68` measures the
+        agreement between two raters who each classify N subjects into :math:`q`
+        mutually exclusive categories.
         """
         pk_dot = (self.ratings.sum(axis=1) / self.n).values.reshape(-1, 1)
         p_dot_l = (self.ratings.sum(axis=0) / self.n).values.reshape(-1, 1)
@@ -253,14 +253,13 @@ class CAC:
     def gwet(self):
         """Gwet's AC1/AC2 coefficient for 2 raters.
 
-        The AC1 coefficient was suggested by Gwet (2008a) as a paradox-resistant
-        alternative to Cohen’s Kappa. The percent chance agreement it is
-        defined as the propensity for raters to agree on hard-to-score
-        subjects and is calculated by multiplying the probability to agree
-        when the rating is random by the probability to select a
-        hard-to-score subject.
+        The AC1 coefficient was suggested by Gwet :cite:p:`Gwe08` as a
+        paradox-resistant alternative to Cohen’s Kappa. The percent chance agreement it
+        is defined as the propensity for raters to agree on hard-to-score subjects and
+        is calculated by multiplying the probability to agree when the rating is random
+        by the probability to select a hard-to-score subject.
 
-        The Gwet's AC2 coefficient is the one when using weight for the
+        The Gwet's AC2 coefficient is the one when using weights for the
         calculation.
         """
         pk_dot = (self.ratings.sum(axis=1) / self.n).values.reshape(-1, 1)
@@ -316,7 +315,7 @@ class CAC:
         return deepcopy(self.agreement)
 
     def krippendorff(self):
-        """Krippendorff’s Alpha coefficient for 2 raters.
+        """Krippendorff’s Alpha :cite:p:`Kri70,Kri80` coefficient for 2 raters.
 
         .. versionadded:: 0.2.0
         """
@@ -368,6 +367,17 @@ class CAC:
     def pa2(self):
         """Percent Agreement coefficient for 2 raters.
 
+        The percent agreement is defined as
+
+        .. math::
+            p_a = \\frac{1}{n} \sum_{i=1}^{n} p_{a|i}, \quad
+            where \quad p_{a|i}=\sum_{k=1}^{q} \\frac{r_{ik}(r_{ik}-1)}{r(r-1)}
+
+        with :math:`n` representing the number of subjects, :math:`r` the number of
+        raters, :math:`q` the number of categories, and :math:`r_{ik}` the number of
+        raters who classified subject :math:`i` into category :math:`k`
+        :cite:p:`Gwe16`.
+
         .. versionadded:: 0.2.0
         """
         pkl = self.ratings.values / self.n
@@ -400,7 +410,7 @@ class CAC:
         return deepcopy(self.agreement)
 
     def scott(self):
-        """Scott’s Pi coefficient for 2 raters.
+        """Scott’s Pi :cite:p:`Sco55` coefficient for 2 raters.
 
         .. versionadded:: 0.2.0
         """

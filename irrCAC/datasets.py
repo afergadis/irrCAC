@@ -91,16 +91,13 @@ def dist_g1g2():
 def raw_4raters():
     """Rating Data from 4 Raters and 12 Subjects.
 
-    This dataset contains ratings obtained from an experiment where 4 raters
-    classified 12 subjects into 5 possible categories labeled as 1, 2, 3, 4,
-    and 5. None of the 4 raters scored all 12 units. Therefore, some missing
-    ratings in the form of "NA" appear in each of the columns associated with
-    the 4 raters. Note that only the 4 last columns are to be used with the
-    functions included in this package. The first column only plays a
-    descriptive role and is not used in any calculation.
-
-    **Source**: Gwet, K.L. (2014) Handbook of Inter-Rater Reliability,
-    4th Edition, page #120. Advanced Analytics, LLC
+    This dataset :cite:p:`Gwe14` contains ratings obtained from an
+    experiment where 4 raters classified 12 subjects into 5 possible categories labeled
+    as 1, 2, 3, 4, and 5. None of the 4 raters scored all 12 units. Therefore, some
+    missing ratings in the form of "NA" appear in each of the columns associated with
+    the 4 raters. Note that only the 4 last columns are to be used with the functions
+    included in this package. The first column only plays a descriptive role and is not
+    used in any calculation.
 
     Returns
     -------
@@ -136,15 +133,11 @@ def raw_5observers():
     scored 15 units on a 4-point numeric scale based on the values
     0, 1, 2 and 3.
 
-    The dataset has 15 rows (for the 15 subjects) and 6 columns.
-    Only the last 5 columns associated with the 5 observers are used in the
+    The dataset :cite:p:`Gwe14` has 15 rows (for the 15 subjects) and 6
+    columns. Only the last 5 columns associated with the 5 observers are used in the
     calculations. Of the 5 observers, only observer 3 scored all 15 units.
     Therefore, some missing ratings in the form of "NA" appear in the columns
     associated with the remaining 4 observers.
-
-    **Source**: Gwet, K.L. (2014) Handbook of Inter-Rater Reliability,
-    4th Edition. Advanced Analytics, LLC.
-    A larger version of this table can be found on page #125
 
     Returns
     -------
@@ -308,19 +301,15 @@ def raw_gender():
 def table_cont3x3abstractors():
     """Distribution of 100 pregnant women by pregnancy type and by abstractor.
 
-    This dataset contains pregnancy type data collected from 100 women who
-    entered an Emergency Room with a positive pregnancy test and a second
-    condition, which is either abdominal pain or vaginal bleeding. After
-    reviewing their medical records, 2 reviewers (also referred to as
-    abstractors) classified them into one of the following three pregnancy
-    categories: Ectopic Pregnancy (Ectopic), Abnormal Intrauterine pregnancy
-    (AIU) and Normal Intrauterine Pregnancy (NIU).
+    This dataset :cite:p:`Gwe14` contains pregnancy type data collected from 100 women
+    who entered an Emergency Room with a positive pregnancy test and a second condition,
+    which is either abdominal pain or vaginal bleeding. After reviewing their medical
+    records, 2 reviewers (also referred to as abstractors) classified them into one of
+    the following three pregnancy categories: Ectopic Pregnancy (Ectopic),
+    Abnormal Intrauterine pregnancy (AIU) and Normal Intrauterine Pregnancy (NIU).
 
-    Each row of this dataset describes an interval and the interpretation of
-    the magnitude it represents.
-
-    **Source:** Gwet, K.L. (2014). Handbook of Inter-Rater Reliability,
-    4th Edition. Advanced Analytics, LLC.
+    Each row of this dataset describes an interval and the interpretation of the
+    magnitude it represents.
 
     Returns
     -------
@@ -378,12 +367,9 @@ def distrib_6raters():
     """ Distribution of 6 psychiatrists by Subject/patient and diagnosis \
     category.
 
-    This dataset summarizes the ratings assigned by 6 psychiatrists classifying
-    15 patients into one of five categories named "Depression", "Personal
-    Disorder", "Schizophrenia", "Neurosis" and "Other.
-
-    **Source:** Fleiss, J. L. (1971). Measuring nominal scale agreement among
-    many raters, Psychological Bulletin, 76, 378-382.
+    This dataset :cite:p:`Fle71` summarizes the ratings assigned by 6
+    psychiatrists classifying 15 patients into one of five categories named
+    "Depression", "Personal Disorder", "Schizophrenia", "Neurosis" and "Other.
 
     Returns
     -------

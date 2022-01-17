@@ -2,3 +2,5 @@ nbsphinx
 myst-parser
 sphinx-autodoc-typehints
 sphinx-rtd-theme
+sphinxcontrib-bibtex
+scipy

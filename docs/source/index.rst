@@ -39,6 +39,7 @@ more.
 
 .. note::
    All of these statistical procedures are described in details in
+
    Gwet, K.L. (2014,ISBN:978-0970806284):
    "Handbook of Inter-Rater Reliability," 4th edition, Advanced Analytics, LLC.
 
