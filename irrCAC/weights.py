@@ -80,19 +80,19 @@ class Weights:
     def bipolar(self):
         """Function for computing the Bipolar Weights
 
-        Bipolar weights of a matrix :math:`W \in R^{q \\times q}`, where
-        :math:`q` is the number of `categories`, are defined for each cell
+        Bipolar weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
+        where :math:`q` is the number of `categories`, are defined for each cell
         :math:`w_{kl}, (k,l=1, \ldots, q)` by
 
         .. math::
             w_{kl} = \\frac{(k - l)^2}{
                 ((k + l - 2 \cdot \min(c))(2 \cdot \max(c) - k - l))}
 
-        where :math:`c \in R^q` is the vector of the `categories`.
+        where :math:`c \in \mathbb{R}^q` is the vector of the `categories`.
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of bipolar weights to be used for calculating the
             weighted coefficients.
         """
@@ -112,18 +112,18 @@ class Weights:
     def circular(self):
         """Function for computing the Circular Weights
 
-        Circular weights of a matrix :math:`W \in R^{q \\times q}`, where
-        :math:`q` is the number of `categories`, are defined for each cell
+        Circular weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
+        where :math:`q` is the number of `categories`, are defined for each cell
         :math:`w_{kl}, (k,l=1, \ldots, q)` by
 
         .. math::
             w_{kl} = \sin(\\frac{\pi (k - l)}{(\max(c) - \min(c) + 1)})^2
 
-        where :math:`c \in R^q` is the vector of the `categories`.
+        where :math:`c \in \mathbb{R}^q` is the vector of the `categories`.
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of circular weights to be used for calculating the
             weighted coefficients.
         """
@@ -140,15 +140,15 @@ class Weights:
     def identity(self):
         """Function for computing the Identity Weights.
 
-        The identity weighted matrix :math:`W \in R^{q \\times q}`, where
-        :math:`q` is the number of `categories`, is the same as to calculate the
+        The identity weighted matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
+        where :math:`q` is the number of `categories`, is the same as to calculate the
         coefficients without weights (unweighted). The weights are defined as
         :math:`w_{kk}=1, (k=1, \ldots, q)` and
         :math:`w_{kl}=0, (k,l=1, \ldots, q)` if :math:`k \\neq l`.
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of identity weights to be used for calculating the
             weighted coefficients.
         """
@@ -158,8 +158,8 @@ class Weights:
     def linear(self):
         """Function for computing the Linear Weights.
 
-        Linear weights of a matrix :math:`W \in R^{q \\times q}`, where
-        math:`q` is the number of `categories`, are defined for each cell
+        Linear weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
+        where math:`q` is the number of `categories`, are defined for each cell
         :math:`w_{kl}, (k,l=1, \ldots, q)` by
 
         .. math::
@@ -167,7 +167,7 @@ class Weights:
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of linear weights to be used for calculating the
             weighted coefficients.
         """
@@ -182,8 +182,8 @@ class Weights:
     def ordinal(self):
         """Function for computing the Ordinal Weights
 
-        Ordinal weights of a matrix :math:`W \in R^{q \\times q}`, where
-        :math:`q` is the number of `categories`, are defined for each cell
+        Ordinal weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
+        where :math:`q` is the number of `categories`, are defined for each cell
         :math:`w_{kl}, (k,l=1, \ldots, q)` by
 
         .. math::
@@ -192,7 +192,7 @@ class Weights:
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of ordinal weights to be used for calculating the
             weighted coefficients.
         """
@@ -207,8 +207,8 @@ class Weights:
     def quadratic(self):
         """Function for computing the Quadratic Weights
 
-        Quadratic weights of a matrix :math:`W \in R^{q \\times q}`, where
-        :math:`q` is the number of `categories`, are defined for each cell
+        Quadratic weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
+        where :math:`q` is the number of `categories`, are defined for each cell
         :math:`w_{kl}, (k,l=1, \ldots, q)` by
 
         .. math::
@@ -216,7 +216,7 @@ class Weights:
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of quadratic weights to be used for calculating the
             weighted coefficients.
         """
@@ -232,18 +232,18 @@ class Weights:
     def radical(self):
         """Function for computing the Radical Weights
 
-        Radical weights of a matrix :math:`W \in R^{q \\times q}`, where
-        :math:`q` is the number of `categories`, are defined for each cell
+        Radical weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
+        where :math:`q` is the number of `categories`, are defined for each cell
         :math:`w_{kl}, (k,l=1, \ldots, q)` by
 
         .. math::
             w_{kl} = 1 - \\frac{|k - l|^{1/2}}{(\max(c) - \min(c))^{1/2}}
 
-        where :math:`c \in R^q` is the vector of the `categories`.
+        where :math:`c \in \mathbb{R}^q` is the vector of the `categories`.
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of radical weights to be used for calculating the
             weighted coefficients.
         """
@@ -258,7 +258,7 @@ class Weights:
     def ratio(self):
         """Function for computing the Ratio Weights
 
-        Ratio weights of a matrix :math:`W \in R^{q \\times q}`, where
+        Ratio weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
         :math:`w_{kl}, (k,l=1, \ldots, q)` by
 
@@ -266,11 +266,11 @@ class Weights:
             w_{kl} = 1 - (\\frac{k - l}{k + l})^2/(
                 \\frac{\\max(c) - \\min(c)}{\\max(c) - \\min(c)})^2
 
-        where :math:`c \in R^q` is the vector of the `categories`.
+        where :math:`c \in \mathbb{R}^q` is the vector of the `categories`.
 
         Returns
         -------
-        2D :math:`q \\times q` matrix
+        :math:`\mathbb{R}^{q \\times q}` matrix
             A square matrix of ratio weights to be used for calculating the
             weighted coefficients.
 
