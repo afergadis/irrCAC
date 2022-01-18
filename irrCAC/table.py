@@ -180,7 +180,7 @@ class CAC:
                 sum1 += pkl[k, l] * self.weights_mat[k, l] ** 2
         var_bp = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (sum1 - self.pa ** 2)
         stderr = np.sqrt(var_bp)
-        p_value = 2 * (1 - stats.t.cdf(abs(bp_coeff / stderr), self.n - 1))
+        p_value = 2 * (1 - stats.t.cdf(max(bp_coeff, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
             alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
         )
@@ -288,7 +288,7 @@ class CAC:
             sum1 - (self.pa - 2 * (1 - ac1) * pe) ** 2
         )
         stderr = np.sqrt(var_gwet)
-        p_value = 2 * (1 - stats.t.cdf(abs(ac1 / stderr), self.n - 1))
+        p_value = 2 * (1 - stats.t.cdf(max(ac1, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
             alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
         )
@@ -342,7 +342,7 @@ class CAC:
             sum1 - (self.pa - 2 * (1 - kcoeff) * pe) ** 2
         )
         stderr = np.sqrt(var_kripp)
-        p_value = 2 * (1 - stats.t.cdf(abs(kripen_coeff / stderr), self.n - 1))
+        p_value = 2 * (1 - stats.t.cdf(max(kripen_coeff, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
             alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=kripen_coeff
         )
@@ -387,7 +387,7 @@ class CAC:
                 sum1 += pkl[k][l] * self.weights_mat[k][l] ** 2
         var_pa = ((1 - self.f) / self.n) * (sum1 - self.pa ** 2)
         stderr = np.sqrt(var_pa)
-        p_value = 2 * (1 - stats.t.cdf(abs(self.pa / stderr), self.n - 1))
+        p_value = 2 * (1 - stats.t.cdf(max(self.pa, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
             alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=self.pa
         )
@@ -434,7 +434,7 @@ class CAC:
             sum1 - (self.pa - 2 * (1 - scott) * pe) ** 2
         )
         stderr = np.sqrt(var_scott)
-        p_value = 2 * (1 - stats.t.cdf(abs(self.pa / stderr), self.n - 1))
+        p_value = 2 * (1 - stats.t.cdf(max(scott, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
             alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=scott
         )
