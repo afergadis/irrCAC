@@ -23,7 +23,7 @@ copyright = "2021, Kilem Gwet, Aris Fergadis"
 author = "Kilem Gwet, Aris Fergadis"
 
 # The full version, including alpha/beta/rc tags
-release = "0.2.2"
+release = "0.2.3"
 
 
 # -- General configuration ---------------------------------------------------
