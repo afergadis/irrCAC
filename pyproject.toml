@@ -13,7 +13,7 @@ repository = "https://github.com/afergadis/irrCAC"
 packages = [
     { include="irrCAC", from="." },
 ]
-
+include = ["CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
@@ -40,7 +40,7 @@ sphinxcontrib-bibtex = "^2.4.1"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.2.0"
+version = "0.3.0"
 tag_format = "$version"
 
 [build-system]
