@@ -49,7 +49,7 @@ def dist_g1g2():
 
     See Also
     --------
-    datasets.raw_g1g2()
+    :meth:`~irrCAC.datasets.raw_g1g2()`
 
     Returns
     -------
