@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+import numpy as np
+
 from irrCAC.datasets import table_cont3x3abstractors
 from irrCAC.table import CAC
 
@@ -119,3 +121,19 @@ class TestKrippendorff(TestCase):
         self.assertEqual(
             round(est["confidence_interval"][1], 3), 0.977, "Wrong CI upper value."
         )
+
+    def test_krippendorff_cont4x4diagnosis_custom_weights(self):
+        weights = np.array(
+            [
+                [1.00, 0.50, 0.00],
+                [0.00, 1.00, 0.50],
+                [0.50, 0.00, 1.00],
+            ]
+        )
+        cac = CAC(self.cont3x3abstractors, weights=weights, digits=3)
+        results = cac.krippendorff()
+        est = results["est"]
+        self.assertEqual(est["coefficient_value"], 0.816, "Wrong coeff value.")
+        self.assertEqual(est["se"], 0.057, "Wrong stderr.")
+        self.assertEqual(est["confidence_interval"][0], 0.703, "Wrong CI lower value.")
+        self.assertEqual(est["confidence_interval"][1], 0.928, "Wrong CI upper value.")

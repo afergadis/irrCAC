@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "irrCAC"
-version = "0.2.3"
+version = "0.2.4"
 description = "Degree of agreement among raters."
 authors = ["Aris Fergadis"]
 keywords = ["Chance-corrected agreement coefficients",
@@ -19,7 +19,6 @@ include = ["CHANGELOG.md"]
 python = ">=3.8,<3.11"
 scipy = "^1.7.3"
 pandas = "^1.3.5"
-pytest = "^6.2.5"
 coverage = "^6.2"
 
 [tool.poetry.dev-dependencies]
@@ -28,8 +27,8 @@ yapf = "^0.32.0"
 commitizen = "^2.20.4"
 jupyter = "^1.0.0"
 myst-parser = "^0.16.1"
-sphinx-autodoc-typehints = "^1.15.2"
-pre-commit = "^2.16.0"
+sphinx-autodoc-typehints = "^1.16.0"
+pre-commit = "^2.17.0"
 tox = "^3.24.5"
 nbsphinx = "^0.8.8"
 Pygments = "^2.11.1"
@@ -46,3 +45,7 @@ tag_format = "$version"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.semantic_release]
+version_variable = ["irrCAC/__init__.py:__version__", "pyproject.toml:version"]
+branch = "main"

@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+import numpy as np
+
 from irrCAC.datasets import (
     raw_4raters,
     raw_5observers,
@@ -114,6 +116,27 @@ class TestKrippendorff(TestCase):
         self.assertEqual(est["confidence_interval"][0], 0.484, "Wrong CI lower value.")
         self.assertEqual(est["confidence_interval"][1], 1, "Wrong CI upper value.")
         self.assertEqual(round(est["p_value"], 5), 2e-4, "Wrong p-value.")
+
+    def test_krippendorff_kappa_raw4raters_custom_weights(self):
+        data = raw_4raters()
+        weights = np.array(
+            [
+                [1.00, 0.75, 0.50, 0.25, 0.00],
+                [0.00, 1.00, 0.75, 0.50, 0.25],
+                [0.25, 0.00, 1.00, 0.75, 0.50],
+                [0.50, 0.25, 0.00, 1.00, 0.75],
+                [0.75, 0.50, 0.25, 0.00, 1.00],
+            ]
+        )
+        cac = CAC(data, weights=weights, digits=3)
+        est = cac.krippendorff()["est"]
+        self.assertEqual(est["pa"], 0.878, "Wrong pa value.")
+        self.assertEqual(est["pe"], 0.525, "Wrong pe value.")
+        self.assertEqual(est["coefficient_value"], 0.743)
+        self.assertEqual(est["se"], 0.146, "Wrong standard error.")
+        self.assertEqual(est["confidence_interval"][0], 0.419, "Wrong CI lower value.")
+        self.assertEqual(est["confidence_interval"][1], 1, "Wrong CI upper value.")
+        self.assertEqual(round(est["p_value"], 5), 4.6e-4, "Wrong p-value.")
 
     def test_krippendorff_kappa_raw5observers(self):
         data = raw_5observers()

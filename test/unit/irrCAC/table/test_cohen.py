@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+import numpy as np
+
 from irrCAC.datasets import table_cont3x3abstractors, table_cont4x4diagnosis
 from irrCAC.table import CAC
 
@@ -143,4 +145,21 @@ class TestCohen(TestCase):
         self.assertEqual(est["coefficient_value"], 0.413, "Wrong coeff value.")
         self.assertEqual(est["se"], 0.063, "Wrong stderr.")
         self.assertEqual(est["confidence_interval"][0], 0.288, "Wrong CI lower value.")
+        self.assertEqual(est["confidence_interval"][1], 0.538, "Wrong CI upper value.")
+
+    def test_cohen_cont4x4diagnosis_custom_weights(self):
+        weights = np.array(
+            [
+                [1.00, 0.67, 0.33, 0.00],
+                [0.00, 1.00, 0.67, 0.33],
+                [0.00, 0.00, 1.00, 0.67],
+                [0.33, 0.00, 0.00, 1.00],
+            ]
+        )
+        cac = CAC(self.cont4x4diagnosis, weights=weights, digits=3)
+        results = cac.cohen()
+        est = results["est"]
+        self.assertEqual(est["coefficient_value"], 0.439, "Wrong coeff value.")
+        self.assertEqual(est["se"], 0.05, "Wrong stderr.")
+        self.assertEqual(est["confidence_interval"][0], 0.34, "Wrong CI lower value.")
         self.assertEqual(est["confidence_interval"][1], 0.538, "Wrong CI upper value.")

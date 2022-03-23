@@ -111,7 +111,7 @@ class CAC:
         A data frame of ratings where each column represents one rater and
         each row one subject.
     weights : array-like, ndarray, or str, {"identity", "quadratic", "ordinal",\
-    "linear", "radical", "ratio", "circular", "bipolar"}
+    "linear", "radical", "ratio", "circular", "bipolar"}, default: "identity"
         A mandatory parameter that is either a string variable or a matrix.
         The string describes one of the predefined weights. If this
         parameter is a matrix then it must be a square matrix qxq where q
@@ -156,8 +156,6 @@ class CAC:
             "circular",
             "bipolar",
         )
-        if weights not in weights_choices:
-            raise ValueError(f"weights values can be any of {weights_choices}")
         if not 0.9 <= confidence_level <= 0.99:
             raise ValueError("Please provide a value in range [0.90, 0.99].")
         self.confidence_level = confidence_level
@@ -173,12 +171,20 @@ class CAC:
             self.categories = categories
         self.q = len(self.categories)
         if isinstance(weights, str):
+            if weights not in weights_choices:
+                raise ValueError(f"weights values can be any of {weights_choices}")
             self.weights_name = weights
             weights_functions = Weights(self.categories)
             self.weights_mat = weights_functions[self.weights_name]
         else:
             self.weights_name = "Custom Weights"
             self.weights_mat = np.asarray(weights)
+            rows, cols = self.weights_mat.shape
+            if not (rows == self.q and cols == self.q):
+                raise ValueError(
+                    f"Expected weights matrix shape is {self.q}x{self.q}. "
+                    f"Given size is {rows}x{cols}."
+                )
         self.digits = digits
         self.coefficient_value = 0
         self.coefficient_name = None

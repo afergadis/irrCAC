@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+import numpy as np
+
 from irrCAC.datasets import (
     raw_4raters,
     raw_5observers,
@@ -113,6 +115,27 @@ class TestFleiss(TestCase):
         self.assertEqual(est["confidence_interval"][0], 0.486, "Wrong CI lower value.")
         self.assertEqual(est["confidence_interval"][1], 1, "Wrong CI upper value.")
         self.assertEqual(round(est["p_value"], 5), 2.2e-04, "Wrong p-value.")
+
+    def test_fleiss_kappa_raw4raters_custom_weights(self):
+        data = raw_4raters()
+        weights = np.array(
+            [
+                [1.00, 0.75, 0.50, 0.25, 0.00],
+                [0.00, 1.00, 0.75, 0.50, 0.25],
+                [0.25, 0.00, 1.00, 0.75, 0.50],
+                [0.50, 0.25, 0.00, 1.00, 0.75],
+                [0.75, 0.50, 0.25, 0.00, 1.00],
+            ]
+        )
+        cac = CAC(data, weights=weights, digits=3)
+        est = cac.fleiss()["est"]
+        self.assertEqual(est["pa"], 0.886, "Wrong pa value.")
+        self.assertEqual(est["pe"], 0.524, "Wrong pe value.")
+        self.assertEqual(est["coefficient_value"], 0.761)
+        self.assertEqual(est["se"], 0.153, "Wrong standard error.")
+        self.assertEqual(est["confidence_interval"][0], 0.424, "Wrong CI lower value.")
+        self.assertEqual(est["confidence_interval"][1], 1, "Wrong CI upper value.")
+        self.assertEqual(round(est["p_value"], 5), 4.2e-04, "Wrong p-value.")
 
     def test_fleiss_kappa_raw5observers(self):
         data = raw_5observers()

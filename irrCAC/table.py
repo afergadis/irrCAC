@@ -76,7 +76,7 @@ class CAC:
         A data frame of ratings where each column represents one rater and
         each row one subject.
     weights : array-like, ndarray, or str, {"identity", "quadratic", "ordinal",\
-    "linear", "radical", "ratio", "circular", "bipolar"}
+    "linear", "radical", "ratio", "circular", "bipolar"}, default: "identity"
         A mandatory parameter that is either a string variable or a matrix.
         The string describes one of the predefined weights. If this
         parameter is a matrix then it must be a square matrix qxq where q
@@ -109,29 +109,12 @@ class CAC:
             "circular",
             "bipolar",
         )
-        if weights not in weights_choices:
-            raise ValueError(f"weights values can be any of {weights_choices}")
-        assert (
-            0 < confidence_level <= 0.99
-        ), "Confidence level should be in the range (0, 1)."
+        if not 0.9 <= confidence_level <= 0.99:
+            raise ValueError("Please provide a value in range [0.90, 0.99].")
         self.confidence_level = confidence_level
 
-        if isinstance(weights, str):
-            self.weights_name = weights
-            weights_functions = Weights(list(range(1, len(ratings) + 1)))
-            self.weights_mat = weights_functions[self.weights_name]
-        else:
-            self.weights_name = "Custom Weights"
-            self.weights_mat = np.asarray(weights)
-            if ratings.shape[0] != self.weights_mat.shape[0]:
-                raise AttributeError(
-                    f"We expect a {ratings.shape[0]}x{ratings.shape[1]}"
-                    f" weights matrix but the input matrix is "
-                    f"{self.weights_mat.shape[0]}x{self.weights_mat.shape[1]}."
-                )
-
         if ratings.shape[0] != ratings.shape[1]:
-            raise AttributeError(
+            raise ValueError(
                 "The contingency table should have the same "
                 "number of rows and columns."
             )
@@ -139,19 +122,35 @@ class CAC:
         self.n = np.sum(ratings.values)
         self.f = self.n / N
         self.q = len(self.ratings)
+        if isinstance(weights, str):
+            if weights not in weights_choices:
+                raise ValueError(f"weights values can be any of {weights_choices}")
+            self.weights_name = weights
+            weights_functions = Weights(list(range(1, len(ratings) + 1)))
+            self.weights_mat = weights_functions[self.weights_name]
+        else:
+            self.weights_name = "Custom Weights"
+            self.weights_mat = np.asarray(weights)
+            rows, cols = self.weights_mat.shape
+            if not (rows == self.q and cols == self.q):
+                raise ValueError(
+                    f"Expected weights matrix shape is {self.q}x{self.q}. "
+                    f"Given size is {rows}x{cols}."
+                )
+
         self.pa = np.sum(self.ratings.values * self.weights_mat / self.n)
         self.digits = digits
         self.agreement = {
-            "est": {
-                "coefficient_value": 0,
-                "coefficient_name": None,
-                "confidence_interval": (0, 0),
-                "p_value": 0,
-                "z": 0,
-                "se": 0,
-                "pa": self.pa,
-                "pe": 0,
-            },
+            "est": dict(
+                coefficient_value=0,
+                coefficient_name=None,
+                confidence_interval=(0, 0),
+                p_value=0,
+                z=0,
+                se=0,
+                pa=self.pa,
+                pe=0,
+            ),
             "weights": self.weights_mat,
             "categories": self.ratings.index.to_list(),
         }
