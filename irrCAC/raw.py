@@ -96,7 +96,7 @@ class CAC:
     more raters are provided. Among the CAC coefficients covered are
 
     * Brennan-Prediger coefficient, (TODO)
-    * Conger's kappa, (TODO)
+    * Conger's kappa,
     * Fleiss' kappa,
     * Gwet's AC1/AC2 coefficients, and
     * Krippendorff's Alpha.
@@ -437,6 +437,105 @@ class CAC:
         self.se = round(stderr, self.digits)
         self.pa = round(pa, self.digits)
         self.pe = round(pe, self.digits)
+        self.agreement["est"].update(
+            dict(
+                coefficient_name=self.coefficient_name,
+                pa=self.pa,
+                pe=self.pe,
+                se=self.se,
+                z=self.z,
+                coefficient_value=self.coefficient_value,
+                confidence_interval=self.confidence_interval,
+                p_value=self.p_value,
+            )
+        )
+        return deepcopy(self.agreement)
+
+    def conger(self):
+        """Conger's generalized kappa coefficient.
+
+        Conger :cite:p:`Con80` adopted the same percent agreement :math:`p_a` as Fleiss,
+        but suggested estimating the percent chance agreement by averaging all
+        :math:`r(r − 1) / 2` Cohen-type pairwise percent chance agreement estimates.
+
+        .. versionadded:: 0.2.5
+        """
+        agree_mat = np.zeros(shape=(self.n, self.q))
+        for k in range(self.q):
+            agree_mat[:, k] = self.ratings[self.ratings == self.categories[k]].count(
+                axis=1
+            )
+        classif_mat = np.zeros(shape=(self.r, self.q))
+        for k in range(self.q):
+            with_mis = self.ratings == self.categories[k]
+            without_mis = with_mis.T.fillna(False)
+            classif_mat[:, k] = without_mis.sum(axis=1)
+        ri_vec = agree_mat.sum(axis=1)
+        agree_mat_w = np.transpose(np.matmul(self.weights_mat, agree_mat.T))
+        sum_q = (agree_mat * (agree_mat_w - 1)).sum(axis=1)
+        n2more = sum(ri_vec >= 2)
+        pa = sum(sum_q[ri_vec >= 2] / (ri_vec * (ri_vec - 1))[ri_vec >= 2]) / n2more
+        ng_vec = classif_mat.sum(axis=1).reshape(-1, 1)
+        pgk_mat = classif_mat / np.broadcast_to(ng_vec, (self.r, self.q))
+        p_mean_k = pgk_mat.T.sum(axis=1) / self.r
+        p_mean_k = p_mean_k.reshape(-1, 1)
+        s2kl_mat = (
+            np.matmul(pgk_mat.T, pgk_mat) - self.r * (p_mean_k * p_mean_k.T)
+        ) / (self.r - 1)
+        pe = np.sum(self.weights_mat * (p_mean_k * p_mean_k.T - s2kl_mat / self.r))
+        conger_kappa = (pa - pe) / (1 - pe)
+        # bkl_mat = (self.weights_mat + self.weights_mat.T) / 2
+        lambda_ig_mat = np.zeros((self.n, self.r))
+        is_numeric_ratings = (
+            self.ratings.applymap(lambda x: isinstance(x, (int, float))).all(1).sum()
+            == self.n
+        )
+        if is_numeric_ratings:
+            epsi_ig_mat = 1 - self.ratings.isna()
+        else:
+            epsi_ig_mat = self.ratings.applymap(lambda x: isinstance(x, str))
+        for k in range(self.q):
+            lambda_ig_kmat = np.zeros((self.n, self.r))
+            for l in range(self.q):
+                delta_ig_mat = self.ratings == self.categories[l]
+                lambda_ig_kmat += self.weights_mat[k][l] * (
+                    delta_ig_mat
+                    - (epsi_ig_mat - ng_vec.T / self.n)
+                    * np.broadcast_to(pgk_mat[:, l], (self.n, self.r))
+                )
+            lambda_ig_kmat *= self.n / ng_vec.T
+            lambda_ig_mat += lambda_ig_kmat * (
+                self.r * pgk_mat[:, k].mean()
+                - np.broadcast_to(pgk_mat[:, k], (self.n, self.r))
+            )
+        pe_ivec = lambda_ig_mat.sum(axis=1) / (self.r * (self.r - 1))
+        den_ivec = ri_vec * (ri_vec - 1)
+        den_ivec = den_ivec - (den_ivec == 0)
+        pa_ivec = sum_q / den_ivec
+        pe_r2 = pe * (ri_vec >= 2)
+        conger_ivec = self.n / n2more * (pa_ivec - pe_r2) / (1 - pe)
+        conger_ivec_x = conger_ivec - 2 * (1 - conger_kappa) * (pe_ivec - pe) / (1 - pe)
+
+        var_conger = (
+            (1 - self.f)
+            / (self.n * (self.n - 1))
+            * sum((conger_ivec_x - conger_kappa) ** 2)
+        )
+        stderr = np.sqrt(var_conger)
+        p_value = float(2 * (1 - stats.t.cdf(abs(conger_kappa / stderr), self.n - 1)))
+        lcb, ucb = stats.t.interval(
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=conger_kappa
+        )
+        ucb = min(1, ucb)
+
+        self.coefficient_value = round(conger_kappa, self.digits)
+        self.coefficient_name = "Conger's kappa"
+        self.confidence_interval = (round(lcb, self.digits), round(ucb, self.digits))
+        self.p_value = p_value
+        self.z = round(conger_kappa / stderr, self.digits)
+        self.se = round(stderr, self.digits)
+        self.pa = round(pa, self.digits)
+        self.pe = round(float(pe), self.digits)
         self.agreement["est"].update(
             dict(
                 coefficient_name=self.coefficient_name,

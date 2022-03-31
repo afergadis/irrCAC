@@ -29,6 +29,7 @@ types with the corresponding coefficients are in the following list:
   1. Fleiss' kappa
   2. Gwet AC1/AC2
   3. Krippendorff's Alpha
+  4. Conger's kappa
 
 The package also supports functionality for weighted analysis using a set of
 predefined `weights <irrCAC.html#module-irrCAC.weights>`_ and interpreting the

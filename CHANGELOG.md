@@ -1,5 +1,9 @@
-## 0.2.0 (2022-01-21)
+## v0.2.3 (2022-01-21)
 
+### Fix
+
+- custom weights were not supported (closes #1)
+- 
 ## v0.2.3 (2022-01-18)
 
 ### Fix
@@ -8,7 +12,7 @@
 
 ### Refactor
 
-- **docs**: remove sphinx's build direcotry
+- **docs**: remove sphinx's build directory
 - add more pre-commit hooks
 - migrate code style to Black
 
