@@ -13,7 +13,7 @@ Gwet's AC1/AC2 coefficients, and Krippendorff's alpha. Multiple sets of weights
 are proposed for computing weighted analyses.
 
 The functions included in this package can handle 2 types of input data. Those
-types with the corresponding coefficients are in the following list:
+types with the corresponding coefficients are in the following lists:
 
 1. `Contingency Table <irrCAC.html#module-irrCAC.table>`_:
 
@@ -26,10 +26,11 @@ types with the corresponding coefficients are in the following list:
 
 2. `Raw Data <irrCAC.html#module-irrCAC.raw>`_:
 
-  1. Fleiss' kappa
-  2. Gwet AC1/AC2
-  3. Krippendorff's Alpha
-  4. Conger's kappa
+  1. Conger's kappa
+  2. Brennar-Prediger
+  3. Gwet AC1/AC2
+  4. Fleiss' kappa
+  5. Krippendorff's Alpha
 
 The package also supports functionality for weighted analysis using a set of
 predefined `weights <irrCAC.html#module-irrCAC.weights>`_ and interpreting the

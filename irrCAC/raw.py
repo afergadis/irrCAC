@@ -549,3 +549,66 @@ class CAC:
             )
         )
         return deepcopy(self.agreement)
+
+    def bp(self):
+        """Brennan-Prediger coefficient
+
+        The agreement coefficient recommended by Brennan and Prediger :cite:p:`BP81`
+        assumes that when the rating of a subject is a random process, the subject would
+        be assigned to any of the :math:`q` categories with equal probability
+        :math:`1/q`, resulting in a percent chance agreement of :math:`1/q`.
+
+        .. versionadded:: 0.4.0
+        """
+        agree_mat = np.zeros(shape=(self.n, self.q))
+        for c in range(self.q):
+            agree_mat[:, c] = self.ratings[self.ratings == self.categories[c]].count(
+                axis=1
+            )
+        agree_mat_w = np.transpose(np.matmul(self.weights_mat, agree_mat.T))
+        ri_vec = agree_mat.sum(axis=1)
+        sum_q = (agree_mat * (agree_mat_w - 1)).sum(axis=1)
+        n2more = sum(ri_vec >= 2)
+        pa = float(
+            sum(sum_q[ri_vec >= 2] / (ri_vec * (ri_vec - 1))[ri_vec >= 2]) / n2more
+        )
+        if self.q >= 2:
+            pe = np.sum(self.weights_mat) / (self.q ** 2)
+        else:
+            pe = 1e-15
+        bp_coeff = (pa - pe) / (1 - pe)
+        den_ivec = ri_vec * (ri_vec - 1)
+        den_ivec = den_ivec - (den_ivec == 0)
+        pa_ivec = sum_q / den_ivec
+        pe_r2 = pe * (ri_vec >= 2)
+        bp_ivec = (self.n / n2more) * (pa_ivec - pe_r2) / (1 - pe)
+
+        var_bp = (1 - self.f) / (self.n * (self.n - 1)) * sum((bp_ivec - bp_coeff) ** 2)
+        stderr = np.sqrt(var_bp)
+        p_value = 1 - stats.t.cdf(abs(bp_coeff / stderr), self.n - 1)
+        lcb, ucb = stats.t.interval(
+            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
+        )
+        ucb = min(1, ucb)
+
+        self.coefficient_value = round(bp_coeff, self.digits)
+        self.coefficient_name = "Brennan-Prediger"
+        self.confidence_interval = (round(lcb, self.digits), round(ucb, self.digits))
+        self.p_value = p_value
+        self.z = round(bp_coeff / stderr, self.digits)
+        self.se = round(stderr, self.digits)
+        self.pa = round(pa, self.digits)
+        self.pe = round(pe, self.digits)
+        self.agreement["est"].update(
+            dict(
+                coefficient_name=self.coefficient_name,
+                pa=self.pa,
+                pe=self.pe,
+                se=self.se,
+                z=self.z,
+                coefficient_value=self.coefficient_value,
+                confidence_interval=self.confidence_interval,
+                p_value=self.p_value,
+            )
+        )
+        return deepcopy(self.agreement)
