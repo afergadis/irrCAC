@@ -1,3 +1,27 @@
+## v0.4.0 (2022-06-28)
+
+### Refactor
+
+- update dev-dependencies and commitizen section
+
+### Feat
+
+- Brennan-Prediger coefficient for raw data
+
+## v0.3.0 (2022-03-31)
+
+### Feat
+
+- Conger's kappa coefficient for raw data
+
+### Fix
+
+- custom weights were not supported
+
+## 0.3.0 (2022-01-21)
+
+## 0.2.0 (2022-01-21)
+
 ## v0.2.3 (2022-01-21)
 
 ### Fix
