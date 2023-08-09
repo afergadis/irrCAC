@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "irrCAC"
-version = "0.2.4"
+version = "0.4.0"
 description = "Degree of agreement among raters."
 authors = ["Aris Fergadis"]
 keywords = ["Chance-corrected agreement coefficients",
@@ -41,8 +41,10 @@ sphinxcontrib-bibtex = "^2.4.1"
 name = "cz_conventional_commits"
 version = "0.4.0"
 tag_format = "$version"
+version_type = "semver"
+version_provider = "poetry"
 update_changelog_on_bump = true
-version_files = ["irrCAC/__init__.py"]
+version_files = ["pyproject.toml:version", "irrCAC/__init__.py"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
