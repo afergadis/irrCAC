@@ -268,7 +268,7 @@ class CAC:
         stderr = np.sqrt(var_ac1)
         p_value = 2 * (1 - stats.t.cdf(abs(ac1 / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
+            confidence=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
         )
         ucb = min(1, ucb)
 
@@ -351,7 +351,10 @@ class CAC:
         stderr = np.sqrt(var_fleiss)
         p_value = float(2 * (1 - stats.t.cdf(abs(fleiss_kappa / stderr), self.n - 1)))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=fleiss_kappa
+            confidence=self.confidence_level,
+            df=self.n - 1,
+            scale=stderr,
+            loc=fleiss_kappa,
         )
         ucb = min(1, ucb)
 
@@ -426,7 +429,7 @@ class CAC:
         stderr = np.sqrt(float(var_krippen))
         p_value = 2 * (1 - stats.t.cdf(abs(krippen_alpha / stderr), n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=n - 1, scale=stderr, loc=krippen_alpha
+            confidence=self.confidence_level, df=n - 1, scale=stderr, loc=krippen_alpha
         )
         ucb = min(1, ucb)
         self.coefficient_value = round(krippen_alpha_est, self.digits)
@@ -496,12 +499,12 @@ class CAC:
             epsi_ig_mat = self.ratings.applymap(lambda x: isinstance(x, str))
         for k in range(self.q):
             lambda_ig_kmat = np.zeros((self.n, self.r))
-            for l in range(self.q):
-                delta_ig_mat = self.ratings == self.categories[l]
-                lambda_ig_kmat += self.weights_mat[k][l] * (
+            for lam in range(self.q):
+                delta_ig_mat = self.ratings == self.categories[lam]
+                lambda_ig_kmat += self.weights_mat[k][lam] * (
                     delta_ig_mat
                     - (epsi_ig_mat - ng_vec.T / self.n)
-                    * np.broadcast_to(pgk_mat[:, l], (self.n, self.r))
+                    * np.broadcast_to(pgk_mat[:, lam], (self.n, self.r))
                 )
             lambda_ig_kmat *= self.n / ng_vec.T
             lambda_ig_mat += lambda_ig_kmat * (
@@ -524,7 +527,10 @@ class CAC:
         stderr = np.sqrt(var_conger)
         p_value = float(2 * (1 - stats.t.cdf(abs(conger_kappa / stderr), self.n - 1)))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=conger_kappa
+            confidence=self.confidence_level,
+            df=self.n - 1,
+            scale=stderr,
+            loc=conger_kappa,
         )
         ucb = min(1, ucb)
 
@@ -573,7 +579,7 @@ class CAC:
             sum(sum_q[ri_vec >= 2] / (ri_vec * (ri_vec - 1))[ri_vec >= 2]) / n2more
         )
         if self.q >= 2:
-            pe = np.sum(self.weights_mat) / (self.q ** 2)
+            pe = np.sum(self.weights_mat) / (self.q**2)
         else:
             pe = 1e-15
         bp_coeff = (pa - pe) / (1 - pe)
@@ -587,7 +593,7 @@ class CAC:
         stderr = np.sqrt(var_bp)
         p_value = 1 - stats.t.cdf(abs(bp_coeff / stderr), self.n - 1)
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
+            confidence=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
         )
         ucb = min(1, ucb)
 
