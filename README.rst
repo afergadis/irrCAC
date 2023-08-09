@@ -65,13 +65,32 @@ To install the package, run:
 
 Developers
 ----------
-To run the tests, install `poetry <https://python-poetry.org/>`_ and run:
+To use the code for development it is recommended to install
+`poetry <https://python-poetry.org/>`_ and run:
 
 .. code:: bash
 
     poetry install
 
-Next run:
+And add the `pre-commit` hook:
+
+.. code:: bash
+
+   pre-commit install
+
+and update the hooks:
+
+.. code:: bash
+
+   pre-commit autoupdate
+
+To update the project dependencies, run:
+
+.. code:: bash
+
+   poetry update
+
+Next run the tests:
 
 .. code:: bash
 
