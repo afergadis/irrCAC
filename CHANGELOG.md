@@ -1,3 +1,10 @@
+## v0.4.1 (2023-08-24)
+
+### Refactor
+
+- update to scipy 1.11.2
+- fix tex warnings during pytest
+
 ## v0.4.0 (2022-06-28)
 
 ### Refactor
