@@ -181,7 +181,7 @@ class CAC:
         stderr = np.sqrt(var_bp)
         p_value = 2 * (1 - stats.t.cdf(max(bp_coeff, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -229,7 +229,7 @@ class CAC:
         stderr = np.sqrt(var_kappa)
         p_value = 2 * (1 - stats.t.cdf(abs(kappa / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=kappa
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=kappa
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -289,7 +289,7 @@ class CAC:
         stderr = np.sqrt(var_gwet)
         p_value = 2 * (1 - stats.t.cdf(max(ac1, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
         )
         ucb = min(1, ucb)
         if np.sum(self.weights_mat) == self.q:
@@ -343,7 +343,7 @@ class CAC:
         stderr = np.sqrt(var_kripp)
         p_value = 2 * (1 - stats.t.cdf(max(kripen_coeff, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=kripen_coeff
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=kripen_coeff
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -388,7 +388,7 @@ class CAC:
         stderr = np.sqrt(var_pa)
         p_value = 2 * (1 - stats.t.cdf(max(self.pa, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=self.pa
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=self.pa
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -435,7 +435,7 @@ class CAC:
         stderr = np.sqrt(var_scott)
         p_value = 2 * (1 - stats.t.cdf(max(scott, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=scott
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=scott
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
