@@ -17,7 +17,7 @@ class Benchmark:
         P(a \le \kappa_1 \le b)
             &= P[(\hat{\kappa}_1 - b)/se(\hat{\kappa}_1)
                \le Z \le
-               (\hat{\kappa}_1 - a)/se(\hat{\kappa}_1)] \\\\
+               (\hat{\kappa}_1 - a)/se(\hat{\kappa}_1)]
             &= \Phi[(\hat{\kappa}_1 - b)/se(\hat{\kappa}_1)] -
                \Phi[(\hat{\kappa}_1 - a)/se(\hat{\kappa}_1)]
 

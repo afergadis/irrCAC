@@ -369,8 +369,8 @@ class CAC:
         The percent agreement is defined as
 
         .. math::
-            p_a = \\frac{1}{n} \sum_{i=1}^{n} p_{a|i}, \quad
-            where \quad p_{a|i}=\sum_{k=1}^{q} \\frac{r_{ik}(r_{ik}-1)}{r(r-1)}
+            p_a = \frac{1}{n} \sum_{i=1}^{n} p_{a|i}, \quad
+            where \quad p_{a|i}=\sum_{k=1}^{q} \frac{r_{ik}(r_{ik}-1)}{r(r-1)}
 
         with :math:`n` representing the number of subjects, :math:`r` the number of
         raters, :math:`q` the number of categories, and :math:`r_{ik}` the number of
