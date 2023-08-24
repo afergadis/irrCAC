@@ -364,7 +364,7 @@ class CAC:
         return deepcopy(self.agreement)
 
     def pa2(self):
-        """Percent Agreement coefficient for 2 raters.
+        r"""Percent Agreement coefficient for 2 raters.
 
         The percent agreement is defined as
 

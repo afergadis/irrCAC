@@ -78,7 +78,7 @@ class Weights:
         return f"Weights for {self.q} categories."
 
     def bipolar(self):
-        """Function for computing the Bipolar Weights
+        r"""Function for computing the Bipolar Weights
 
         Bipolar weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
         where :math:`q` is the number of `categories`, are defined for each cell
@@ -110,7 +110,7 @@ class Weights:
         return weights
 
     def circular(self):
-        """Function for computing the Circular Weights
+        r"""Function for computing the Circular Weights
 
         Circular weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
         where :math:`q` is the number of `categories`, are defined for each cell
@@ -138,7 +138,7 @@ class Weights:
         return weights
 
     def identity(self):
-        """Function for computing the Identity Weights.
+        r"""Function for computing the Identity Weights.
 
         The identity weighted matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
         where :math:`q` is the number of `categories`, is the same as to calculate the
@@ -156,7 +156,7 @@ class Weights:
         return weights
 
     def linear(self):
-        """Function for computing the Linear Weights.
+        r"""Function for computing the Linear Weights.
 
         Linear weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
         where math:`q` is the number of `categories`, are defined for each cell
@@ -180,7 +180,7 @@ class Weights:
         return weights
 
     def ordinal(self):
-        """Function for computing the Ordinal Weights
+        r"""Function for computing the Ordinal Weights
 
         Ordinal weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
         where :math:`q` is the number of `categories`, are defined for each cell
@@ -205,7 +205,7 @@ class Weights:
         return weights
 
     def quadratic(self):
-        """Function for computing the Quadratic Weights
+        r"""Function for computing the Quadratic Weights
 
         Quadratic weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
         where :math:`q` is the number of `categories`, are defined for each cell
@@ -230,7 +230,7 @@ class Weights:
         return weights
 
     def radical(self):
-        """Function for computing the Radical Weights
+        r"""Function for computing the Radical Weights
 
         Radical weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`,
         where :math:`q` is the number of `categories`, are defined for each cell
@@ -256,7 +256,7 @@ class Weights:
         return weights
 
     def ratio(self):
-        """Function for computing the Ratio Weights
+        r"""Function for computing the Ratio Weights
 
         Ratio weights of a matrix :math:`\mathbf{W} \in \mathbb{R}^{q \\times q}`, where
         :math:`q` is the number of `categories`, are defined for each cell
