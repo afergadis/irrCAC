@@ -268,7 +268,7 @@ class CAC:
         stderr = np.sqrt(var_ac1)
         p_value = 2 * (1 - stats.t.cdf(abs(ac1 / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
         )
         ucb = min(1, ucb)
 
@@ -332,17 +332,18 @@ class CAC:
                 * (pi_vec.reshape(self.q, 1) * pi_vec.reshape(1, self.q))
             )
         )
-        fleiss_kappa = (pa - pe) / (1 - pe)
+        # add 1e-8 to avoid division by zero
+        fleiss_kappa = (pa - pe) / (1 - pe + 1e-8)
         den_ivec = ri_vec * (ri_vec - 1)
         den_ivec = den_ivec - (den_ivec == 0)
         pa_ivec = sum_q / den_ivec
         pe_r2 = pe * (ri_vec >= 2)
-        kappa_ivec = (self.n / n2more) * (pa_ivec - pe_r2) / (1 - pe)
+        kappa_ivec = (self.n / n2more) * (pa_ivec - pe_r2) / (1 - pe + 1e-8)
         pi_vec_wk_ = np.matmul(self.weights_mat, pi_vec)
         pi_vec_w_k = np.matmul(self.weights_mat.T, pi_vec)
         pi_vec_w = (pi_vec_wk_ + pi_vec_w_k) / 2
         pe_ivec = np.matmul(agree_mat, pi_vec_w) / ri_vec
-        kappa_ivec_x = kappa_ivec - 2 * (1 - fleiss_kappa) * (pe_ivec - pe) / (1 - pe)
+        kappa_ivec_x = kappa_ivec - 2 * (1 - fleiss_kappa) * (pe_ivec - pe) / (1 - pe + 1e-8)
         var_fleiss = (
             (1 - self.f)
             / (self.n * (self.n - 1))
@@ -351,7 +352,7 @@ class CAC:
         stderr = np.sqrt(var_fleiss)
         p_value = float(2 * (1 - stats.t.cdf(abs(fleiss_kappa / stderr), self.n - 1)))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=fleiss_kappa
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=fleiss_kappa
         )
         ucb = min(1, ucb)
 
@@ -426,7 +427,7 @@ class CAC:
         stderr = np.sqrt(float(var_krippen))
         p_value = 2 * (1 - stats.t.cdf(abs(krippen_alpha / stderr), n - 1))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=n - 1, scale=stderr, loc=krippen_alpha
+            self.confidence_level, df=n - 1, scale=stderr, loc=krippen_alpha
         )
         ucb = min(1, ucb)
         self.coefficient_value = round(krippen_alpha_est, self.digits)
@@ -524,7 +525,7 @@ class CAC:
         stderr = np.sqrt(var_conger)
         p_value = float(2 * (1 - stats.t.cdf(abs(conger_kappa / stderr), self.n - 1)))
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=conger_kappa
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=conger_kappa
         )
         ucb = min(1, ucb)
 
@@ -587,7 +588,7 @@ class CAC:
         stderr = np.sqrt(var_bp)
         p_value = 1 - stats.t.cdf(abs(bp_coeff / stderr), self.n - 1)
         lcb, ucb = stats.t.interval(
-            alpha=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
         )
         ucb = min(1, ucb)
 

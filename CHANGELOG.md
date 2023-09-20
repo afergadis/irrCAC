@@ -1,3 +1,10 @@
+## v0.4.1 (2023-09-20)
+
+### Fix
+
+- Add support for `python 3.11`
+- Fix `scipy` dependency: Pass confidence level as positional argument in `stats.t.interval`
+
 ## v0.4.0 (2022-06-28)
 
 ### Refactor
