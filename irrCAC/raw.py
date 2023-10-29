@@ -332,17 +332,18 @@ class CAC:
                 * (pi_vec.reshape(self.q, 1) * pi_vec.reshape(1, self.q))
             )
         )
-        fleiss_kappa = (pa - pe) / (1 - pe)
+        # add 1e-8 to avoid division by zero
+        fleiss_kappa = (pa - pe) / (1 - pe + 1e-8)
         den_ivec = ri_vec * (ri_vec - 1)
         den_ivec = den_ivec - (den_ivec == 0)
         pa_ivec = sum_q / den_ivec
         pe_r2 = pe * (ri_vec >= 2)
-        kappa_ivec = (self.n / n2more) * (pa_ivec - pe_r2) / (1 - pe)
+        kappa_ivec = (self.n / n2more) * (pa_ivec - pe_r2) / (1 - pe + 1e-8)
         pi_vec_wk_ = np.matmul(self.weights_mat, pi_vec)
         pi_vec_w_k = np.matmul(self.weights_mat.T, pi_vec)
         pi_vec_w = (pi_vec_wk_ + pi_vec_w_k) / 2
         pe_ivec = np.matmul(agree_mat, pi_vec_w) / ri_vec
-        kappa_ivec_x = kappa_ivec - 2 * (1 - fleiss_kappa) * (pe_ivec - pe) / (1 - pe)
+        kappa_ivec_x = kappa_ivec - 2 * (1 - fleiss_kappa) * (pe_ivec - pe) / (1 - pe + 1e-8)
         var_fleiss = (
             (1 - self.f)
             / (self.n * (self.n - 1))
