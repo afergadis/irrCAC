@@ -1,1 +1,7 @@
 irrCAC.egg-info/
+**/__pycache__/
+
+.github/
+poetry.lock
+pyproject.toml
+tox.ini
