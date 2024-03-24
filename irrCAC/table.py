@@ -45,6 +45,7 @@ To use weights with the calculations, we pass the type of weights as argument.
                   [0.  , 0.75, 1.  ]]),
 'categories': ['Ectopic', 'AIU', 'NIU']}
 """
+
 from copy import deepcopy
 
 import numpy as np
@@ -175,13 +176,13 @@ class CAC:
         pkl = self.ratings.values / self.n
         sum1 = 0
         for k in range(self.q):
-            for l in range(self.q):
-                sum1 += pkl[k, l] * self.weights_mat[k, l] ** 2
+            for n in range(self.q):
+                sum1 += pkl[k, n] * self.weights_mat[k, n] ** 2
         var_bp = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (sum1 - self.pa**2)
         stderr = np.sqrt(var_bp)
         p_value = 2 * (1 - stats.t.cdf(max(bp_coeff, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            confidence=self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -214,12 +215,12 @@ class CAC:
         pbl_dot = (self.weights_mat * pk_dot).sum(axis=0)
         sum1 = 0
         for k in range(self.q):
-            for l in range(self.q):
+            for n in range(self.q):
                 sum1 += (
-                    pkl[k][l]
+                    pkl[k][n]
                     * (
-                        self.weights_mat[k][l]
-                        - (1 - kappa) * (pb_dot_k[k] + pbl_dot[l])
+                        self.weights_mat[k][n]
+                        - (1 - kappa) * (pb_dot_k[k] + pbl_dot[n])
                     )
                     ** 2
                 )
@@ -229,7 +230,7 @@ class CAC:
         stderr = np.sqrt(var_kappa)
         p_value = 2 * (1 - stats.t.cdf(abs(kappa / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
-            confidence=self.confidence_level, df=self.n - 1, scale=stderr, loc=kappa
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=kappa
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -270,15 +271,15 @@ class CAC:
         pkl = self.ratings.values / self.n
         sum1 = 0
         for k in range(self.q):
-            for l in range(self.q):
+            for n in range(self.q):
                 sum1 += float(
-                    pkl[k][l]
+                    pkl[k][n]
                     * (
-                        self.weights_mat[k][l]
+                        self.weights_mat[k][n]
                         - 2
                         * (1 - ac1)
                         * tw
-                        * (1 - (pi_dot_k[k] + pi_dot_k[l]) / 2)
+                        * (1 - (pi_dot_k[k] + pi_dot_k[n]) / 2)
                         / (self.q * (self.q - 1))
                     )
                     ** 2
@@ -289,7 +290,7 @@ class CAC:
         stderr = np.sqrt(var_gwet)
         p_value = 2 * (1 - stats.t.cdf(max(ac1, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            confidence=self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
         )
         ucb = min(1, ucb)
         if np.sum(self.weights_mat) == self.q:
@@ -332,10 +333,10 @@ class CAC:
         kcoeff = (self.pa - pe) / (1 - pe)
         sum1 = 0
         for k in range(self.q):
-            for l in range(self.q):
+            for n in range(self.q):
                 sum1 += (
-                    pkl[k][l]
-                    * (self.weights_mat[k][l] - (1 - kcoeff) * (pbk[k] + pbk[l])) ** 2
+                    pkl[k][n]
+                    * (self.weights_mat[k][n] - (1 - kcoeff) * (pbk[k] + pbk[n])) ** 2
                 )
         var_kripp = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (
             sum1 - (self.pa - 2 * (1 - kcoeff) * pe) ** 2
@@ -343,10 +344,7 @@ class CAC:
         stderr = np.sqrt(var_kripp)
         p_value = 2 * (1 - stats.t.cdf(max(kripen_coeff, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            confidence=self.confidence_level,
-            df=self.n - 1,
-            scale=stderr,
-            loc=kripen_coeff,
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=kripen_coeff
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -367,13 +365,13 @@ class CAC:
         return deepcopy(self.agreement)
 
     def pa2(self):
-        """Percent Agreement coefficient for 2 raters.
+        r"""Percent Agreement coefficient for 2 raters.
 
         The percent agreement is defined as
 
         .. math::
-            p_a = \\frac{1}{n} \sum_{i=1}^{n} p_{a|i}, \quad
-            where \quad p_{a|i}=\sum_{k=1}^{q} \\frac{r_{ik}(r_{ik}-1)}{r(r-1)}
+            p_a = \frac{1}{n} \sum_{i=1}^{n} p_{a|i}, \quad
+            where \quad p_{a|i}=\sum_{k=1}^{q} \frac{r_{ik}(r_{ik}-1)}{r(r-1)}
 
         with :math:`n` representing the number of subjects, :math:`r` the number of
         raters, :math:`q` the number of categories, and :math:`r_{ik}` the number of
@@ -385,13 +383,13 @@ class CAC:
         pkl = self.ratings.values / self.n
         sum1 = 0
         for k in range(self.q):
-            for l in range(self.q):
-                sum1 += pkl[k][l] * self.weights_mat[k][l] ** 2
+            for n in range(self.q):
+                sum1 += pkl[k][n] * self.weights_mat[k][n] ** 2
         var_pa = ((1 - self.f) / self.n) * (sum1 - self.pa**2)
         stderr = np.sqrt(var_pa)
         p_value = 2 * (1 - stats.t.cdf(max(self.pa, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            confidence=self.confidence_level, df=self.n - 1, scale=stderr, loc=self.pa
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=self.pa
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(
@@ -427,10 +425,10 @@ class CAC:
         pbk = (pb_dot_k + pbl_dot) / 2
         sum1 = 0
         for k in range(self.q):
-            for l in range(self.q):
+            for n in range(self.q):
                 sum1 += (
-                    pkl[k][l]
-                    * (self.weights_mat[k][l] - (1 - scott) * (pbk[k] + pbk[l])) ** 2
+                    pkl[k][n]
+                    * (self.weights_mat[k][n] - (1 - scott) * (pbk[k] + pbk[n])) ** 2
                 )
         var_scott = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (
             sum1 - (self.pa - 2 * (1 - scott) * pe) ** 2
@@ -438,7 +436,7 @@ class CAC:
         stderr = np.sqrt(var_scott)
         p_value = 2 * (1 - stats.t.cdf(max(scott, 0) / stderr, self.n - 1))
         lcb, ucb = stats.t.interval(
-            confidence=self.confidence_level, df=self.n - 1, scale=stderr, loc=scott
+            self.confidence_level, df=self.n - 1, scale=stderr, loc=scott
         )
         ucb = min(1, ucb)
         self.agreement["est"].update(

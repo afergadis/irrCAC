@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "irrCAC"
-version = "0.4.0"
+version = "0.4.1"
 description = "Degree of agreement among raters."
 authors = ["Aris Fergadis"]
 keywords = ["Chance-corrected agreement coefficients",
@@ -16,8 +16,8 @@ packages = [
 include = ["CHANGELOG.md"]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.11"
-scipy = "^1.7.3"
+python = ">=3.9,<3.11"
+scipy = "^1.11.2"
 pandas = "^1.3.5"
 coverage = "^6.2"
 

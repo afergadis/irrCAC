@@ -4,7 +4,7 @@ from scipy.stats import norm
 
 
 class Benchmark:
-    """Compute benchmark scale membership probabilities.
+    r"""Compute benchmark scale membership probabilities.
 
     An elaborate approach to interpret a kappa value is based on the notion of
     cumulative interval membership probability (CIMP). The interval probability
@@ -17,7 +17,7 @@ class Benchmark:
         P(a \le \kappa_1 \le b)
             &= P[(\hat{\kappa}_1 - b)/se(\hat{\kappa}_1)
                \le Z \le
-               (\hat{\kappa}_1 - a)/se(\hat{\kappa}_1)] \\\\
+               (\hat{\kappa}_1 - a)/se(\hat{\kappa}_1)]
             &= \Phi[(\hat{\kappa}_1 - b)/se(\hat{\kappa}_1)] -
                \Phi[(\hat{\kappa}_1 - a)/se(\hat{\kappa}_1)]
 
