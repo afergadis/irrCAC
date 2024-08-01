@@ -272,18 +272,11 @@ class CAC:
         sum1 = 0
         for k in range(self.q):
             for n in range(self.q):
-                sum1 += float(
-                    pkl[k][n]
-                    * (
-                        self.weights_mat[k][n]
-                        - 2
-                        * (1 - ac1)
-                        * tw
-                        * (1 - (pi_dot_k[k] + pi_dot_k[n]) / 2)
-                        / (self.q * (self.q - 1))
-                    )
-                    ** 2
-                )
+                term = self.weights_mat[k, n] - 2 * (1 - ac1) * tw * (
+                    1 - (pi_dot_k[k] + pi_dot_k[n]) / 2
+                ) / (self.q * (self.q - 1))
+                sum1 += pkl[k, n] * (term**2)
+
         var_gwet = ((1 - self.f) / (self.n * (1 - pe) ** 2)) * (
             sum1 - (self.pa - 2 * (1 - ac1) * pe) ** 2
         )

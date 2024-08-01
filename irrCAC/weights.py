@@ -1,6 +1,7 @@
 """ A set of predefined weight schemes that can be used with the agreement \
 coefficients.
 """
+
 import numpy as np
 import pandas as pd
 
@@ -98,14 +99,14 @@ class Weights:
         """
         weights = np.eye(self.q)
         for k in range(self.q):
-            for l in range(self.q):
-                if k != l:
-                    weights[k][l] = pow(self.categ_vec[k] - self.categ_vec[l], 2) / (
-                        (self.categ_vec[k] + self.categ_vec[l] - 2 * self.xmin)
-                        * (2 * self.xmax - self.categ_vec[k] - self.categ_vec[l])
+            for el in range(self.q):
+                if k != el:
+                    weights[k][el] = pow(self.categ_vec[k] - self.categ_vec[el], 2) / (
+                        (self.categ_vec[k] + self.categ_vec[el] - 2 * self.xmin)
+                        * (2 * self.xmax - self.categ_vec[k] - self.categ_vec[el])
                     )
                 else:
-                    weights[k][l] = 0
+                    weights[k][el] = 0
         weights = 1 - weights / np.max(weights)
         return weights
 
@@ -130,9 +131,9 @@ class Weights:
         weights = np.eye(self.q)
         U = self.xmax - self.xmin + 1
         for k in range(self.q):
-            for l in range(self.q):
-                weights[k][l] = pow(
-                    np.sin(np.pi * (self.categ_vec[k] - self.categ_vec[l]) / U), 2
+            for el in range(self.q):
+                weights[k][el] = pow(
+                    np.sin(np.pi * (self.categ_vec[k] - self.categ_vec[el]) / U), 2
                 )
         weights = 1 - weights / np.max(weights)
         return weights
@@ -173,8 +174,8 @@ class Weights:
         """
         weights = np.eye(self.q)
         for k in range(self.q):
-            for l in range(self.q):
-                weights[k][l] = 1 - abs(self.categ_vec[k] - self.categ_vec[l]) / abs(
+            for el in range(self.q):
+                weights[k][el] = 1 - abs(self.categ_vec[k] - self.categ_vec[el]) / abs(
                     self.xmax - self.xmin
                 )
         return weights
@@ -198,9 +199,9 @@ class Weights:
         """
         weights = np.eye(self.q)
         for k in range(self.q):
-            for l in range(self.q):
-                nkl = max(k, l) - min(k, l) + 1
-                weights[k][l] = nkl * (nkl - 1) / 2
+            for el in range(self.q):
+                nkl = max(k, el) - min(k, el) + 1
+                weights[k][el] = nkl * (nkl - 1) / 2
         weights = 1 - weights / np.max(weights)
         return weights
 
@@ -223,9 +224,9 @@ class Weights:
         weights = np.eye(self.q)
         diff = self.xmax - self.xmin
         for k in range(self.q):
-            for l in range(self.q):
-                weights[k][l] = 1 - pow(
-                    (self.categ_vec[k] - self.categ_vec[l]) / diff, 2
+            for el in range(self.q):
+                weights[k][el] = 1 - pow(
+                    (self.categ_vec[k] - self.categ_vec[el]) / diff, 2
                 )
         return weights
 
@@ -249,9 +250,9 @@ class Weights:
         """
         weights = np.eye(self.q)
         for k in range(self.q):
-            for l in range(self.q):
-                weights[k][l] = 1 - np.sqrt(
-                    abs(self.categ_vec[k] - self.categ_vec[l])
+            for el in range(self.q):
+                weights[k][el] = 1 - np.sqrt(
+                    abs(self.categ_vec[k] - self.categ_vec[el])
                 ) / np.sqrt(abs(self.xmax - self.xmin))
         return weights
 
@@ -288,16 +289,12 @@ class Weights:
             )
         weights = np.eye(self.q)
         for k in range(self.q):
-            for l in range(self.q):
-                weights[k][l] = (
-                    1
-                    - (
-                        pow(
-                            (self.categ_vec[k] - self.categ_vec[l])
-                            / (self.categ_vec[k] + self.categ_vec[l]),
-                            2,
-                        )
+            for el in range(self.q):
+                weights[k][el] = 1 - (
+                    pow(
+                        (self.categ_vec[k] - self.categ_vec[el])
+                        / (self.categ_vec[k] + self.categ_vec[el]),
+                        2,
                     )
-                    / pow((self.xmax - self.xmin) / (self.xmax + self.xmin), 2)
-                )
+                ) / pow((self.xmax - self.xmin) / (self.xmax + self.xmin), 2)
         return weights

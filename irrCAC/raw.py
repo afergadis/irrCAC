@@ -248,7 +248,7 @@ class CAC:
             np.repeat(1 / self.n, self.n).reshape(self.n, 1)
             * (agree_mat / np.repeat(ri_vec, self.q).reshape(self.n, self.q))
         ).T.sum(axis=1)
-        weights_mat_sum = sum(sum(self.weights_mat))
+        weights_mat_sum = np.sum(np.sum(self.weights_mat))
         if self.q >= 2:
             pe = weights_mat_sum * sum(pi_vec * (1 - pi_vec)) / (self.q * (self.q - 1))
         else:
@@ -424,7 +424,7 @@ class CAC:
             / (n * (n - 1))
             * sum((krippen_ivec_x - krippen_alpha_prime) ** 2)
         )
-        stderr = np.sqrt(float(var_krippen))
+        stderr = np.sqrt(float(var_krippen.item()))
         p_value = 2 * (1 - stats.t.cdf(abs(krippen_alpha / stderr), n - 1))
         lcb, ucb = stats.t.interval(
             self.confidence_level, df=n - 1, scale=stderr, loc=krippen_alpha

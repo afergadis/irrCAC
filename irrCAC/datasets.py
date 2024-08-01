@@ -1,4 +1,5 @@
-""" Sample datasets for demonstrating and testing agreement coefficients. """
+"""Sample datasets for demonstrating and testing agreement coefficients."""
+
 import pandas as pd
 
 
@@ -166,7 +167,7 @@ def raw_5observers():
         Observer4=[None, 1, 3, None, None, None, None, 0, None, 1, 0, 0, 2, 2, None],
         Observer5=[2, None, None, 0, 0, 0, 1, None, 2, None, None, None, None, 3, 1],
     )
-    return pd.DataFrame(data, index=units)
+    return pd.DataFrame(data, index=units, dtype=float)
 
 
 def raw_ben_gerry():
@@ -324,7 +325,7 @@ def table_cont3x3abstractors():
 
     """
     data = {"Ectopic": [13, 0, 0], "AIU": [0, 20, 4], "NIU": [0, 7, 56]}
-    return pd.DataFrame(data, index=data.keys())
+    return pd.DataFrame(data, index=list(data.keys()))
 
 
 def table_cont4x4diagnosis():
@@ -351,14 +352,7 @@ def table_cont4x4diagnosis():
         Diagnosis
             The category of the diagnosis.
     """
-    methods = ["Clinical Diagnosis", "Research Diagnosis"]
     diagnosis = ["Schizophrenia", "Bipolar Disorder", "Depression", "Other"]
-    cols = pd.MultiIndex.from_product(
-        [[methods[0]], diagnosis], names=["Method", "Diagnosis"]
-    )
-    idx = pd.MultiIndex.from_product(
-        [[methods[1]], diagnosis], names=["Method", "Diagnosis"]
-    )
     data = [[40, 4, 4, 17], [6, 25, 2, 13], [4, 1, 21, 12], [15, 5, 9, 45]]
     return pd.DataFrame(data, index=diagnosis, columns=diagnosis)
 

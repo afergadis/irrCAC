@@ -1892,6 +1892,27 @@ files = [
 ]
 
 [[package]]
+name = "pudb"
+version = "2024.1.2"
+description = "A full-screen, console-based Python debugger"
+optional = false
+python-versions = "~=3.8"
+files = [
+    {file = "pudb-2024.1.2-py3-none-any.whl", hash = "sha256:4726c288d9f57845b8dba706c70eb6faaddff9d86e5208eda82216ef5e79cc2e"},
+    {file = "pudb-2024.1.2.tar.gz", hash = "sha256:adc9b00042ba8367117df0a6c0dc62fa9609abd21c3bf8e5b73d620907c5b43e"},
+]
+
+[package.dependencies]
+jedi = ">=0.18,<1"
+packaging = ">=20.0"
+pygments = ">=2.7.4"
+urwid = ">=2.4"
+urwid-readline = "*"
+
+[package.extras]
+completion = ["shtab"]
+
+[[package]]
 name = "pure-eval"
 version = "0.2.3"
 description = "Safely evaluate AST nodes without side effects"
@@ -2987,6 +3008,47 @@ socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
+name = "urwid"
+version = "2.6.15"
+description = "A full-featured console (xterm et al.) user interface library"
+optional = false
+python-versions = ">3.7"
+files = [
+    {file = "urwid-2.6.15-py3-none-any.whl", hash = "sha256:71b3171cabaa0092902f556768756bd2f2ebb24c0da287ee08f081d235340cb7"},
+    {file = "urwid-2.6.15.tar.gz", hash = "sha256:9ecc57330d88c8d9663ffd7092a681674c03ff794b6330ccfef479af7aa9671b"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+wcwidth = "*"
+
+[package.extras]
+curses = ["windows-curses"]
+glib = ["PyGObject"]
+lcd = ["pyserial"]
+serial = ["pyserial"]
+tornado = ["tornado (>=5.0)"]
+trio = ["exceptiongroup", "trio (>=0.22.0)"]
+twisted = ["twisted"]
+zmq = ["zmq"]
+
+[[package]]
+name = "urwid-readline"
+version = "0.14"
+description = "A textbox edit widget for urwid that supports readline shortcuts"
+optional = false
+python-versions = "*"
+files = [
+    {file = "urwid_readline-0.14.tar.gz", hash = "sha256:8fabd2e501c124a30d38cfb10610b32f119a615ec0b310ae5591c583fb00bd09"},
+]
+
+[package.dependencies]
+urwid = "*"
+
+[package.extras]
+dev = ["black", "pytest"]
+
+[[package]]
 name = "virtualenv"
 version = "20.26.3"
 description = "Virtual Python Environment builder"
@@ -3099,4 +3161,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "bac5ab7a1fc7a1fbb24aa167f111a30e26fed57a0d3b29f51ee5149f47bfe08e"
+content-hash = "970cbdd6ca40b12ddce00887c235e5d151dac32ecbfccebe8d06db071c616d35"
