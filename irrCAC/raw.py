@@ -96,7 +96,7 @@ class CAC:
     Calculates various chance-corrected agreement coefficients (CAC) among 2 or
     more raters are provided. Among the CAC coefficients covered are
 
-    * Brennan-Prediger coefficient, (TODO)
+    * Brennan-Prediger coefficient,
     * Conger's kappa,
     * Fleiss' kappa,
     * Gwet's AC1/AC2 coefficients, and
