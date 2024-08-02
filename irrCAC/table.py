@@ -189,12 +189,12 @@ class CAC:
             dict(
                 coefficient_name="Brennan-Prediger",
                 pa=np.round(self.pa, self.digits),
-                pe=round(pe, self.digits),
+                pe=np.round(pe, self.digits),
                 se=round(stderr, self.digits),
                 z=round(bp_coeff / stderr, self.digits),
                 coefficient_value=round(bp_coeff, self.digits),
                 confidence_interval=(round(lcb, self.digits), round(ucb, self.digits)),
-                p_value=round(p_value, self.digits),
+                p_value=np.round(p_value, self.digits),
             )
         )
         return deepcopy(self.agreement)
