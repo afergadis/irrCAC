@@ -1,4 +1,4 @@
-""" Inter-rater reliability
+"""Inter-rater reliability
 
 In statistics, inter-rater reliability (also called by various similar names,
 such as inter-rater agreement, inter-rater concordance, inter-observer
@@ -15,10 +15,8 @@ measurement. Some options are
 * `Scott's pi <https://en.wikipedia.org/wiki/Scott%27s_pi>`_
 * `Fleiss' kappa <https://en.wikipedia.org/wiki/Fleiss%27_kappa>`_
 * `Krippendorff's alpha <https://en.wikipedia.org/wiki/Krippendorff%27s_alpha>`_
-* `Concordance Correlation Coefficient <https://en.wikipedia.org/wiki/Concordance_correlation_coefficient>`_
+* `Concordance Correlation Coefficient <https://reduced.to/q27kr>`_
 * `Intra-Class Correlation <https://en.wikipedia.org/wiki/Intraclass_correlation>`_
 
 and many others.
 """
-
-__version__ = "0.4.0"

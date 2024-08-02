@@ -1,3 +1,9 @@
+## 0.4.2 (2024-08-02)
+
+### Fix
+
+- replace 'round' function with 'np.round'
+
 ## v0.4.1 (2023-08-24)
 
 ### Refactor
