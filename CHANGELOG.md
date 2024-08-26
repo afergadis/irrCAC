@@ -1,3 +1,9 @@
+## 0.4.3 (2024-08-26)
+
+### Refactor
+
+- **raw**: replace depricated function call
+
 ## 0.4.2 (2024-08-02)
 
 ### Fix
