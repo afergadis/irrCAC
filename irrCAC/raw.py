@@ -488,13 +488,13 @@ class CAC:
         # bkl_mat = (self.weights_mat + self.weights_mat.T) / 2
         lambda_ig_mat = np.zeros((self.n, self.r))
         is_numeric_ratings = (
-            self.ratings.applymap(lambda x: isinstance(x, (int, float))).all(1).sum()
+            self.ratings.map(lambda x: isinstance(x, (int, float))).all(1).sum()
             == self.n
         )
         if is_numeric_ratings:
             epsi_ig_mat = 1 - self.ratings.isna()
         else:
-            epsi_ig_mat = self.ratings.applymap(lambda x: isinstance(x, str))
+            epsi_ig_mat = self.ratings.map(lambda x: isinstance(x, str))
         for k in range(self.q):
             lambda_ig_kmat = np.zeros((self.n, self.r))
             for lam in range(self.q):
