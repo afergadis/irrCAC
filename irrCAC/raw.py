@@ -267,6 +267,8 @@ class CAC:
         ac1_ivec_x = ac1_ivec - 2 * (1 - ac1) * (pe_ivec - pe) / (1 - pe)
         var_ac1 = (1 - self.f) / (self.n * (self.n - 1)) * sum((ac1_ivec_x - ac1) ** 2)
         stderr = np.sqrt(var_ac1)
+        if stderr == 0.0:
+            stderr = 1e-15
         p_value = 2 * (1 - stats.t.cdf(abs(ac1 / stderr), self.n - 1))
         lcb, ucb = stats.t.interval(
             self.confidence_level, df=self.n - 1, scale=stderr, loc=ac1
@@ -350,6 +352,8 @@ class CAC:
             * sum((kappa_ivec_x - fleiss_kappa) ** 2)
         )
         stderr = np.sqrt(var_fleiss)
+        if stderr == 0.0:
+            stderr = 1e-15
         p_value = float(2 * (1 - stats.t.cdf(abs(fleiss_kappa / stderr), self.n - 1)))
         lcb, ucb = stats.t.interval(
             self.confidence_level, df=self.n - 1, scale=stderr, loc=fleiss_kappa
@@ -425,6 +429,8 @@ class CAC:
             * sum((krippen_ivec_x - krippen_alpha_prime) ** 2)
         )
         stderr = np.sqrt(float(var_krippen.item()))
+        if stderr == 0.0:
+            stderr = 1e-15
         p_value = 2 * (1 - stats.t.cdf(abs(krippen_alpha / stderr), n - 1))
         lcb, ucb = stats.t.interval(
             self.confidence_level, df=n - 1, scale=stderr, loc=krippen_alpha
@@ -523,6 +529,8 @@ class CAC:
             * sum((conger_ivec_x - conger_kappa) ** 2)
         )
         stderr = np.sqrt(var_conger)
+        if stderr == 0.0:
+            stderr = 1e-15
         p_value = float(2 * (1 - stats.t.cdf(abs(conger_kappa / stderr), self.n - 1)))
         lcb, ucb = stats.t.interval(
             self.confidence_level, df=self.n - 1, scale=stderr, loc=conger_kappa
@@ -586,6 +594,8 @@ class CAC:
 
         var_bp = (1 - self.f) / (self.n * (self.n - 1)) * sum((bp_ivec - bp_coeff) ** 2)
         stderr = np.sqrt(var_bp)
+        if stderr == 0.0:
+            stderr = 1e-15
         p_value = 1 - stats.t.cdf(abs(bp_coeff / stderr), self.n - 1)
         lcb, ucb = stats.t.interval(
             self.confidence_level, df=self.n - 1, scale=stderr, loc=bp_coeff
