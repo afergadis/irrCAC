@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "irrCAC"
-version = "0.4.3"
+version = "0.4.4"
 description = "Degree of agreement among raters."
 authors = ["Aris Fergadis"]
 keywords = ["Chance-corrected agreement coefficients",
@@ -40,7 +40,7 @@ pudb = "^2024.1.2"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.4.3"
+version = "0.4.4"
 tag_format = "$version"
 version_type = "semver"
 version_provider = "poetry"

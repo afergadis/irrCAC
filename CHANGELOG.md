@@ -1,3 +1,9 @@
+## 0.4.4 (2024-11-05)
+
+### Fix
+
+- prevent divide by zero when computing p_value if stderr too small
+
 ## 0.4.3 (2024-08-26)
 
 ### Refactor
