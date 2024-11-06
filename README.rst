@@ -96,7 +96,7 @@ Next run the tests:
 
     poetry run pytest
 
-There is also a config file for `tox <https://tox.readthedocs.io/en/latest/>`_
+There is also a config for `tox <https://tox.readthedocs.io/en/latest/>`_
 so you can automatically run the tests for various python versions like this:
 
 .. code:: bash
