@@ -1,5 +1,6 @@
 """ The "Cumulative Probability" approach to Benchmarking.
 """
+
 from scipy.stats import norm
 
 

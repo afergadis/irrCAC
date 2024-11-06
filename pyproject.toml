@@ -3,25 +3,24 @@ name = "irrCAC"
 version = "0.4.4"
 description = "Degree of agreement among raters."
 authors = ["Aris Fergadis"]
-keywords = ["Chance-corrected agreement coefficients",
+keywords = [
+    "Chance-corrected agreement coefficients",
     "Inter-rater reliability",
-    "Inter-annotator agreement"
+    "Inter-annotator agreement",
 ]
 readme = "README.rst"
 homepage = "https://github.com/afergadis/irrCAC"
 repository = "https://github.com/afergadis/irrCAC"
-packages = [
-    { include="irrCAC", from="." },
-]
+packages = [{ include = "irrCAC", from = "." }]
 include = ["CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-scipy = "1.12.0"
+scipy = "^1.12.0"
 pandas = "^2.2.2"
 coverage = "^6.2"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.1.2"
 yapf = "^0.32.0"
 commitizen = "^2.20.4"
@@ -54,3 +53,30 @@ build-backend = "poetry.core.masonry.api"
 [tool.semantic_release]
 version_variable = ["irrCAC/__init__.py:__version__", "pyproject.toml:version"]
 branch = "master"
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py39,py310,py311,py312
+isolated_build = true
+skip_missing_interpreters = true
+
+[gh-actions]
+python =
+    3.9: py39
+    3.10: py310
+    3.11: py311
+    3.12: py312
+
+[testenv]
+description = Run tests
+require_locked_deps = true
+install_dev_deps = true
+deps =
+  pytest
+commands =
+  pytest
+"""
+
+[tool.flake8]
+per-file-ignores = "irrCAC/__init__py: E501"

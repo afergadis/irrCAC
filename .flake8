@@ -1,2 +1,0 @@
-[flake8]
-per-file-ignores = irrCAC/__init__py: E501
